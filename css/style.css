@@ -1,0 +1,297 @@
+/*Main Framework*/
+body {
+	margin: 0;
+	padding: 0;
+}
+#map {
+	position: absolute;
+	top: 101px;
+	bottom: 0;
+	width: 100%;
+}
+#logo {
+	position: absolute;
+	top: 8px;
+	left: 30px;
+	z-index: 1500;
+}
+#header {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	background: #F1F1F1;
+	height: 60px;
+	opacity: 0.9;
+	z-index: 1000;
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+}
+#interface {
+	position: absolute;
+	top: 61px;
+	width: 100%;
+	height: 40px;
+	background: #FFF;
+	z-index: 1000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+	font-size: 14px;
+	line-height: 40px;
+	font-weight: lighter;
+	color: #333;
+	vertical-align: middle;
+}
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background: #F1F1F1; /* good contrast #3C4E5A*/
+	height: 30px;
+	z-index: 1000;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #CCC;
+	color: #000;
+}
+#attribution {
+	font-size: 12px;
+	bottom: 8px;
+	color: #999;
+	margin-left: 5px;
+	margin-bottom: 8px;
+}
+
+/*Legend*/
+#legend {
+	position: absolute;
+	bottom: 35px;
+	right: 20px;
+	width: 140px;
+	height: 225px;
+	background: #FFF;
+	z-index: 3000;
+	border: 1px solid #CCC;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	font-size: 20px;
+	line-height: 50px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: top;
+}
+#legendContent {
+	padding-top: 8px;
+}
+.legendFooter {
+	position: absolute;
+	bottom: 1px;
+	right: 20px;
+	width: 180px;
+	height: 30px;
+	background: #FFF;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 30px;
+	text-align: center;
+	vertical-align: top;
+	font-weight: lighter;
+	color: #999;
+	z-index: 2000;
+	border: 1px solid #CCC;
+}
+#legendFooterTouch {
+	position: relative;
+	bottom: -2px;
+	right: -40px;
+}
+#legendTouch {
+	position: absolute;
+	bottom: 200px;
+	right: 10px;
+}
+
+/* Cities */
+.cityChicago {
+	position: absolute;
+	top: 25px;
+	left: 160px;
+	width: 70px;
+	height: 22px;
+	font-family: proxima-nova, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 15px;
+	line-height: 22px;
+	z-index: 1500;
+	color: #999;
+	font-weight: lighter;
+	padding-top: 2px;
+}
+.cityNY {
+	position: absolute;
+	top: 25px;
+	left: 230px;
+	width: 80px;
+	height: 22px;
+	font-family: proxima-nova, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 15px;
+	line-height: 22px;
+	z-index: 1500;
+	color: #242424;
+	font-weight: lighter;
+	padding-top: 2px;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #999;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #999;
+}
+.cityPhilly {
+	position: absolute;
+	top: 25px;
+	left: 310px;
+	width: 90px;
+	height: 22px;
+	font-family: proxima-nova, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 15px;
+	line-height: 22px;
+	z-index: 1500;
+	color: #999;
+	font-weight: lighter;
+	padding-top: 2px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #999;
+}
+.cityDC {
+	position: absolute;
+	top: 25px;
+	left: 400px;
+	width: 120px;
+	height: 22px;
+	font-family: proxima-nova, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 15px;
+	line-height: 22px;
+	z-index: 1500;
+	color: #999;
+	font-weight: lighter;
+	padding-top: 2px;
+}
+
+.cityChicago:hover {
+	color: #21221C;
+}
+.cityNY:hover {
+	color: #21221C;
+}
+.cityPhilly:hover {
+	color: #21221C;
+}
+.cityDC:hover {
+	color: #21221C;
+}
+
+
+/* Header Buttons */
+.homeButton {
+	position: absolute;
+	top: 22px;
+	right: 265px;
+	width: 150px;
+	height: 34px;
+	font-family: proxima-nova, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 15px;
+	line-height: 22px;
+	z-index: 1500;
+	color: #999;
+	font-weight: bolder;
+	padding-top: 2px;
+}
+.dataButton {
+	position: absolute;
+	top: 22px;
+	right: 147px;
+	width: 152px;
+	height: 22px;
+	font-family: proxima-nova, sans-serif;
+	text-align: center;
+	vertical-align: text-top;
+	font-size: 15px;
+	line-height: 22px;
+	z-index: 1500;
+	color: #999;
+	font-weight: lighter;
+	border-right-width: 2px;
+	border-left-width: 2px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #999;
+	border-left-color: #999;
+	font-weight: bolder;
+	padding-top: 2px;
+}
+.contactButton {
+	position: absolute;
+	top: 22px;
+	right: 15px;
+	width: 150px;
+	height: 34px;
+	font-family: proxima-nova, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 15px;
+	line-height: 22px;
+	z-index: 1500;
+	color: #999;
+	font-weight: lighter;
+	font-weight: bolder;
+	padding-top: 2px;
+}
+.homeButton:hover {
+	color: #21221C;
+}
+.contactButton:hover {
+	color: #21221C;
+}
+.dataButton:hover {
+	color: #21221C;
+}
+
+/* Leaflet Popup */
+.leaflet-popup-content-wrapper{
+	height: 500px;
+	width: 340px;
+	overflow: auto;
+	max-height: 600px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin: 0px;
+}
+.leaflet-popup-content{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/*CartoDB Mapping*/
+div.cartodb-popup.header div.cartodb-popup-content {
+  max-height:350px;
+}
+div.cartodb-header h1 {
+    padding:0;
+    margin:0;
+    font-weight: bold;
+    font-size: 17px;
+    color: #397DBA;
+    line-height:normal;
+    text-align:left;
+  }
