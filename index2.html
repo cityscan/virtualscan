@@ -9,24 +9,33 @@
       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/cartodb.ie.css" />
     <![endif]-->
 
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="js/map.js"></script>
 
   </head>
 <body onload="init()">
+    <header>
+        <div id="branding">
+            <a href="http://cityscan.com"><img src="img/logo.png" alt="CityScan logo" name="CityScan"></a>
+        </div>
+        <div id="cityswitcher">
+            <select name="cityswitcher">
+                <option>Chicago (Exelon)</option>
+                <option>Milwaukee</option>
+                <option selected>New York</option>
+                <option>Philadelphia</option>
+                <option>Washington D.C.</option>
+            </select>
+        </div>
+        <nav>
+            <a href="http://cityscan.com/about-us/"><div class="navbutton">About</div></a>
+        </nav>
+    </header>
     <div id='map'></div>
     <div id="menu">
         <a href="#nopermit" id="nopermit" class="button nopermit">NO PERMIT</a>
         <a href="#expiredpermit" id="expiredpermit" class="button expiredpermit">EXPIRED PERMIT</a>
         <a href="#all" id="all" class="button all">ALL</a>
-    </div>
-    <div id="cityswitcher">
-        <select name="cityswitcher">
-            <option>Chicago (Exelon)</option>
-            <option>Milwaukee</option>
-            <option selected>New York</option>
-            <option>Philadelphia</option>
-            <option>Washington D.C.</option>
-        </select>
     </div>
             
 </body>
