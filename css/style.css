@@ -18,22 +18,79 @@ html, body {
 }
 #cityswitcher {
     position: absolute;
-    top: 5px;
-    left: 500px;
-    width: 200px;
+    top: 28px;
+    left: 750px;
+    width: 150px;
+    height: 34px;
+    background: transparent;
+    z-index: 10;
+}
+/*
+#cityswitcher select {
+    border: 0;
+    font-size: 15px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+
+}
+*/
+.navbutton {
+    position: absolute;
+    top: 28px;
+    right: 6px;
+    width: 150px;
+    height: 34px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 4px;
+    color: white;
+    background: #476674;
+    font-size: 15px;
+    line-height: 34px;
+    z-index: 1500;
+}
+
+#dataview {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #ddd;
+    width: 790px;
+    height: 200px;
+}
+
+
+#menu {
+    position: absolute;
+    right: 10px;
+    width: 775px;
     height: 60px;
     background: transparent;
     z-index: 10;
 }
 
-#menu {
+#assetclass {
     position: absolute;
-    bottom: 20px;
-    right: 10px;
-    width: 400px;
-    height: 60px;
-    background: transparent;
-    z-index: 10;
+    left: 5px;
+    width: 350px;
+}
+
+#assetclass ul {
+    list-style: none;
+}
+
+#permitstatus {
+    position:absolute;
+    left: 375px;
+    width: 250px;
+}
+
+#allbutton {
+    position:absolute;
+    width: 120px;
+    right: 15px;
 }
 
 .navbutton {

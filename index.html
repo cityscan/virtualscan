@@ -1,33 +1,101 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <!--[if lte IE 8]>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 (experimental) for Linux https://github.com/w3c/tidy-html5/tree/c63cc39">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href=
+  "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js">
+</script><!--[if lte IE 8]>
       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/cartodb.ie.css" />
     <![endif]-->
 
-    <script src="js/map.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js">
+</script>
+  <script src="js/map.js">
+</script>
 
-  </head>
+  <title></title>
+</head>
+
 <body onload="init()">
-    <div id='map'></div>
-    <div id="menu">
-        <a href="#nopermit" id="nopermit" class="button nopermit">NO PERMIT</a>
-        <a href="#expiredpermit" id="expiredpermit" class="button expiredpermit">EXPIRED PERMIT</a>
-        <a href="#all" id="all" class="button all">ALL</a>
+  <header>
+    <div id="branding">
+      <a href="http://cityscan.com"><img src="img/logo.png" alt=
+      "CityScan logo" name="CityScan" id="CityScan"></a>
     </div>
+
     <div id="cityswitcher">
-        <select name="cityswitcher">
-            <option>Chicago (Exelon)</option>
-            <option>Milwaukee</option>
-            <option selected>New York</option>
-            <option>Philadelphia</option>
-            <option>Washington D.C.</option>
-        </select>
+      <select name="cityswitcher">
+        <option>
+          Chicago (Exelon)
+        </option>
+
+        <option>
+          Milwaukee
+        </option>
+
+        <option selected>
+          New York
+        </option>
+
+        <option>
+          Philadelphia
+        </option>
+
+        <option>
+          Washington D.C.
+        </option>
+      </select>
     </div>
-            
+
+    <nav>
+      <a href="http://cityscan.com/about-us/">
+      <div class="navbutton">
+        About
+      </div></a>
+    </nav>
+  </header>
+
+  <div id='map'></div>
+
+  <div id="dataview">
+    <div id="menu">
+      <div id="assetclass">
+        <p>Asset Class:</p>
+
+        <ul>
+            <li><a href="#awning" id="awning" class="button awning">Awning</a></li>
+
+            <li><a href="#billboard" id="billboard" class="button billboard">Billboard</a></li>
+
+            <li><a href="#dumpster" id="dumpster" class="button dumpster">Construction Equipment</a></li>
+
+            <li><a href="#fence" id="fence" class="button fence">Fence</a></li>
+
+            <li><a href="#scaffold" id="scaffold" class="button scaffold">Scaffold</a></li>
+
+            <li><a href="#sidewalkshed" id="sidewalkshed" class="button sidewalkshed">Sidewalk Shed</a></li>
+        </ul>
+      </div>
+
+      <div id="permitstatus">
+        <p>Permit Status:</p>
+
+            <a href="#nopermit" id="nopermit" class=
+            "button nopermit">No Permit</a>
+
+            <a href="#expiredpermit" id="expiredpermit" class=
+            "button expiredpermit">Expired Permit</a>
+      </div>
+
+      <div id="allbutton">
+        <a href="#all" id="all" class="button all">Show All</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
