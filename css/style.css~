@@ -17,7 +17,6 @@ html, body {
 }
 
 #sidebar {
-    color: white;
     position: absolute;
     top: 70px;
     bottom: 0px;
@@ -85,7 +84,7 @@ html, body {
 
 #asset_classes a.selected {
   background-color: #ddd
-  
+  color: black;
   }
 
 #permit_status {
@@ -157,16 +156,3 @@ div.cartodb-header h1 {
     line-height:normal;
     text-align:left;
   }
-
-.infowindow-custom {
-    position: absolute;
-    width: 300px;
-    top: 70px;
-    left: 0px;
-    display: none;
-}
-
-.cartodb-popup-content {
-    min-height: 80px;
-    display: none;
-}

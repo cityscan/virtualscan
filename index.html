@@ -2,100 +2,157 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for HTML5 (experimental) for Linux https://github.com/w3c/tidy-html5/tree/c63cc39">
+
   <meta charset="utf-8">
+
+  <title>VirtualScan powered by CityScan</title>
+  <link rel="Shortcut Icon" href=
+  "http://cityscan.com/wp-content/themes/cityscan/images/favicon.ico"
+  type="image/x-icon">
+  
+  <!-- Stylesheets -->
   <link rel="stylesheet" href=
   "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css">
   <link rel="stylesheet" href="css/style.css">
-  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js">
-</script><!--[if lte IE 8]>
+  <link rel="stylesheet" href=
+  "http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css">
+  <link rel="stylesheet" href="css/l.geosearch.mod.css">
+  <!--[if lte IE 8]>
       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/cartodb.ie.css" />
     <![endif]-->
+    
+    
+  <!-- Scripts -->
 
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js">
+</script>
   <script src="http://code.jquery.com/jquery-1.10.2.min.js">
+</script>
+  <script src=
+  "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js">
+</script>
+  <script src="js/leaflet-hash.js">
+</script>
+  <script src="js/l.geosearch.mod.js">
 </script>
   <script src="js/map.js">
 </script>
-
-  <title></title>
 </head>
 
-<body onload="init()">
-  <header>
-    <div id="branding">
-      <a href="http://cityscan.com"><img src="img/logo.png" alt=
-      "CityScan logo" name="CityScan" id="CityScan"></a>
-    </div>
-
-    <div id="cityswitcher">
-      <select name="cityswitcher">
-        <option>
-          Chicago (Exelon)
-        </option>
-
-        <option>
-          Milwaukee
-        </option>
-
-        <option selected>
-          New York
-        </option>
-
-        <option>
-          Philadelphia
-        </option>
-
-        <option>
-          Washington D.C.
-        </option>
-      </select>
-    </div>
-
-    <nav>
-      <a href="http://cityscan.com/about-us/">
-      <div class="navbutton">
-        About
-      </div></a>
-    </nav>
-  </header>
-
+<body>
   <div id='map'></div>
 
-  <div id="dataview">
-    <div id="menu">
-      <div id="assetclass">
-        <p>Asset Class:</p>
+  <div id="topleft">
+    <div id="branding">
+      <a href="http://cityscan.com/"><img src="img/logo_clean.png"
+      id="logo" height="45" width="133"></a>
+    </div><!-- branding -->
 
-        <ul>
-            <li><a href="#awning" id="awning" class="button awning">Awning</a></li>
+    <div id="cityswitcher">
+      <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              New York
+        <span class="caret"></span>
+    </a>
 
-            <li><a href="#billboard" id="billboard" class="button billboard">Billboard</a></li>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a href="#">Chicago (Exelon)</a>
+          </li>
 
-            <li><a href="#dumpster" id="dumpster" class="button dumpster">Construction Equipment</a></li>
+          <li>
+            <a href="#">Milwaukee</a>
+          </li>
 
-            <li><a href="#fence" id="fence" class="button fence">Fence</a></li>
+          <li>
+            <a href="#">New York</a>
+          </li>
 
-            <li><a href="#scaffold" id="scaffold" class="button scaffold">Scaffold</a></li>
+          <li>
+            <a href="#">Philadelphia</a>
+          </li>
 
-            <li><a href="#sidewalkshed" id="sidewalkshed" class="button sidewalkshed">Sidewalk Shed</a></li>
+          <li>
+            <a href="#">Washington, D.C.</a>
+          </li>
         </ul>
       </div>
+    </div><!--cityswitcher -->
+  </div><!--topleft -->
 
-      <div id="permitstatus">
-        <p>Permit Status:</p>
+  <!--
+  <a href="#close" class="cartodb-popup-close-button close">x</a>
+  -->
+  <div id="sidebar">
+    <script type="infowindow/html" id="infowindow_template">
+      <div class="infowindow-custom">
+            <div class="cartodb-popup-content">
+                <!-- content.data contains the field info -->
+                <h4>BIN: </h4>
+                <p>{{content.data.bin}}</p>
+                </div>
+            </div>
 
-            <a href="#nopermit" id="nopermit" class=
-            "button nopermit">No Permit</a>
+        </script>
+  </div><!-- sidebar -->
 
-            <a href="#expiredpermit" id="expiredpermit" class=
-            "button expiredpermit">Expired Permit</a>
-      </div>
+  <div id="control">
+    <div id="switchbase">
+      <a class="btn" href="#" title="Road basemap"><i class=
+      "icon-road">.</i></a> <a class="btn" href="#" title=
+      "Satellite basemap"><i class="icon-globe">.</i></a> <a class=
+      "btn" href="#" title="Export data"><i class=
+      "icon-download-alt">.</i></a>
+    </div><!-- switchbase -->
 
-      <div id="allbutton">
-        <a href="#all" id="all" class="button all">Show All</a>
-      </div>
+    <ul class="nav nav-list">
+
+    <li class="divider">.</li>
+</ul>
+    <div id="asset_classes" >
+
+    <p>Asset Class:
+    <ul class="nav nav-tabs nav-stacked">
+    <li data="Awning">
+        <a href="#" class="query asset" title="Awning">Awning</a>
+    </li>
+
+    <li data="Billboard">
+        <a href="#" class="query asset" title="Billboard">Billboard</a>
+    </li>
+
+    <li data="Dumpster">
+        <a href="#" class="query asset" title="Dumpster">Dumpster</a>
+    </li>
+
+    <li data="Fence"> 
+        <a href="#" class="query asset" title="Fence">Fence</a>
+    </li>
+
+    <li data="Scaffolding">
+        <a href="#" class="query asset" title="Scaffolding">Scaffolding</a>
+    </li>
+
+    <li data="Sidewalk Shed">
+        <a href="#" class="query asset" title="Sidewalk Shed">Sidewalk Shed</a>
+    </li>
+    </ul></p>
+</div> <!-- asset_classes -->
+
+
+
+<div id="permit_status">
+    <ul class="nav nav-list">
+
+    <li class="divider">.</li>
+</ul>
+    <p>Permit Status:</p>
+    <div class="btn-group">
+        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
+        <a href="#" id="expiredpermit" title="Expired Permit" class="query permit"><button class="btn btn-warning">Expired</a></button>
+        <a style="color: black;" href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
     </div>
-  </div>
+  </div><!-- control -->
 </body>
 </html>
+
