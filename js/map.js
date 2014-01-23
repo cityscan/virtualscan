@@ -18,6 +18,8 @@ $('document').ready( function() {
         // if permit: sql = "SELECT * FROM nyc WHERE asviolation = '" + permit + "'";
         // if both: sql = "SELECT * FROM nyc WHERE type = '" + title + "' AND asviolation = '" + permit + "'";
         // if both, then toggle off one...
+        
+
 
         function createSelector(layer) {
           var sql = new cartodb.SQL({ user: 'cityscan' });
@@ -50,11 +52,13 @@ $('document').ready( function() {
             });
           }
  
-          cartodb.createVis('map', 'http://cityscan.cartodb.com/api/v2/viz/3cf649b6-7fa9-11e3-b800-ad11aa07e6f1/viz.json')
+          cartodb.createVis('map', 'http://cityscan.cartodb.com/api/v2/viz/3cf649b6-7fa9-11e3-b800-ad11aa07e6f1/viz.json', {
+                  zoom: 15
+                  })
             .done(function(vis, layers) {
               var subLayer = layers[1].getSubLayer(0);
               createSelector(subLayer);
-              IW = subLayer.infowindow;
+              map = vis.getNativeMap();
 
               // TODO: add hover tooltips for fields in infowindow sidebar
               subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
@@ -73,6 +77,28 @@ $('document').ready( function() {
               .error(function(err) {
                 console.log(err);
                });
+            var cities = $('.dropdown-menu a');
+            cities.click(function(e) {
+                var link = e.target;
+                switch (link.text) {
+                    case 'Chicago (Exelon)':
+                        // Mapbox doesn't seem to like this...
+                        map.setView(L.latLng(41.9,-87.7));
+                        break;
+                    case 'Milwaukee':
+                        // mil function goes here
+                        console.log('Milwaukee');
+                        break;
+                    case 'Philadelphia':
+                        // PHI function goes here
+                        console.log('Philadelphia');
+                        break;
+                    case 'Washington, D.C.':
+                        console.log('DC');
+                        break;
+                }
+                console.log(link.text);
+            });
               
               });
   
