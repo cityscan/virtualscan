@@ -35,7 +35,7 @@
 </script>
   <script src="js/l.geosearch.mod.js">
 </script>
-  <script src="js/map.js">
+  <script src="js/map_chicago.js">
 </script>
 </head>
 
@@ -51,13 +51,13 @@
     <div id="cityswitcher">
       <div class="btn-group">
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              New York
+              Chicago
         <span class="caret"></span>
     </a>
 
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="chicago.html">Chicago (Exelon)</a>
+            <a href="/">New York<a>
           </li>
 
           <li>
@@ -109,45 +109,33 @@
 
     <p>Asset Class:
     <ul class="nav nav-tabs nav-stacked">
-    <li data="Awning">
-        <a href="#" class="query asset" title="Awning">Awning</a>
+    <li data="Electricity/Utility Poles">
+        <a href="#" class="query asset" title="Electricity/Utility Poles">Electricity/Utility Poles</a>
     </li>
 
-    <li data="Billboard">
-        <a href="#" class="query asset" title="Billboard">Billboard</a>
+    <li data="Pole Devices">
+        <a href="#" class="query asset" title="Pole Devices">Pole Devices</a>
     </li>
 
-    <li data="Dumpster">
-        <a href="#" class="query asset" title="Dumpster">Dumpster</a>
+    <li data="Manholes and Vaults">
+        <a href="#" class="query asset" title="Manholes and Vaults">Manholes and Vaults</a>
     </li>
 
-    <li data="Fence"> 
-        <a href="#" class="query asset" title="Fence">Fence</a>
+    <li data="Streetlights"> 
+        <a href="#" class="query asset" title="Streetlights">Streetlights</a>
     </li>
 
-    <li data="Scaffolding">
-        <a href="#" class="query asset" title="Scaffolding">Scaffolding</a>
+    <li data="Wire Sag">
+        <a href="#" class="query asset" title="Wire Sag">Wire Sag</a>
     </li>
 
-    <li data="Sidewalk Shed">
-        <a href="#" class="query asset" title="Sidewalk Shed">Sidewalk Shed</a>
+    <li data="Show All">
+        <a href="#" class="query all" id="all" title="All">Show All</a>
     </li>
     </ul></p>
 </div> <!-- asset_classes -->
 
 
-
-<div id="permit_status">
-    <ul class="nav nav-list">
-
-    <li class="divider">.</li>
-</ul>
-    <p>Permit Status:</p>
-    <div class="btn-group">
-        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
-        <a href="#" id="expiredpermit" title="Expired Permit" class="query permit"><button class="btn btn-warning">Expired</a></button>
-        <a style="color: black;" href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
-    </div>
   </div><!-- control -->
 </body>
 </html>
