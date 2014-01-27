@@ -35,7 +35,7 @@
 </script>
   <script src="js/l.geosearch.mod.js">
 </script>
-  <script src="js/map_chicago.js">
+  <script src="js/map_philly.js">
 </script>
 </head>
 
@@ -51,13 +51,13 @@
     <div id="cityswitcher">
       <div class="btn-group">
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              Chicago
+              Philadelphia
         <span class="caret"></span>
     </a>
 
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="./">New York</a>
+            <a href="chicago.html">Chicago (Exelon)</a>
           </li>
 
           <!--
@@ -67,7 +67,7 @@
           -->
 
           <li>
-            <a href="philadelphia.html">Philadelphia</a>
+          <a href="./">New York</a>
           </li>
 
           <li>
@@ -109,35 +109,43 @@
 </ul>
     <div id="asset_classes" >
 
-    <p>Asset Class:
+    <p>Billboard Type:
     <ul class="nav nav-tabs nav-stacked">
-    <li data="Electricity/Utility Poles">
-        <a href="#" class="query asset" title="Electricity/Utility Poles">Electricity/Utility Poles</a>
+    <li data="Bulletin">
+        <a href="#" class="query asset" title="Bulletin">Bulletin</a>
     </li>
 
-    <li data="Pole Devices">
-        <a href="#" class="query asset" title="Pole Devices">Pole Devices</a>
+    <li data="Digital">
+        <a href="#" class="query asset" title="Digital">Digital</a>
     </li>
 
-    <li data="Manholes and Vaults">
-        <a href="#" class="query asset" title="Manholes and Vaults">Manholes and Vaults</a>
+    <li data="Junior Poster">
+        <a href="#" class="query asset" title="Junior Poster">Junior Poster</a>
     </li>
 
-    <li data="Streetlights"> 
-        <a href="#" class="query asset" title="Streetlights">Streetlights</a>
+    <li data="Other"> 
+        <a href="#" class="query asset" title="Other">Other</a>
     </li>
 
-    <li data="Wire Sag">
-        <a href="#" class="query asset" title="Wire Sag">Wire Sag</a>
+    <li data="Walls/Spectacular">
+        <a href="#" class="query asset" title="Walls/Spectacular">Walls/Spectacular</a>
     </li>
 
-    <li data="Show All">
-        <a href="#" class="query all" id="all" title="All">Show All</a>
-    </li>
     </ul></p>
 </div> <!-- asset_classes -->
 
 
+
+<div id="permit_status">
+    <ul class="nav nav-list">
+
+    <li class="divider">.</li>
+</ul>
+    <p>Zoning Violations:</p>
+        <a href="#" id="spacing" title="num_other_within_500ft" class="query permit">500ft Spacing</a>
+        <a href="#" id="res" title="within_300ft_res" class="query permit">Within 300ft of Residential</a>
+        <a href="#" id="res" title="face_rule" class="query permit">Billboard Face Height > 20ft</a>
+        <a href="#" title="All" id="all" class="query all">Show All</a>
   </div><!-- control -->
 </body>
 </html>

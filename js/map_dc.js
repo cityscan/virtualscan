@@ -39,43 +39,33 @@ $('document').ready( function() {
             $a.addClass('selected');
             
 
-            var query = "SELECT * FROM wp_import";
+            var query = "SELECT * FROM demo";
             
             // create query based on data from the layer
             if(title !== 'All' && queryType == 'query asset') {
-              query = "SELECT * FROM wp_import WHERE type = '" + title + "'";
+              query = "SELECT * FROM demo WHERE type = '" + title + "'";
               }
             else if (title != 'All' && queryType == 'query permit') {
-               switch (title) {
-                    case "num_other_within_500ft":
-                        query = "SELECT * FROM wp_import WHERE " + title + " > 0";
-                        break;
-                    case "within_300ft_res":
-                        query = "SELECT * FROM wp_import WHERE " + title;
-                        break;
-                    case "face_rule":
-                        query = "SELECT * FROM wp_import WHERE " + title;
-                        break;
-               }
                         
+                query = "SELECT * FROM demo WHERE violation = '" + title + "'";
             }
               console.log(query);
               layer.setSQL(query);
             });
           }
  
-          cartodb.createVis('map', 'http://cityscan.cartodb.com/api/v2/viz/d08269c0-8789-11e3-b179-0edd25b1ac90/viz.json')
+          cartodb.createVis('map', 'http://cityscan.cartodb.com/api/v2/viz/935fe83e-8792-11e3-b898-0edd25b1ac90/viz.json')
             .done(function(vis, layers) {
               var subLayer = layers[1].getSubLayer(0);
               subLayer.setInteraction(true);
-              subLayer.interactivity = 'id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl';
+              subLayer.interactivity = 'asset_id,type,lat,lon,height_m,violation,address,imageurl';
               createSelector(subLayer);
               map = vis.getNativeMap();
 
               // TODO: add hover tooltips for fields in infowindow sidebar
               subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
                   console.log(data.cartodb_id);
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) { 
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT asset_id,type,lat,lon,height_m,violation,address,imageurl FROM demo WHERE cartodb_id = ' + data.cartodb_id), function(data) { 
                       $('#sidebar').html('');
                       $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].imageurl + '" height="250" width="300"></a>');
                       $.each(data.rows[0], function(key, val) {

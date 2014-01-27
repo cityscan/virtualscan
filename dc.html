@@ -35,7 +35,7 @@
 </script>
   <script src="js/l.geosearch.mod.js">
 </script>
-  <script src="js/map_chicago.js">
+  <script src="js/map_dc.js">
 </script>
 </head>
 
@@ -51,13 +51,13 @@
     <div id="cityswitcher">
       <div class="btn-group">
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              Chicago
+              Washington, D.C.
         <span class="caret"></span>
     </a>
 
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="./">New York</a>
+            <a href="chicago.html">Chicago (Exelon)</a>
           </li>
 
           <!--
@@ -67,11 +67,11 @@
           -->
 
           <li>
-            <a href="philadelphia.html">Philadelphia</a>
+          <a href="./">New York</a>
           </li>
 
           <li>
-            <a href="dc.html">Washington, D.C.</a>
+          <a href="philadelphia.html">Philadelphia</a>
           </li>
         </ul>
       </div>
@@ -111,32 +111,47 @@
 
     <p>Asset Class:
     <ul class="nav nav-tabs nav-stacked">
-    <li data="Electricity/Utility Poles">
-        <a href="#" class="query asset" title="Electricity/Utility Poles">Electricity/Utility Poles</a>
+    <li data="Awning">
+        <a href="#" class="query asset" title="Awning">Awning</a>
     </li>
 
-    <li data="Pole Devices">
-        <a href="#" class="query asset" title="Pole Devices">Pole Devices</a>
+    <li data="Construction">
+        <a href="#" class="query asset" title="Construction">Construction</a>
     </li>
 
-    <li data="Manholes and Vaults">
-        <a href="#" class="query asset" title="Manholes and Vaults">Manholes and Vaults</a>
+    <li data="Dumpster">
+        <a href="#" class="query asset" title="Dumpster">Dumpster</a>
     </li>
 
-    <li data="Streetlights"> 
-        <a href="#" class="query asset" title="Streetlights">Streetlights</a>
+    <li data="Flag"> 
+        <a href="#" class="query asset" title="Flag">Flag</a>
     </li>
 
-    <li data="Wire Sag">
-        <a href="#" class="query asset" title="Wire Sag">Wire Sag</a>
+    <li data="Food Vendor">
+        <a href="#" class="query asset" title="Food Vendor">Food Vendor</a>
     </li>
 
-    <li data="Show All">
-        <a href="#" class="query all" id="all" title="All">Show All</a>
+    <li data="Outdoor Cafe">
+        <a href="#" class="query asset" title="Outdoor Cafe">Outdoor Cafe</a>
     </li>
     </ul></p>
 </div> <!-- asset_classes -->
 
+
+<div id="permit_status">
+    <ul class="nav nav-list">
+
+    <li class="divider">.</li>
+</ul>
+    <p>Permit Status:</p>
+    <div class="btn-group">
+        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
+        <a href="#" id="expiredpermit" title="Work commenced before permit issued" class="query permit"><button class="btn btn-warning">Not yet issued</a></button>
+        <ul class="nav nav-list">
+            <li class="divider">.</li>
+        </ul>
+        <a style="color: black;" href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
+    </div>
 
   </div><!-- control -->
 </body>
