@@ -16,6 +16,13 @@ html, body {
 	width: 100%;
 }
 
+/*
+.leaflet-control-layers {
+    position: absolute;
+    left: 350px;
+    bottom: 25px;
+}
+*/
 #sidebar {
     color: white;
     position: absolute;
@@ -57,6 +64,12 @@ html, body {
     position: absolute;
     top: 70px;
     width: 300px;
+}
+
+.leafleft-right .leaflet-control {
+    position: absolute;
+    top: 16px;
+    right: 16px;
 }
 
 #control {

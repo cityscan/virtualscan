@@ -51,7 +51,68 @@ $('document').ready( function() {
               layer.setSQL(query);
             });
           }
+
+        var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.gkbm3gfn/{z}/{x}/{y}.png');
+        var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');
+        
+        var map = L.map('map', {
+            center: new L.latLng(40.7397, -73.8896),
+            zoom: 14,
+        });
  
+        var baseMaps = {
+            'Satellite': sat,
+            'Road': road
+        };
+
+        L.control.layers(baseMaps).setPosition('bottomleft').addTo(map);
+
+        cartodb.createLayer(map, {
+            user_name: 'cityscan',
+            type: 'cartodb',
+            sublayers: [
+        
+        {
+                sql: "SELECT * FROM nyc",
+                cartocss: "#nyc {marker-fill: blue;}",
+                interactivity: "bin,lat,lon,address,asviolation,height_meters,imageurl,notes,permit_expiration_date,permit_issuance_date,type,width_meters,cartodb_id"
+            }]
+        }).addTo(map)
+            .done(function(layer) {
+                LAY = layer;
+                layer.setZIndex(99);
+                
+                // needed to get cursor to turn to pointer when hovering over clickable map objects
+                cartodb.vis.Vis.addCursorInteraction(map, layer);
+
+                var subLayer = layer.getSubLayer(0);
+                SUB = subLayer;
+              createSelector(subLayer);
+
+              // TODO: add hover tooltips for fields in infowindow sidebar
+              subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT bin,lat,lon,address,asviolation,height_meters,imageurl,notes,permit_expiration_date,permit_issuance_date,type,width_meters FROM nyc WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                      $('#sidebar').html('');
+                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].imageurl + '" height="250" width="300"></a>');
+                      $.each(data.rows[0], function(key, val) {
+                      $('#sidebar').append('<p>' + key + ': ' + val + '</p>');
+                      });
+                    });
+                  // latlng parameter is where the mouse was clicked, not where the marker is
+                  // the more you know...
+              });
+              subLayer.setInteraction(true);
+              subLayer.infowindow.set('template', $('#infowindow_template').html());
+             })
+              .error(function(err) {
+                console.log(err);
+               });
+
+              map.addLayer(sat, {insertAtTheBottom:true});
+              map.addLayer(road, {insertAtTheBottom:true});
+
+
+        /*
           cartodb.createVis('map', 'http://cityscan.cartodb.com/api/v2/viz/3cf649b6-7fa9-11e3-b800-ad11aa07e6f1/viz.json', {
                   zoom: 15
                   })
@@ -77,7 +138,7 @@ $('document').ready( function() {
               .error(function(err) {
                 console.log(err);
                });
-              
+          */    
               });
   
 
