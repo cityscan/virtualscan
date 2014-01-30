@@ -49,6 +49,7 @@ $('document').ready( function() {
                 query = "SELECT * FROM nyc WHERE asviolation = '" + title + "'";
             }
               layer.setSQL(query);
+              console.log(query);
             });
           }
 
@@ -65,7 +66,7 @@ $('document').ready( function() {
             'Road': road
         };
 
-        L.control.layers(baseMaps).setPosition('bottomleft').addTo(map);
+        L.control.layers(baseMaps).setPosition('topleft').addTo(map);
 
         cartodb.createLayer(map, {
             user_name: 'cityscan',
@@ -110,6 +111,8 @@ $('document').ready( function() {
 
               map.addLayer(sat, {insertAtTheBottom:true});
               map.addLayer(road, {insertAtTheBottom:true});
+
+
 
 
         /*

@@ -23,6 +23,12 @@ html, body {
     bottom: 25px;
 }
 */
+
+#showhide {
+    position: absolute;
+    top: 10px;
+    left: 180px;
+}
 #sidebar {
     color: white;
     position: absolute;
@@ -87,8 +93,11 @@ html, body {
      */
 }
 
-#switchbase {
-    text-align: center;
+#download {
+    position:absolute;
+    left: 10px;
+    top: 120px;
+    z-index: 1000;
 }
 
 
