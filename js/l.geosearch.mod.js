@@ -1,9 +1,3 @@
-/*
- * L.GeoSearch - search for an address and zoom to it's location
- * https://github.com/smeijer/leaflet.control.geosearch
- * modified for geoportal use by wboykinm
- */
-
 L.GeoSearch = {};
 L.GeoSearch.Provider = {};
 
