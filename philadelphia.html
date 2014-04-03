@@ -16,7 +16,7 @@
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.js'></script>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.css' rel='stylesheet' />
-    <script src="js/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/mapbox.jquery.js"></script>
 
     <!-- Mapping Libraries -->  
@@ -31,14 +31,28 @@
   <!-- Add Map and SideBar -->
   <div id='map'></div>
   <div id='sidebar'></div>
+  <div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div>
+  <div id='sidebar_imgbox'></div>
 
   <!-- Add Header -->
   <div id='header'>
     <div id='logo'>
-      <a href="http://cityscan.com/"><img src="image/logo_philly.png" width="200" height="30" id="logo"></a>
+      <a href="http://cityscan.com/"><img src="image/logo_main.png" width="156" height="35" id="logo"></a>
       </div>
-    
+    <!--Add CitySwitcher-->
+    <div id="citySwitcher">
+      <div class="btn-group">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Philadelphia <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="chicago.html">Chicago (Exelon)</a></li>
+          <!--<li><a href="#">Milwaukee</a></li>-->
+          <li><a href="index.html">New York </a></li>
+          <li><a href="dc.html">Washington D.C.</a></li>
+        </ul>
+      </div>
+    </div><!--End CitySwitcher -->
     <div id='headerButtons'>
+
       <!--Welcome Button -->
       <span class="bar">|&nbsp</span>
       <span class="aboutButton">
@@ -62,43 +76,61 @@
 
   <!--Add Sub-Header-->
   <div id='subheader'>
-    <!--Add CitySwitcher-->
-    <div id="citySwitcher">
-      <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Philadelphia <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="chicago.html">Chicago (Exelon)</a></li>
-          <!--<li><a href="#">Milwaukee</a></li>-->
-          <li><a href="index.html">New York </a></li>
-          <li><a href="dc.html">Washington D.C.</a></li>
-        </ul>
-      </div>
-    </div><!--End CitySwitcher -->
-
-  <!-- Add Permit Status 
-    <span id="permitStatusLabel">Permit Status:</span>
-    <div id="permit_status">
+    
+  <!-- Add Assets -->
+    <span id="assetLabel">ASSETS</span>
+    <div id="asset_status">
     <div class="btn-group">
-        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
-        <a href="#" id="expiredpermit" title="Expired Permit" class="query permit"><button class="btn btn-warning">Expired</a></button>
-        <a style="color: black;" href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Bulletin">Bulletin</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Digital">Digital</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Junior Poster">Junior Poster</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Other">Other</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Walls/Spectacular">Walls/Spectacular</a></button>
     </div>
     </div>
-  </div>-->
-  </div>
 
-    <!--DownloadSwitcher-->
-    <div id="downloadData">
-      <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a id="downkml" href="#" target="_blank">KML</a></li>
-            <li><a id="downshp" href="#">Shapefile</a></li>
-            <li><a id="downgeojson" href="#">GeoJSON</a></li>
-            <li><a id="downcsv" href="#">CSV</a></li>
-        </ul>
-      </div>
+   <!-- Add Source -->
+    <span id="sourceLabel">SOURCE</span>
+    <div id="source_status">
+    <div class="btn-group">
+        <button type="button" class="btn"><a href="#" class="query asset" title="">LiDAR</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="">Market Records</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="">City Records</a></button>
     </div>
+    </div>
+   
+  <!-- Add Violations -->
+    <span id="violationStatusLabel">ZONING/CONDITION</span>
+    <div id="violation_status">
+    <div class="btn-group">
+        <button type="button" class="btn"><a href="#" class="query permit" title="num_other_within_500ft">500ft Spacing</a></button>
+        <button type="button" class="btn"><a href="#" class="query permit" title="within_300ft_res">Within 300ft of Residential</a></button>
+        <button type="button" class="btn"><a href="#" class="query permit" title="face_rule">Billboard Height>20ft</a></button>
+        <button type="button" class="btn"><a href="#" class="query permit" title="" style="color:orange;weight:bold">No Permit</a></button>
+        <button type="button" class="btn"><a href="#" class="query permit" title="" style="color:red;weight:bold">Expired Permit</a></button>
+
+    </div>
+    </div>
+
+    <!-- Add Show All -->
+    <div id="showall_status">
+    <div class="btn-group">
+        <button type="button" class="btn"><a href="#" class="query all" title="face_rule">DISPLAY ALL</a></button>
+    </div>
+    </div>
+    
+    <!--DownloadSwitcher-->
+      <div id="downloadData">
+        <div class="btn-group">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data <span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+              <li><a id="downkml" href="#" target="_blank">KML</a></li>
+              <li><a id="downshp" href="#">Shapefile</a></li>
+              <li><a id="downgeojson" href="#">GeoJSON</a></li>
+              <li><a id="downcsv" href="#">CSV</a></li>
+          </ul>
+        </div>
+      </div>
 
   <!--About Info Panel -->
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -124,7 +156,11 @@
       </div>
     </div>
     <!-- End of Info Panel -->
+</div>
+    <!-- Legend -->
+    <div id="legend">Legend</div>
 
+    <!-- Deprectate Feature Menu
     <div class="featureMenu">
       <div id="asset_classes" >
         <p>Asset Class
@@ -153,6 +189,8 @@
         </ul>
       </div>
       </div>
+    -->
+
     <!-- Custom Script -->
     <script src="js/script_philly.js"></script>
 
