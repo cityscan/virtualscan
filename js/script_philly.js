@@ -62,7 +62,7 @@ $('document').ready( function() {
     }
 
     //Initialize Map
-    var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.hmglb6fc/{z}/{x}/{y}.png');
+    var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
     var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');   
     var map = L.map('map', {       
        center: new L.latLng(39.965139, -75.181934),
@@ -74,7 +74,7 @@ $('document').ready( function() {
       'Road': road
        };
 
-    L.control.layers(baseMaps).setPosition('topleft').addTo(map);
+    L.control.layers(baseMaps).setPosition('topright').addTo(map);
 
     cartodb.createLayer(map, {
       user_name: 'cityscan',
@@ -83,7 +83,7 @@ $('document').ready( function() {
         {
           sql: "SELECT * FROM wp_import",
           cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #F11810;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #B2DF8A;}[type=\"null\"]{marker-fill: #33A02C;}[type=\"Junior Poster\"]{marker-fill: #FB9A99;}",
-          interactivity: "id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,cartodb_id"
+          interactivity: "id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,source,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,cartodb_id"
         }]
         }).addTo(map)
             .done(function(layer) {
@@ -107,18 +107,20 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height (in):&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Face Count:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Display Permit:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;font-weight:bolder">' + 'CONDITION -</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Hansen License No.:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'License Status:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'License Expiration Date:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'No. within 500ft:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Within 300ft:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Face Rule:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;font-weight:bolder"><em>' + 'This information comes from &nbsp;' +'</em></p>');
              
               // TODO: add hover tooltips for fields in infowindow sidebar
               subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,imageurl_lowres FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,title,route_id,lat,lon,source,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                       $('#sidebar').html('');
-                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].imageurl_lowres + '" height="250" width="300" id="image_sidepanel"></a>');
+                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].imageurl + '" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Title:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].title  +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Operator:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].operator +'</p>');
@@ -128,12 +130,14 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height (in):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Face Count:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].face_count +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Display Permit:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].display_permit +'</p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;font-weight:bolder">' + 'CONDITION -</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Hansen License No.:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].hansen_license_num +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'License Status:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].license_status +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'License Expiration Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].license_expiration_date +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'No. within 500ft:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].num_other_within_500ft +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Within 300ft:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].within_300ft_res +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Face Rule:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].face_rule +'</p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;font-weight:bolder"><em>' + 'This information comes from &nbsp;' + data.rows[0].source +'.</em></p>');
                     });
                   // latlng parameter is where the mouse was clicked, not where the marker is
               });
@@ -199,8 +203,60 @@ $('document').ready( function() {
       });
 
   });
-$("#sidebar_toggle").click(function(){
-  $("#sidebar").toggle("slide");
-  $("#sidebar_imgbox").toggle("slide");
-});
+  
+  //Sidebar Animation   
+  $("#sidebar_toggle").click(function(){
+    $("#sidebar").animate({"left":"-300px"}, "slow");
+    $("#assetLabel").animate({"left":"10px"}, "slow");
+    $("#violationStatusLabel").animate({"left":"10px"}, "slow");
+    $("#asset_status").animate({"left":"65px"}, "slow");
+    $("#violation_status").animate({"left":"145px"}, "slow");
+    $("#sourceLabel").animate({"left":"400px"}, "slow");
+    $("#source_status").animate({"left":"460px"}, "slow");
+    $("#showall_status").animate({"left":"650px"}, "slow");
+    $("#sidebar_toggle").hide();
+    $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
+  });
+
+  $("#sidebar_toggle2").click(function(){
+    $("#sidebar").animate({"left":"0px"}, "slow");
+    $("#assetLabel").animate({"left":"308px"}, "slow");
+    $("#violationStatusLabel").animate({"left":"308px"}, "slow");
+    $("#asset_status").animate({"left":"360px"}, "slow");
+    $("#violation_status").animate({"left":"434px"}, "slow");
+    $("#sourceLabel").animate({"left":"700px"}, "slow");
+    $("#source_status").animate({"left":"753px"}, "slow");
+    $("#showall_status").animate({"left":"955px"}, "slow");
+    $("#sidebar_toggle").show();
+    $("#sidebar_imgbox").animate({"left":"0"}, "slow");
+  });
+
+  $(document).ready(function(){
+      var hidden = $('.leaflet-left .leaflet-control');
+      var hidden2 = $('.leaflet-control-geosearch, .leaflet-control-geosearch ul');
+      $('#sidebar_toggle').click(function(){
+      if (hidden.hasClass('visible')){
+          hidden.animate({"margin-left":"300px"}, "slow").removeClass('visible');
+      } else {
+          hidden.animate({"margin-left":"-300px"}, "slow").addClass('visible');
+      }
+      if (hidden2.hasClass('visible')){
+          hidden2.animate({"left":"280px"}, "slow").removeClass('visible');
+      } else {
+          hidden2.animate({"left":"-280px"}, "slow").addClass('visible');
+      }    
+      });
+      $('#sidebar_toggle2').click(function(){
+      if (hidden.hasClass('visible')){
+          hidden.animate({"margin-left":"0"}, "slow").removeClass('visible');
+      } else {
+          hidden.animate({"margin-left":"-300px"}, "slow").addClass('visible');
+      }
+      if (hidden2.hasClass('visible')){
+          hidden2.animate({"left":"0"}, "slow").removeClass('visible');
+      } else {
+          hidden2.animate({"left":"-300px"}, "slow").addClass('visible');
+      }    
+      });
+  });
 

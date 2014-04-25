@@ -30,14 +30,33 @@
 
   <!-- Add Map and SideBar -->
   <div id='map'></div>
-  <div id='sidebar'></div>
+  <div class="hidden"><div id='sidebar'></div></div>
   <div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div>
+  <a href="#"><div id='sidebar_toggle2'>P<br/>A</br>N</br>E</br>L</br></div></a>
   <div id='sidebar_imgbox'></div>
+
+  <!-- Add Info Window -->
+  <script type="infowindow/html" id="infowindow_template">
+  <div class="cartodb-popup">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-header">
+         <img style="width: 100%" src="http://cartodb.com/assets/logos/logos_full_cartodb_light-5ef5e4ff558f4f8d178ab2c8faa231c1.png"></src>
+       </div>
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+         <h4>City: </h4>
+         <p>{{data.rows[0].title}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
 
   <!-- Add Header -->
   <div id='header'>
     <div id='logo'>
-      <a href="http://cityscan.com/"><img src="image/logo_philly.png" width="156" height="35" id="logo"></a>
+      <a href="http://cityscan.com/"><img src="image/logo_main.png" width="156" height="35" id="logo"></a>
       </div>
     <!--Add CitySwitcher-->
     <div id="citySwitcher">
@@ -93,9 +112,9 @@
     <span id="sourceLabel">SOURCE</span>
     <div id="source_status">
     <div class="btn-group">
-        <button type="button" class="btn"><a href="#" class="query asset" title="">LiDAR</a></button>
-        <button type="button" class="btn"><a href="#" class="query asset" title="">Market Records</a></button>
-        <button type="button" class="btn"><a href="#" class="query asset" title="">City Records</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="">CityScan</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="">&nbsp;Market&nbsp;</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="">&nbsp;&nbsp;&nbsp;City&nbsp;&nbsp;&nbsp;</a></button>
     </div>
     </div>
    
@@ -158,7 +177,7 @@
     <!-- End of Info Panel -->
 </div>
     <!-- Legend -->
-    <div id="legend">Legend</div>
+    <div id="legend">L&nbsp;E&nbsp;G&nbsp;E&nbsp;N&nbsp;D</div>
 
     <!-- Deprectate Feature Menu
     <div class="featureMenu">
