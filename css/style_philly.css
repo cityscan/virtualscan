@@ -215,7 +215,8 @@ strong {
 	width: 330px !important;
 }
 .leaflet-control-geosearch, .leaflet-control-geosearch ul{
-	position: absolute;
+	position: absolute !important;
+	left: 20px;
 }
 .leaflet-control-layers-list {
 	width: 70px !important;
