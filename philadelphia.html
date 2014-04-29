@@ -19,39 +19,24 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/mapbox.jquery.js"></script>
 
-    <!-- Mapping Libraries -->  
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <!-- Mapping Libraries -->
+    <script src="http://libs.cartodb.com/cartodb.js/v3/cartodb.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <script src="js/leaflet-hash.js"></script>
     <script src="js/l.geosearch.mod.js"></script>
   </head>
 
-  <body onload="init()">
+  <body>
 
   <!-- Add Map and SideBar -->
   <div id='map'></div>
-  <div class="hidden"><div id='sidebar'></div></div>
-  <div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div>
-  <a href="#"><div id='sidebar_toggle2'>P<br/>A</br>N</br>E</br>L</br></div></a>
-  <div id='sidebar_imgbox'></div>
+  <div class="hidden"><div id='box'></div></div>
 
-  <!-- Add Info Window -->
-  <script type="infowindow/html" id="infowindow_template">
-  <div class="cartodb-popup">
-    <a href="#close" class="cartodb-popup-close-button close">x</a>
-     <div class="cartodb-popup-content-wrapper">
-       <div class="cartodb-popup-header">
-         <img style="width: 100%" src="http://cartodb.com/assets/logos/logos_full_cartodb_light-5ef5e4ff558f4f8d178ab2c8faa231c1.png"></src>
-       </div>
-       <div class="cartodb-popup-content">
-         <!-- content.data contains the field info -->
-         <h4>City: </h4>
-         <p>{{data.rows[0].title}}</p>
-       </div>
-     </div>
-     <div class="cartodb-popup-tip-container"></div>
-  </div>
-</script>
+  <div class="hidden"><div id='sidebar'></div></div>
+  <a href="#" title="Hide Panel"><div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div></a>
+  <a href="#" title="Show Panel"><div id='sidebar_toggle2'>P<br/>A</br>N</br>E</br>L</br></div></a>
+  <div id='sidebar_imgbox'></div>
+  <a href="#" title="Show Report" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')"><div id="sidebarProfile">R</div></a>
 
   <!-- Add Header -->
   <div id='header'>
