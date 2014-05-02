@@ -54,6 +54,19 @@ $('document').ready( function() {
                         query = "SELECT * FROM wp_import WHERE " + title;
                         break;
                }
+             }
+            else if (title != 'All' && queryType == 'query record') {
+               switch (title) {
+                    case "lidar":
+                        query = "SELECT * FROM wp_import WHERE source ='" + title + "'";
+                        break;
+                    case "city_records":
+                        query = "SELECT * FROM wp_import WHERE source ='" + title + "'";
+                        break;
+                    case "market_records":
+                        query = "SELECT * FROM wp_import WHERE source ='" + title + "'";
+                        break;
+               }
                         
             }
               console.log(query);
@@ -82,7 +95,7 @@ $('document').ready( function() {
       sublayers: [  
         {
           sql: "SELECT * FROM wp_import",
-          cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #F11810;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #B2DF8A;}[type=\"null\"]{marker-fill: #33A02C;}[type=\"Junior Poster\"]{marker-fill: #FB9A99;}",
+          cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #F11810;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #B2DF8A;}[type=\"null\"]{marker-fill: #33A02C;}[type=\"Junior Poster\"]{marker-fill: #FB9A99;}[type=null]{marker-fill: #000000;}",
           interactivity: "id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,source,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,cartodb_id"
         }]
         }).addTo(map)
@@ -233,6 +246,7 @@ $('document').ready( function() {
     $("#source_status").animate({"left":"460px"}, "slow");
     $("#showall_status").animate({"left":"650px"}, "slow");
     $("#sidebar_toggle").animate({"left":"-18px"}, "slow");
+    $("#sidebarProfile").animate({"left":"-18px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
   });
 
@@ -246,6 +260,7 @@ $('document').ready( function() {
     $("#source_status").animate({"left":"753px"}, "slow");
     $("#showall_status").animate({"left":"955px"}, "slow");
     $("#sidebar_toggle").animate({"left":"281px"}, "slow");
+    $("#sidebarProfile").animate({"left":"281px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"0"}, "slow");
   });
 

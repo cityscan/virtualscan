@@ -36,7 +36,7 @@
   <a href="#" title="Hide Panel"><div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div></a>
   <a href="#" title="Show Panel"><div id='sidebar_toggle2'>P<br/>A</br>N</br>E</br>L</br></div></a>
   <div id='sidebar_imgbox'></div>
-  <a href="#" title="Show Report" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')"><div id="sidebarProfile">R</div></a>
+  <a href="#" title="Show Report" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes')"><div id="sidebarProfile"><img src="image/print.png" hspace="1" width="12" height="23" ></div></a>
 
   <!-- Add Header -->
   <div id='header'>
@@ -97,24 +97,26 @@
     <span id="sourceLabel">SOURCE</span>
     <div id="source_status">
     <div class="btn-group">
-        <button type="button" class="btn"><a href="#" class="query asset" title="">CityScan</a></button>
-        <button type="button" class="btn"><a href="#" class="query asset" title="">&nbsp;Market&nbsp;</a></button>
-        <button type="button" class="btn"><a href="#" class="query asset" title="">&nbsp;&nbsp;&nbsp;City&nbsp;&nbsp;&nbsp;</a></button>
+        <button type="button" class="btn"><a href="#" class="query record" title="lidar">CityScan</a></button>
+        <button type="button" class="btn"><a href="#" class="query record" title="market_records">&nbsp;Market&nbsp;</a></button>
+        <button type="button" class="btn"><a href="#" class="query record" title="city_records">&nbsp;&nbsp;&nbsp;City&nbsp;&nbsp;&nbsp;</a></button>
     </div>
     </div>
    
   <!-- Add Violations -->
     <span id="violationStatusLabel">ZONING/CONDITION</span>
     <div id="violation_status">
-    <div class="btn-group">
-        <button type="button" class="btn"><a href="#" class="query permit" title="num_other_within_500ft">500ft Spacing</a></button>
-        <button type="button" class="btn"><a href="#" class="query permit" title="within_300ft_res">Within 300ft of Residential</a></button>
-        <button type="button" class="btn"><a href="#" class="query permit" title="face_rule">Billboard Height>20ft</a></button>
-        <button type="button" class="btn"><a href="#" class="query permit" title="" style="color:orange;weight:bold">No Permit</a></button>
-        <button type="button" class="btn"><a href="#" class="query permit" title="" style="color:red;weight:bold">Expired Permit</a></button>
-
-    </div>
-    </div>
+        <label title="Spacing"> 
+          <input type="checkbox" id="Spacing"><a href="#" class="query permit" title="num_other_within_500ft" style="color:black;weight:bold">&nbsp;500ft Spacing</a></input></label>
+        <label title="Residential">
+          <input type="checkbox" id="Residential"><a href="#" class="query permit" title="within_300ft_res" style="color:black;weight:bold">&nbsp;Within 300ft of Residential</a></input></label>
+        <label title="Height">
+          <input type="checkbox" id="Height"><a href="#" class="query permit" title="face_rule" style="color:black;weight:bold;padding-top:5px">&nbsp;Billboard Height>20ft</a></input></label>
+        <label title="NoPermit">
+          <input type="checkbox" id="NoPermit"><a href="#" class="query permit" title="" style="color:orange;weight:bold">&nbsp;No Permit</a></input></label>
+        <label title="Permit">
+          <input type="checkbox" id="Permit"><a href="#" class="query permit" title="" style="color:red;weight:bold">&nbsp;Expired Permit</a></input></label>
+      </div>
 
     <!-- Add Show All -->
     <div id="showall_status">
