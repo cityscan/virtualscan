@@ -1,5 +1,4 @@
 $('document').ready( function() {
-
         // initialize status to "All"
         // set up event handler to watch for clicking buttons
         // if asset class is clicked, toggle it on and capture type
@@ -150,6 +149,24 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'No. within 500ft:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].num_other_within_500ft +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Within 300ft:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].within_300ft_res +'<span style="color:white;margin-left:37px;font-family:arial"><strong>' + 'Face Rule:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].face_rule +'</span></p>');
                       $('#sidebar').append('<p style="color:white;margin-top: 20px;margin-left:7px;font-family:arial;font-weight:bolder"><em>' + 'This information comes from &nbsp;' + data.rows[0].source +'.</em></p>');
+                      //global variables for report generation
+                      window.image= data.rows[0].imageurl;
+                      window.types= data.rows[0].type;
+                      window.titles= data.rows[0].title;
+                      window.operator= data.rows[0].operator;
+                      window.address= data.rows[0].address;
+                      window.mountType= data.rows[0].mount_type;
+                      window.widths= data.rows[0].width;
+                      window.heights= data.rows[0].height;
+                      window.faceCount= data.rows[0].face_count;
+                      window.displayPermit= data.rows[0].display_permit;
+                      window.licenseNum= data.rows[0].hansen_license_num;
+                      window.licenseStatus= data.rows[0].license_status;
+                      window.expirationDate= data.rows[0].license_expiration_date;
+                      window.within500ft= data.rows[0].num_other_within_500ft;
+                      window.within300ft= data.rows[0].within_300ft_res;
+                      window.faceRule= data.rows[0].face_rule;
+                      window.sources= data.rows[0].source;
                   });
                   // latlng parameter is where the mouse was clicked, not where the marker is
               });
