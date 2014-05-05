@@ -73,6 +73,7 @@ $('document').ready( function() {
     });
     }
 
+
     //Initialize Map
     var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
     var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');   
@@ -88,13 +89,17 @@ $('document').ready( function() {
 
     L.control.layers(baseMaps).setPosition('topright').addTo(map);
 
-    cartodb.createLayer(map, {
+  var sublayerCarto = "\"#wp_import [type=\"Bulletin\"]{marker-fill: #F11810;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #B2DF8A;}[type=\"null\"]{marker-fill: #33A02C;}[type=\"Junior Poster\"]{marker-fill: #FB9A99;}[type=null]{marker-fill: #000000;}\"";
+  console.log(sublayerCarto);
+  
+
+    var myLayer = cartodb.createLayer(map, {
       user_name: 'cityscan',
       type: 'cartodb',
       sublayers: [  
         {
           sql: "SELECT * FROM wp_import",
-          cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #F11810;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #B2DF8A;}[type=\"null\"]{marker-fill: #33A02C;}[type=\"Junior Poster\"]{marker-fill: #FB9A99;}[type=null]{marker-fill: #000000;}",
+          cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #006E98;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #009900;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #F11810;}",
           interactivity: "id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,source,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,cartodb_id"
         }]
         }).addTo(map)
@@ -108,6 +113,46 @@ $('document').ready( function() {
 
                 var subLayer = layer.getSubLayer(0);
                 var infoSubLayer = layer.getSubLayer(0);
+
+                
+              //Change colors of legend
+              $('#legendAsset').click(function () {
+                layer.getSubLayer(0).setCartoCSS('#wp_import [type=\"Bulletin\"]{marker-fill: #006E98;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #009900;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #F11810;}');
+                $( "#legendAssetLabel" ).show();
+                $( "#legendZoningLabel" ).hide();
+                $( "#legendSourceLabel" ).hide();
+                $( "#legendPermitLabel" ).hide();
+              });
+              $('#legendZoning').click(function () {
+                layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #000000;}');
+                $( "#legendAssetLabel" ).hide();
+                $( "#legendZoningLabel" ).show();
+                $( "#legendSourceLabel" ).hide();
+                $( "#legendPermitabel" ).hide();
+              });
+              $('#legendSource').click(function () {
+                layer.getSubLayer(0).setCartoCSS('#wp_import [source=\"city_records\"]{marker-fill: #006E98;}[source=\"lidar\"] {marker-fill: #474747;}[source=\"market_records\"]{marker-fill: #009900;}');
+                $( "#legendAssetLabel" ).hide();
+                $( "#legendZoningLabel" ).hide();
+                $( "#legendSourceLabel" ).show();
+                $( "#legendPermitLabel" ).hide();
+              });
+                  $('#spacingViolation').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #006E98;}[num_other_within_500ft=null]{marker-fill: #F11810;}');
+                  });
+                  $('#residentialViolation').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [within_300ft_res=true]{marker-fill: #006E98;}[within_300ft_res=false]{marker-fill: #F11810;}');
+                  });
+                  $('#heightViolation').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #006E98;}[num_other_within_500ft=null]{marker-fill: #F11810;}');
+                  });
+              $('#legendPermit').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [height_rule=true]{marker-fill: #006E98;}[height_rule=false]{marker-fill: #F11810;}');
+                $( "#legendAssetLabel" ).hide();
+                $( "#legendZoningLabel" ).hide();
+                $( "#legendSourceLabel" ).hide();
+                $( "#legendPermitLabel" ).show();
+              });
 
               createSelector(subLayer);
                       $('#sidebar').html('');
@@ -168,9 +213,9 @@ $('document').ready( function() {
                       window.faceRule= data.rows[0].face_rule;
                       window.sources= data.rows[0].source;
                   });
+
                   // latlng parameter is where the mouse was clicked, not where the marker is
               });
-
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
 
@@ -186,10 +231,11 @@ $('document').ready( function() {
                     var y = pos.y;
               console.log(x,y)
               $('#box').offset({ left: pos.x + 10 , top: pos.y + 70 })
-              
               });
 
-
+              subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
+              $('#box').hide() //need to change this to feature out
+              });
 
               subLayer.setInteraction(true);
 			       })
@@ -259,9 +305,9 @@ $('document').ready( function() {
     $("#violationStatusLabel").animate({"left":"10px"}, "slow");
     $("#asset_status").animate({"left":"65px"}, "slow");
     $("#violation_status").animate({"left":"145px"}, "slow");
-    $("#sourceLabel").animate({"left":"400px"}, "slow");
-    $("#source_status").animate({"left":"460px"}, "slow");
-    $("#showall_status").animate({"left":"650px"}, "slow");
+    $("#sourceLabel").animate({"left":"445px"}, "slow");
+    $("#source_status").animate({"left":"500px"}, "slow");
+    $("#showall_status").animate({"left":"700px"}, "slow");
     $("#sidebar_toggle").animate({"left":"-18px"}, "slow");
     $("#sidebarProfile").animate({"left":"-18px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
@@ -273,9 +319,9 @@ $('document').ready( function() {
     $("#violationStatusLabel").animate({"left":"308px"}, "slow");
     $("#asset_status").animate({"left":"360px"}, "slow");
     $("#violation_status").animate({"left":"434px"}, "slow");
-    $("#sourceLabel").animate({"left":"700px"}, "slow");
-    $("#source_status").animate({"left":"753px"}, "slow");
-    $("#showall_status").animate({"left":"955px"}, "slow");
+    $("#sourceLabel").animate({"left":"740px"}, "slow");
+    $("#source_status").animate({"left":"800px"}, "slow");
+    $("#showall_status").animate({"left":"1000px"}, "slow");
     $("#sidebar_toggle").animate({"left":"281px"}, "slow");
     $("#sidebarProfile").animate({"left":"281px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"0"}, "slow");
@@ -310,3 +356,15 @@ $('document').ready( function() {
       });
   });
 
+  //Legend Animation
+  $("#legendBigClose").click(function(){
+    $("#legendBig").animate({"bottom":"-165px"}, "slow");
+    $("#legendBigClose").animate({"bottom":"-36px"}, "slow");
+  });
+
+  $("#legend").click(function(){
+    $("#legendBig").animate({"bottom":"0px"}, "slow");
+    $("#legendBigClose").animate({"bottom":"143px"}, "slow");
+  });
+  //Button toggle for legend and other radio buttons
+  $('.btn-group').button();
