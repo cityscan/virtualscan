@@ -80,6 +80,8 @@ $('document').ready( function() {
     var map = L.map('map', {       
        center: new L.latLng(39.965139, -75.181934),
        zoom: 12,
+       minZoom: 12,
+       maxZoom: 17
       });
  
     var baseMaps = {
@@ -138,16 +140,16 @@ $('document').ready( function() {
                 $( "#legendPermitLabel" ).hide();
               });
                   $('#spacingViolation').click(function () {
-                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #006E98;}[num_other_within_500ft=null]{marker-fill: #F11810;}');
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #F11810;}[num_other_within_500ft=null]{marker-fill: #006E98;}');
                   });
                   $('#residentialViolation').click(function () {
-                    layer.getSubLayer(0).setCartoCSS('#wp_import [within_300ft_res=true]{marker-fill: #006E98;}[within_300ft_res=false]{marker-fill: #F11810;}');
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [within_300ft_res=true]{marker-fill: #F11810;}[within_300ft_res=false]{marker-fill: #006E98;}');
                   });
                   $('#heightViolation').click(function () {
-                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #006E98;}[num_other_within_500ft=null]{marker-fill: #F11810;}');
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #F11810;}[num_other_within_500ft=null]{marker-fill: #006E98;}');
                   });
               $('#legendPermit').click(function () {
-                    layer.getSubLayer(0).setCartoCSS('#wp_import [height_rule=true]{marker-fill: #006E98;}[height_rule=false]{marker-fill: #F11810;}');
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [height_rule=true]{marker-fill: #F11810;}[height_rule=false]{marker-fill: #006E98;}');
                 $( "#legendAssetLabel" ).hide();
                 $( "#legendZoningLabel" ).hide();
                 $( "#legendSourceLabel" ).hide();
@@ -368,3 +370,33 @@ $('document').ready( function() {
   });
   //Button toggle for legend and other radio buttons
   $('.btn-group').button();
+
+  //toggling classes for ui buttons 
+  $("#showall_status").click(function() {
+    var bulletin_button = $("#bulletin_button");
+    bulletin_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var digital_button = $("#digital_button");
+    digital_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var junior_button = $("#junior_button");
+    junior_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var other_button = $("#other_button");
+    other_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var walls_button = $("#walls_button");
+    walls_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var cityscan_button = $("#cityscan_button");
+    cityscan_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var city_button = $("#city_button");
+    city_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var market_button = $("#market_button");
+    market_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var spacing_button = $("#spacing_button");
+    spacing_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var residential_button = $("#residential_button");
+    residential_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var height_button = $("#height_button");
+    height_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var nopermit_button = $("#nopermit_button");
+    nopermit_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var expired_button = $("#expired_button");
+    expired_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    });

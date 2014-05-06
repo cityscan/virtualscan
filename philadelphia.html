@@ -117,11 +117,11 @@
     <span id="assetLabel">ASSETS</span>
     <div id="asset_status">
           <div class="btn-group" data-toggle="buttons-radio">
-              <button type="button" class="btn btn-primary"><a href="#" class="query asset" title="Bulletin" style="color:white">Bulletin</a></button>
-              <button type="button" class="btn btn-primary"><a href="#" class="query asset" title="Digital" style="color:white">Digital</a></button>
-              <button type="button" class="btn btn-primary"><a href="#" class="query asset" title="Junior Poster" style="color:white">Junior Poster</a></button>
-              <button type="button" class="btn btn-primary"><a href="#" class="query asset" title="Other" style="color:white">Other</a></button>
-              <button type="button" class="btn btn-primary"><a href="#" class="query asset" title="Walls/Spectacular" style="color:white">Walls/Spectacular</a></button>
+              <button type="button" class="btn btn-primary" id="bulletin_button"><a href="#" class="query asset" title="Bulletin" style="color:white">Bulletin</a></button>
+              <button type="button" class="btn btn-primary" id="digital_button"><a href="#" class="query asset" title="Digital" style="color:white">Digital</a></button>
+              <button type="button" class="btn btn-primary" id="junior_button"><a href="#" class="query asset" title="Junior Poster" style="color:white">Junior Poster</a></button>
+              <button type="button" class="btn btn-primary" id="other_button"><a href="#" class="query asset" title="Other" style="color:white">Other</a></button>
+              <button type="button" class="btn btn-primary" id="walls_button"><a href="#" class="query asset" title="Walls/Spectacular" style="color:white">Walls/Spectacular</a></button>
           </div>
       <!--
       <div class="btn-group">
@@ -138,9 +138,9 @@
     <span id="sourceLabel">SOURCE</span>
     <div id="source_status">
           <div class="btn-group" data-toggle="buttons-radio">
-              <button type="button" class="btn btn-primary"><a href="#" class="query record" title="lidar" style="color:white">&nbsp;CityScan</a></button>
-              <button type="button" class="btn btn-primary"><a href="#" class="query record" title="market_records" style="color:white">&nbsp;Market</a></button>
-              <button type="button" class="btn btn-primary"><a href="#" class="query record" title="city_records" style="color:white">&nbsp;City<a></button>
+              <button type="button" class="btn btn-primary" id="cityscan_button"><a href="#" class="query record" title="lidar" style="color:white">&nbsp;CityScan</a></button>
+              <button type="button" class="btn btn-primary" id="market_button"><a href="#" class="query record" title="market_records" style="color:white">&nbsp;Market</a></button>
+              <button type="button" class="btn btn-primary" id="city_button"><a href="#" class="query record" title="city_records" style="color:white">&nbsp;City<a></button>
           </div>
       <!--
       <div class="btn-group">
@@ -155,11 +155,11 @@
     <span id="violationStatusLabel">ZONING/CONDITION</span>
         <div id="violation_status">
           <div class="btn-group" data-toggle="buttons-checbox">
-              <button type="button" class="btn btn-primary" id="Spacing" title="num_other_within_500ft"><a href="#" class="query permit" title="num_other_within_500ft" style="color:white">&nbsp;500ft Spacing</a></button>
-              <button type="button" class="btn btn-primary" id="Residential" title="within_300ft_res"><a href="#" class="query permit" title="within_300ft_res" style="color:white">&nbsp;Within 300ft of Residential</a></button>
-              <button type="button" class="btn btn-primary" id="Height" title="Height"><a href="#" class="query permit" title="face_rule" style="color:white">&nbsp;Billboard Height>20ft</a></button>
-              <button type="button" class="btn btn-primary" id="NoPermit" title="face_rule"><a href="#" class="query permit" title="" style="color:white">&nbsp;No Permit</a></button>
-              <button type="button" class="btn btn-primary" id="Permit" title="Permit"><a href="#" class="query permit" title="" style="color:white">&nbsp;Expired Permit</a></button>
+              <button type="button" class="btn btn-primary" id="spacing_button" title="num_other_within_500ft"><a href="#" class="query permit" title="num_other_within_500ft" style="color:white">&nbsp;500ft Spacing</a></button>
+              <button type="button" class="btn btn-primary" id="residential_button" title="within_300ft_res"><a href="#" class="query permit" title="within_300ft_res" style="color:white">&nbsp;Within 300ft of Residential</a></button>
+              <button type="button" class="btn btn-primary" id="height_button" title="Height"><a href="#" class="query permit" title="face_rule" style="color:white">&nbsp;Billboard Height>20ft</a></button>
+              <button type="button" class="btn btn-primary" id="nopermit_button" title="face_rule"><a href="#" class="query permit" title="" style="color:white">&nbsp;No Permit</a></button>
+              <button type="button" class="btn btn-primary" id="expired_button" title="Permit"><a href="#" class="query permit" title="" style="color:white">&nbsp;Expired Permit</a></button>
           </div>
         <!--
         <label title="Spacing"> 
@@ -178,7 +178,7 @@
     <!-- Add Show All -->
     <div id="showall_status">
     <div class="btn-group">
-        <button type="button" class="btn"><a href="#" class="query all" title="face_rule">DISPLAY ALL</a></button>
+        <button type="button" class="btn"><a href="#" class="query all" title="Display All Features">DISPLAY ALL</a></button>
     </div>
     </div>
     
@@ -240,7 +240,7 @@
           <li><a style='background:#009900;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
         </ul>
         <div id="legendZoningLabel">
-        <p id="violationLegendLabel">Select Zoning Violation (<span style="color:#006E98">Yes</span> or <span style="color:red">No</span>)</p>
+        <p id="violationLegendLabel">Select Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#006E98">No</span>)</p>
             <div class="btn-group" data-toggle="buttons-radio">
               <button type="button" class="btn btn-primary" id="spacingViolation" style="width:170px">500ft Spacing</button><br />
               <button type="button" class="btn btn-primary" id="residentialViolation" style="width:170px">Within 300ft of Residential</button><br />
