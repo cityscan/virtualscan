@@ -217,25 +217,25 @@ $('document').ready( function() {
                   // latlng parameter is where the mouse was clicked, not where the marker is
               });
 
-              subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-
+           subLayer.on('featureOver', function(e, latlng, pos, data) {
                 var content = $('#box');
+              $('#box').show();
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,title,route_id,lat,lon,source,altimeter,imageurl_lowres,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                       $('#box').html('');
                       $('#box').append('<span id="boxTitle">' + 'Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
                       $('#box').append('<span id="boxTitle">' + 'Title:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].title +'</span><br/>');  
                       $('#box').append('<span id="boxTitle">' + 'Operator:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].operator +'</span>');     
                   });
+                  window.xcoord = pos.x;
+                  window.ycoord = pos.y;
                     var containerObj =  content.position();
-                    var x = pos.x;
-                    var y = pos.y;
-              console.log(x,y)
-              $('#box').offset({ left: pos.x + 10 , top: pos.y + 70 })
-              });
-
-              subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
-              $('#box').hide() //need to change this to feature out
-              });
+                    $('#box').offset({ left: xcoord + 10 , top: ycoord + 70 })
+             console.log("featureOver");
+           });
+           subLayer.on('featureOut', function(e, latlng, pos, data) {
+              $('#box').hide()
+             console.log("featureOut");
+           });
 
               subLayer.setInteraction(true);
 			       })
