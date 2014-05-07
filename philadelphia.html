@@ -21,7 +21,6 @@
     <!-- Mapping Libraries -->
     <script src="http://libs.cartodb.com/cartodb.js/v3/cartodb.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <script src="js/leaflet-hash.js"></script>
     <script src="js/l.geosearch.mod.js"></script>
   </head>
 
@@ -65,7 +64,10 @@
 
   <div class="hidden"><div id='sidebar'></div></div>
   <a href="#" title="Hide Panel"><div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div></a>
-  <a href="#" title="Show Panel"><div id='sidebar_toggle2'>P<br/>A</br>N</br>E</br>L</br></div></a>
+  <a href="#" title="Show Panel">
+    <div id='sidebar_toggle2'>P<br/>A</br>N</br>E</br>L</br></div>
+    <div id='sidebar_toggle3'><img src="image/arrow4.png" hspace="3" width="6" height="10" id="arrow"></div>
+  </a>
   <div id='sidebar_imgbox'></div>
   <a href="#" title="Show Report" onclick="wins()"><div id="sidebarProfile"><img src="image/print.png" hspace="1" width="12" height="23" ></div></a>
 
@@ -151,7 +153,7 @@
       -->
     </div>
    
-  <!-- Add Violations -->
+  <!-- Add Violations 
     <span id="violationStatusLabel">ZONING/CONDITION</span>
         <div id="violation_status">
           <div class="btn-group" data-toggle="buttons-checbox">
@@ -160,7 +162,7 @@
               <button type="button" class="btn btn-primary" id="height_button" title="Height"><a href="#" class="query permit" title="face_rule" style="color:white">&nbsp;Billboard Height>20ft</a></button>
               <button type="button" class="btn btn-primary" id="nopermit_button" title="face_rule"><a href="#" class="query permit" title="" style="color:white">&nbsp;No Permit</a></button>
               <button type="button" class="btn btn-primary" id="expired_button" title="Permit"><a href="#" class="query permit" title="" style="color:white">&nbsp;Expired Permit</a></button>
-          </div>
+          </div>-->
         <!--
         <label title="Spacing"> 
           <input type="checkbox" id="Spacing"><a href="#" class="query permit" title="num_other_within_500ft" style="color:black;weight:bold">&nbsp;500ft Spacing</a></input></label>
@@ -203,16 +205,16 @@
       </div>
 
       <div class="modal-body">
-        <p><a href="http://cityscan.com/">CityScan</a> is a venture-backed company that inspects, observes and predict street-level activity to discover street-level conditions and proactively help respond to changes that impact your city. CityScan is headquartered in Chicago, Illinois and has raised significant funding from both institutional venture and angel investors.</p>
+        <p id="aboutPage"><a href="http://cityscan.com/">CityScan</a> is a venture-backed company that inspects, observes and predict street-level activity to discover street-level conditions and proactively help respond to changes that impact your city. CityScan is headquartered in Chicago, Illinois and has raised significant funding from both institutional venture and angel investors.</p>
         <hr>
-        <p><strong>Legend</strong></p>
+        <!--<p><strong>Legend</strong></p>
         <ul class="unstyled">
           <li><a style='background:#F11810;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
           <li><a style='background:#3B007F;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
           <li><a style='background:#B2DF8A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
           <li><a style='background:#33A02C;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
           <li><a style='background:#FB9A99;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Junior Poster</li>
-        </ul>
+        </ul>-->
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -221,11 +223,11 @@
     <!-- End of Info Panel -->
 </div>
 
-    <!-- Legend -->
-    <a href="#" title="Show Legend"><div id="legend">L&nbsp;E&nbsp;G&nbsp;E&nbsp;N&nbsp;D</div></a>
-    <a href="#" title="Hide Legend"><div id='legendBigClose'><img src="image/arrow3.png" hspace="6" width="11" height="6" id="arrow"></div></a>
+    <!-- Filter -->
+    <a href="#" title="Show Filter"><div id="legend">F&nbsp;I&nbsp;L&nbsp;T&nbsp;E&nbsp;R</div></a>
+    <a href="#" title="Hide Filter"><div id='legendBigClose'><img src="image/arrow3.png" hspace="6" width="11" height="6" id="arrow"></div></a>
     <div id="legendBig">
-      <span style="font-weight:bolder;color:black">VIEW LEGEND BY</span>
+      <span style="font-weight:bolder;color:black">VIEW FILTER BY</span>
       <div class="btn-group" data-toggle="buttons-radio">
         <button type="button" class="btn btn-primary" id="legendAsset">Asset</button>
         <button type="button" class="btn btn-primary" id="legendZoning">Zoning</button>
@@ -233,11 +235,11 @@
         <button type="button" class="btn btn-primary" id="legendPermit">Permit</button>
       </div>
         <ul class="unstyled" style="padding-top:7px" id="legendAssetLabel">
-          <li><a style='background:#006E98;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
-          <li><a style='background:#3B007F;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
-          <li><a style='background:#F11810;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Junior Poster</li>
-          <li><a style='background:#474747;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
-          <li><a style='background:#009900;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
+          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
+          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Junior Poster</li>
+          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
+          <li><a style='background:#88F71A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
         </ul>
         <div id="legendZoningLabel">
         <p id="violationLegendLabel">Select Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#006E98">No</span>)</p>
@@ -248,13 +250,13 @@
             </div>
         </div>
         <ul class="unstyled" style="padding-top:7px" id="legendSourceLabel">
-          <li><a style='background:#006E98;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;City Records</li>
-          <li><a style='background:#474747;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;CityScan (lidar)</li>
-          <li><a style='background:#009900;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Market Records</li>
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;City Records</li>
+          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;CityScan (lidar)</li>
+          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Market Records</li>
         </ul>
         <ul class="unstyled" style="padding-top:7px" id="legendPermitLabel">
-          <li><a style='background:#006E98;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;With Permit</li>
-          <li><a style='background:#F11810;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Without/Expired Permit</li>
+          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;With Permit</li>
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Without/Expired Permit</li>
         </ul>
     </div>
 

@@ -103,7 +103,7 @@ html, body {
 	right: 5px;
 	padding-bottom: 5px;
 	padding-left: 2px;
-	background-color: white;
+	background-color: black;
 	border-color: black;
 	border-width: 1px;
 	border-style: solid;
@@ -168,7 +168,7 @@ a:hover{
 /* SubHeader Framework*/
 #subheader {
 	position: absolute;
-	height: 62px;
+	height: 34px;
 	width: 100%;
 	top: 37px;
 	background-color: #F2F2F2;
@@ -234,14 +234,14 @@ a:hover{
 }
 #showall_status {
 	position: absolute;
-	top: 5px;
+	top: 42px;
 	left: 1000px;
 	z-index: 20;
 	font-size: 12px;
 }
 #downloadData {
 	position: absolute;
-	top: 5px;
+	top: 40px;
 	right: 7px;
 	z-index: 20;
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
@@ -286,7 +286,7 @@ a:hover {text-decoration:none;}
 #map {
 	width: 100%;
 	position: absolute;
-	top: 99px;
+	top: 68px;
 	bottom: 0px;
 	background: black;
 	z-index: 2;
@@ -445,7 +445,7 @@ a:hover {text-decoration:none;}
 }
 #sidebar_toggle2{
 	position: absolute;
-	top: 210px;
+	top: 180px;
 	left: 0px;
 	color: white;
 	background-color: black;
@@ -462,15 +462,32 @@ a:hover {text-decoration:none;}
 	padding-left: 10px;
 	z-index: 2;
 }
+#sidebar_toggle3{
+	position: absolute;
+	top: 290px;
+	left: 0px;
+	background-color: white;
+	border-color: white;
+	border-width: 1px;
+	border-style: solid;
+	height: 25px;
+	width: 20px;
+	padding-top: 3px;
+	padding-left: 8px;
+	z-index: 2;
+}
 #violation_status label{
-float:left;
-padding-left: 5px;
-font-family: arial;
-font-size: 11px;
-height: 11px; 
-line-height: 11px;
+	float:left;
+	padding-left: 5px;
+	font-family: arial;
+	font-size: 11px;
+	height: 11px; 
+	line-height: 11px;
 }
 #Spacing #Residential #Height{
-font-color: black;
-padding-top: 3px;
+	font-color: black;
+	padding-top: 3px;
+}
+#aboutPage{
+	line-height: 16px;
 }

@@ -90,18 +90,13 @@ $('document').ready( function() {
        };
 
     L.control.layers(baseMaps).setPosition('topright').addTo(map);
-
-  var sublayerCarto = "\"#wp_import [type=\"Bulletin\"]{marker-fill: #F11810;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #B2DF8A;}[type=\"null\"]{marker-fill: #33A02C;}[type=\"Junior Poster\"]{marker-fill: #FB9A99;}[type=null]{marker-fill: #000000;}\"";
-  console.log(sublayerCarto);
-  
-
     var myLayer = cartodb.createLayer(map, {
       user_name: 'cityscan',
       type: 'cartodb',
       sublayers: [  
         {
           sql: "SELECT * FROM wp_import",
-          cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #006E98;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #009900;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #F11810;}",
+          cartocss: "#wp_import {marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}",
           interactivity: "id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,source,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,cartodb_id"
         }]
         }).addTo(map)
@@ -119,7 +114,7 @@ $('document').ready( function() {
                 
               //Change colors of legend
               $('#legendAsset').click(function () {
-                layer.getSubLayer(0).setCartoCSS('#wp_import [type=\"Bulletin\"]{marker-fill: #006E98;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #009900;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #F11810;}');
+                layer.getSubLayer(0).setCartoCSS('#wp_import [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}');
                 $( "#legendAssetLabel" ).show();
                 $( "#legendZoningLabel" ).hide();
                 $( "#legendSourceLabel" ).hide();
@@ -133,7 +128,7 @@ $('document').ready( function() {
                 $( "#legendPermitabel" ).hide();
               });
               $('#legendSource').click(function () {
-                layer.getSubLayer(0).setCartoCSS('#wp_import [source=\"city_records\"]{marker-fill: #006E98;}[source=\"lidar\"] {marker-fill: #474747;}[source=\"market_records\"]{marker-fill: #009900;}');
+                layer.getSubLayer(0).setCartoCSS('#wp_import [source=\"city_records\"]{marker-fill: #D7162D;}[source=\"lidar\"] {marker-fill: #F79D00;}[source=\"market_records\"]{marker-fill: #4B25EE;}');
                 $( "#legendAssetLabel" ).hide();
                 $( "#legendZoningLabel" ).hide();
                 $( "#legendSourceLabel" ).show();
@@ -149,7 +144,7 @@ $('document').ready( function() {
                     layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #F11810;}[num_other_within_500ft=null]{marker-fill: #006E98;}');
                   });
               $('#legendPermit').click(function () {
-                    layer.getSubLayer(0).setCartoCSS('#wp_import [height_rule=true]{marker-fill: #F11810;}[height_rule=false]{marker-fill: #006E98;}');
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [height_rule=true]{marker-fill: #16D7CB;}[height_rule=false]{marker-fill: #D7162D;}');
                 $( "#legendAssetLabel" ).hide();
                 $( "#legendZoningLabel" ).hide();
                 $( "#legendSourceLabel" ).hide();
@@ -329,6 +324,20 @@ $('document').ready( function() {
     $("#sidebar_imgbox").animate({"left":"0"}, "slow");
   });
 
+  $("#sidebar_toggle3").click(function(){
+    $("#sidebar").animate({"left":"0px"}, "slow");
+    $("#assetLabel").animate({"left":"308px"}, "slow");
+    $("#violationStatusLabel").animate({"left":"308px"}, "slow");
+    $("#asset_status").animate({"left":"360px"}, "slow");
+    $("#violation_status").animate({"left":"434px"}, "slow");
+    $("#sourceLabel").animate({"left":"740px"}, "slow");
+    $("#source_status").animate({"left":"800px"}, "slow");
+    $("#showall_status").animate({"left":"1000px"}, "slow");
+    $("#sidebar_toggle").animate({"left":"281px"}, "slow");
+    $("#sidebarProfile").animate({"left":"281px"}, "slow");
+    $("#sidebar_imgbox").animate({"left":"0"}, "slow");
+  });
+
   $(document).ready(function(){
       var hidden = $('.leaflet-left .leaflet-control');
       var hidden2 = $('.leaflet-control-geosearch, .leaflet-control-geosearch ul');
@@ -345,6 +354,18 @@ $('document').ready( function() {
       }    
       });
       $('#sidebar_toggle2').click(function(){
+      if (hidden.hasClass('visible')){
+          hidden.animate({"margin-left":"0"}, "slow").removeClass('visible');
+      } else {
+          hidden.animate({"margin-left":"-300px"}, "slow").addClass('visible');
+      }
+      if (hidden2.hasClass('visible')){
+          hidden2.animate({"left":"0"}, "slow").removeClass('visible');
+      } else {
+          hidden2.animate({"left":"-300px"}, "slow").addClass('visible');
+      }    
+      });
+      $('#sidebar_toggle3').click(function(){
       if (hidden.hasClass('visible')){
           hidden.animate({"margin-left":"0"}, "slow").removeClass('visible');
       } else {
