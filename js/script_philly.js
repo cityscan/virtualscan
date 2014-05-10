@@ -96,8 +96,8 @@ $('document').ready( function() {
       sublayers: [  
         {
           sql: "SELECT * FROM wp_import",
-          cartocss: "#wp_import {marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}",
-          interactivity: "id,title,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,source,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,cartodb_id"
+          cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}",
+          interactivity: "id,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,cartodb_id,thumbnail,num_violations"
         }]
         }).addTo(map)
 
@@ -172,12 +172,11 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-top: 20px;margin-left:7px;font-family:arial;font-weight:bolder"><em>' + 'This information comes from &nbsp;' +'</em></p>');
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,title,route_id,lat,lon,source,altimeter,imageurl_lowres,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,route_id,lat,lon,altimeter,thumbnail,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                       $('#sidebar').html('');
-                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].imageurl_lowres + '" height="250" width="300" id="image_sidepanel"></a>');
+                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].thumbnail + '" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Title:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].title  +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Operator:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].operator +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Address:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].address +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Mount Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].mount_type +'</p>');
@@ -194,7 +193,6 @@ $('document').ready( function() {
                       //global variables for report generation
                       window.image= data.rows[0].imageurl;
                       window.types= data.rows[0].type;
-                      window.titles= data.rows[0].title;
                       window.operator= data.rows[0].operator;
                       window.address= data.rows[0].address;
                       window.mountType= data.rows[0].mount_type;
@@ -217,10 +215,9 @@ $('document').ready( function() {
            subLayer.on('featureOver', function(e, latlng, pos, data) {
                 var content = $('#box');
               $('#box').show();
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,title,route_id,lat,lon,source,altimeter,imageurl_lowres,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT id,route_id,lat,lon,altimeter,thumbnail,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,face_rule,imageurl,num_violations FROM wp_import WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                       $('#box').html('');
                       $('#box').append('<span id="boxTitle">' + 'Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
-                      $('#box').append('<span id="boxTitle">' + 'Title:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].title +'</span><br/>');  
                       $('#box').append('<span id="boxTitle">' + 'Operator:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].operator +'</span>');     
                   });
                   window.xcoord = pos.x;
@@ -296,7 +293,7 @@ $('document').ready( function() {
   });
   
   //Sidebar Animation   
-  $("#sidebar_toggle").click(function(){
+  $("#sidebar_toggle").toggle(function(){
     $("#sidebar").animate({"left":"-300px"}, "slow");
     $("#assetLabel").animate({"left":"10px"}, "slow");
     $("#violationStatusLabel").animate({"left":"10px"}, "slow");
@@ -304,13 +301,12 @@ $('document').ready( function() {
     $("#violation_status").animate({"left":"145px"}, "slow");
     $("#sourceLabel").animate({"left":"445px"}, "slow");
     $("#source_status").animate({"left":"500px"}, "slow");
-    $("#showall_status").animate({"left":"700px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"-18px"}, "slow");
-    $("#sidebarProfile").animate({"left":"-18px"}, "slow");
+    $("#sidebarProfile").animate({"left":"-70px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
-  });
-
-  $("#sidebar_toggle2").click(function(){
+    $("#sidebar_toggle").animate({"left":"0px"}, "slow");
+    $('.leaflet-left .leaflet-control').animate({"margin-left":"-290px"}, "slow");
+    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"-300px"}, "slow");
+  },function(){
     $("#sidebar").animate({"left":"0px"}, "slow");
     $("#assetLabel").animate({"left":"308px"}, "slow");
     $("#violationStatusLabel").animate({"left":"308px"}, "slow");
@@ -318,77 +314,21 @@ $('document').ready( function() {
     $("#violation_status").animate({"left":"434px"}, "slow");
     $("#sourceLabel").animate({"left":"740px"}, "slow");
     $("#source_status").animate({"left":"800px"}, "slow");
-    $("#showall_status").animate({"left":"1000px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"281px"}, "slow");
-    $("#sidebarProfile").animate({"left":"281px"}, "slow");
-    $("#sidebar_imgbox").animate({"left":"0"}, "slow");
-  });
-
-  $("#sidebar_toggle3").click(function(){
-    $("#sidebar").animate({"left":"0px"}, "slow");
-    $("#assetLabel").animate({"left":"308px"}, "slow");
-    $("#violationStatusLabel").animate({"left":"308px"}, "slow");
-    $("#asset_status").animate({"left":"360px"}, "slow");
-    $("#violation_status").animate({"left":"434px"}, "slow");
-    $("#sourceLabel").animate({"left":"740px"}, "slow");
-    $("#source_status").animate({"left":"800px"}, "slow");
-    $("#showall_status").animate({"left":"1000px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"281px"}, "slow");
-    $("#sidebarProfile").animate({"left":"281px"}, "slow");
-    $("#sidebar_imgbox").animate({"left":"0"}, "slow");
-  });
-
-  $(document).ready(function(){
-      var hidden = $('.leaflet-left .leaflet-control');
-      var hidden2 = $('.leaflet-control-geosearch, .leaflet-control-geosearch ul');
-      $('#sidebar_toggle').click(function(){
-      if (hidden.hasClass('visible')){
-          hidden.animate({"margin-left":"300px"}, "slow").removeClass('visible');
-      } else {
-          hidden.animate({"margin-left":"-301px"}, "slow").addClass('visible');
-      }
-      if (hidden2.hasClass('visible')){
-          hidden2.animate({"left":"280px"}, "slow").removeClass('visible');
-      } else {
-          hidden2.animate({"left":"-300px"}, "slow").addClass('visible');
-      }    
-      });
-      $('#sidebar_toggle2').click(function(){
-      if (hidden.hasClass('visible')){
-          hidden.animate({"margin-left":"0"}, "slow").removeClass('visible');
-      } else {
-          hidden.animate({"margin-left":"-300px"}, "slow").addClass('visible');
-      }
-      if (hidden2.hasClass('visible')){
-          hidden2.animate({"left":"0"}, "slow").removeClass('visible');
-      } else {
-          hidden2.animate({"left":"-300px"}, "slow").addClass('visible');
-      }    
-      });
-      $('#sidebar_toggle3').click(function(){
-      if (hidden.hasClass('visible')){
-          hidden.animate({"margin-left":"0"}, "slow").removeClass('visible');
-      } else {
-          hidden.animate({"margin-left":"-300px"}, "slow").addClass('visible');
-      }
-      if (hidden2.hasClass('visible')){
-          hidden2.animate({"left":"0"}, "slow").removeClass('visible');
-      } else {
-          hidden2.animate({"left":"-300px"}, "slow").addClass('visible');
-      }    
-      });
+    $("#sidebar_toggle").animate({"left":"300px"}, "slow");
+    $("#sidebarProfile").animate({"left":"230px"}, "slow");
+    $('.leaflet-left .leaflet-control').animate({"margin-left":"10px"}, "slow");
+    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"0px"}, "slow");
   });
 
   //Legend Animation
-  $("#legendBigClose").click(function(){
-    $("#legendBig").animate({"bottom":"-165px"}, "slow");
-    $("#legendBigClose").animate({"bottom":"-36px"}, "slow");
+  $("#control").toggle(function(){
+    $("#control").animate({"bottom":"160px"}, "slow");
+    $("#controlBig").animate({"bottom":"0px"}, "slow");
+  },function(){
+    $("#control").animate({"bottom":"0px"}, "slow");
+    $("#controlBig").animate({"bottom":"-160px"}, "slow");
   });
 
-  $("#legend").click(function(){
-    $("#legendBig").animate({"bottom":"0px"}, "slow");
-    $("#legendBigClose").animate({"bottom":"143px"}, "slow");
-  });
   //Button toggle for legend and other radio buttons
   $('.btn-group').button();
 
