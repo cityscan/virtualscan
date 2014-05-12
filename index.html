@@ -29,9 +29,15 @@
   <body onload="init()">
 
   <!-- Add Map and SideBar -->
-  <div id='map'></div>
-  <div id='sidebar'></div>
-  <div id='sidepanel_toggle'></div>
+  <div id="map"></div>
+  <div class="hidden"><div id='box'></div></div>
+
+  <div class="hidden"><div id='sidebar'></div></div>
+  <!--<a href="#" title="Hide Panel"><div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div></a>-->
+  <a href="#" title="Show Panel">
+    <div id='sidebar_toggle'>P<br/>A</br>N</br>E</br>L</br></div>
+  </a>
+  <div id='sidebar_imgbox'></div>
 
   <!-- Add Header -->
   <div id='header'>

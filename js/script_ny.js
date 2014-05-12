@@ -167,5 +167,33 @@ $('document').ready( function() {
     var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20nyc%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=csv";
         $(this).attr("href", new_sql);
       });
+      
+      //Sidebar Animation   
+  $("#sidebar_toggle").toggle(function(){
+    $("#sidebar").animate({"left":"-300px"}, "slow");
+    $("#assetLabel").animate({"left":"10px"}, "slow");
+    $("#violationStatusLabel").animate({"left":"10px"}, "slow");
+    $("#asset_status").animate({"left":"65px"}, "slow");
+    $("#violation_status").animate({"left":"145px"}, "slow");
+    $("#sourceLabel").animate({"left":"445px"}, "slow");
+    $("#source_status").animate({"left":"500px"}, "slow");
+    $("#sidebarProfile").animate({"left":"-70px"}, "slow");
+    $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
+    $("#sidebar_toggle").animate({"left":"0px"}, "slow");
+    $('.leaflet-left .leaflet-control').animate({"margin-left":"-290px"}, "slow");
+    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"-300px"}, "slow");
+  },function(){
+    $("#sidebar").animate({"left":"0px"}, "slow");
+    $("#assetLabel").animate({"left":"308px"}, "slow");
+    $("#violationStatusLabel").animate({"left":"308px"}, "slow");
+    $("#asset_status").animate({"left":"360px"}, "slow");
+    $("#violation_status").animate({"left":"434px"}, "slow");
+    $("#sourceLabel").animate({"left":"740px"}, "slow");
+    $("#source_status").animate({"left":"800px"}, "slow");
+    $("#sidebar_toggle").animate({"left":"300px"}, "slow");
+    $("#sidebarProfile").animate({"left":"230px"}, "slow");
+    $('.leaflet-left .leaflet-control').animate({"margin-left":"10px"}, "slow");
+    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"0px"}, "slow");
+  });
 
   });
