@@ -83,15 +83,13 @@
       </div>
     </div><!--End CitySwitcher -->
 
-  <!-- Add Permit Status -->
-    <span id="permitStatusLabel">Permit Status:</span>
-    <div id="permit_status">
-    <div class="btn-group">
-        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
-        <a href="#" id="expiredpermit" title="Expired Permit" class="query permit"><button class="btn btn-warning">Expired</a></button>
-        <a style="color: black;" href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
-    </div>
-    </div>
+  <!-- Add Show All -->
+  <div id="showall">
+  
+           <a href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
+           </div>
+
+    
   </div><!-- End Permit Status -->
   </div>
 
@@ -134,23 +132,38 @@
     </div>
     <!-- End of Info Panel -->
 
-    <div class="featureMenu">
-      <div id="asset_classes" >
+    <div class="hidden">
+    	<div id="controlToggle">
+    		
+    			<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span>Control Panel</button>
+    			
+    		</div> <!-- controlToggle -->
+			<div class="featureMenu">
+			<p>Permit Status
+			<div id="permit_status">
+    <div class="btn-group">
+        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
+        <a href="#" id="expiredpermit" title="Expired Permit" class="query permit"><button class="btn btn-warning">Expired</a></button>
+        </p>
+    </div>
+    </div>
+				
+      	<div id="asset_classes" >
         <p>Asset Class
           <ul class="nav nav-tabs nav-stacked">
-            <li data="Awning"><a href="#" class="query asset" title="Awning">Awning</a></li>
-            <li data="Billboard"><a href="#" class="query asset" title="Billboard">Billboard</a></li>
-            <li data="Dumpster"><a href="#" class="query asset" title="Dumpster">Dumpster</a></li>
-            <li data="Fence"><a href="#" class="query asset" title="Fence">Fence</a></li>
-            <li data="Scaffolding"><a href="#" class="query asset" title="Scaffolding">Scaffolding</a></li>
-            <li data="Sidewalk Shed"><a href="#" class="query asset" title="Sidewalk Shed">Sidewalk Shed</a></li>
-            <li data="Sidewalk Shed"><a href="#" class="query all" title="Sidewalk Shed">All</a></li>
+          	
+            <li data="Awning"><a href="#" class="query asset" title="Awning"><img src="image/dot_awning.png">&nbsp;Awning</a></li>
+            <li data="Billboard"><a href="#" class="query asset" title="Billboard"><img src="image/dot_billboard.png">&nbsp;Billboard</a></li>
+            <li data="Dumpster"><a href="#" class="query asset" title="Dumpster"><img src="image/dot_dumpster.png">&nbsp;Dumpster</a></li>
+            <li data="Fence"><a href="#" class="query asset" title="Fence"><img src="image/dot_fence.png">&nbsp;Fence</a></li>
+            <li data="Scaffolding"><a href="#" class="query asset" title="Scaffolding"><img src="image/dot_scaffolding.png">&nbsp;Scaffolding</a></li>
+            <li data="Sidewalk Shed"><a href="#" class="query asset" title="Sidewalk Shed"><img src="image/dot_sidewalk_shed.png">&nbsp;Sidewalk Shed</a></li>
 
           </ul>
         </p>
-      </div>
-    </div>
-
+      </div><!-- asset_classes -->
+    </div> <!-- featureMenu -->
+</div> <!-- hidden -->
     <!-- Custom Script -->
     <script src="js/script_ny.js"></script>
 

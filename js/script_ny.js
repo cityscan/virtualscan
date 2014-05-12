@@ -86,11 +86,29 @@ $('document').ready( function() {
                 SUB = subLayer;
               createSelector(subLayer);
 
-              // TODO: add hover tooltips for fields in infowindow sidebar
-              subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT bin,lat,lon,address,asviolation,height_meters,imageurl,notes,permit_expiration_date,permit_issuance_date,type,width_meters FROM nyc WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
+              var content = $('#box');
+              $('#box').show();
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT bin,lat,lon,address,date,asviolation,height_meters,imageurl,notes,permit_expiration_date,permit_issuance_date,type,width_meters FROM nyc WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $('#box').html('');
+                      $('#box').append('<span id="boxTitle">' + 'Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');   
+                      $('#box').append('<span id="boxTitle">' + 'Address:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].address +'</span><br/>');
+                      $('#box').append('<span id="boxTitle">' + 'BIN:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].bin +'</span><br/>');    
+                      $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].date +'</span>');     
+                  });
+                  window.xcoord = pos.x;
+                  window.ycoord = pos.y;
+                    var containerObj =  content.position();
+                    $('#box').offset({ left: xcoord + 10 , top: ycoord + 70 })
+             
+           });
+           
+                  
+
+              subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT bin,lat,lon,date,address,asviolation,height_meters,imageurl,notes,permit_expiration_date,permit_issuance_date,type,width_meters FROM nyc WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                       $('#sidebar').html('');
-                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].imageurl + '" height="250" width="300" id="image_sidepanel"></a>');
+                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].imageurl + '" id="image_sidepanel"></a>');
                       //$('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Height(m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lat +'</p>'); Template
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Bin:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].bin +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
@@ -107,6 +125,10 @@ $('document').ready( function() {
                     });
                   // latlng parameter is where the mouse was clicked, not where the marker is
               });
+              subLayer.on('featureOut', function(e, latlng, pos, data) {
+              $('#box').hide()
+
+           });
               subLayer.setInteraction(true);
               subLayer.infowindow.set('template', $('#infowindow_template').html());
              })
@@ -195,5 +217,7 @@ $('document').ready( function() {
     $('.leaflet-left .leaflet-control').animate({"margin-left":"10px"}, "slow");
     $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"0px"}, "slow");
   });
-
+	  $('#controlToggle').click(function() {
+		  $('.featureMenu').toggle('slow', function() {});
+});
   });
