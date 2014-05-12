@@ -46,7 +46,6 @@
       + "<strong>License Expiration Date: </strong>" + expirationDate + "<br />" 
       + "<strong>No. within 500ft: </strong>" + within500ft + "<br />"
       + "<strong>Within 300ft: </strong>" + within300ft + "&nbsp;&nbsp;&nbsp;<strong>Face Rule: </strong>" + faceRule + "<br /><br />" 
-      + "<em>This information comes from " + sources + "</em><br />" 
       + "</body></html>");
     // attach to button in target window, and use a handler in this one:
     var button = win.document.getElementById('button');
@@ -68,7 +67,7 @@
   </a>
   <div id='sidebar_imgbox'></div>
 
-   <div id="sidebarProfile"><button type="button" onclick="wins()">Report</button></div>
+   <div id="sidebarProfile"><button type="button" onclick="wins()">Print</button></div>
 
   <!-- Add Header -->
   <div id='header'>
@@ -207,15 +206,6 @@
       <div class="modal-body">
         <p id="aboutPage"><a href="http://cityscan.com/">CityScan</a> is a venture-backed company that inspects, observes and predict street-level activity to discover street-level conditions and proactively help respond to changes that impact your city. CityScan is headquartered in Chicago, Illinois and has raised significant funding from both institutional venture and angel investors.</p>
         <hr>
-        <!--<p><strong>Legend</strong></p>
-        <ul class="unstyled">
-          <li><a style='background:#F11810;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
-          <li><a style='background:#3B007F;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
-          <li><a style='background:#B2DF8A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
-          <li><a style='background:#33A02C;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
-          <li><a style='background:#FB9A99;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Junior Poster</li>
-        </ul>-->
-      </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
       </div>
@@ -226,69 +216,60 @@
     <!-- Filter -->
     <a href="#" title="Show Filter"><div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div></a>
     <div id="controlBig">
-      <span style="font-weight:bolder;color:black">VIEW FILTER BY</span>
       <div class="btn-group" data-toggle="buttons-radio">
         <button type="button" class="btn btn-primary" id="legendAsset">Asset</button>
         <button type="button" class="btn btn-primary" id="legendZoning">Zoning</button>
-        <button type="button" class="btn btn-primary" id="legendSource">Source</button>
-        <button type="button" class="btn btn-primary" id="legendPermit">Permit</button>
+        <button type="button" class="btn btn-primary" id="legendSource">License</button>
+        <button type="button" class="btn btn-primary" id="legendOperator">Operator</button>
       </div>
-        <ul class="unstyled" style="padding-top:7px" id="legendAssetLabel">
+      <!--<div id="ruler"></div>-->
+
+        <div id="legendAssetLabel">
+        <ul class="unstyled" style="padding-top:7px">
           <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
           <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
           <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Junior Poster</li>
           <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
           <li><a style='background:#88F71A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
         </ul>
-        <div id="legendZoningLabel">
-        <p id="violationLegendLabel">Select Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#006E98">No</span>)</p>
-            <div class="btn-group" data-toggle="buttons-radio">
-              <button type="button" class="btn btn-primary" id="spacingViolation" style="width:170px">500ft Spacing</button><br />
-              <button type="button" class="btn btn-primary" id="residentialViolation" style="width:170px">Within 300ft of Residential</button><br />
-              <button type="button" class="btn btn-primary" id="heightViolation" style="width:170px">Billboard Height > 20ft</button><br />
-            </div>
         </div>
-        <ul class="unstyled" style="padding-top:7px" id="legendSourceLabel">
-          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;City Records</li>
-          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;CityScan (lidar)</li>
-          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Market Records</li>
-        </ul>
-        <ul class="unstyled" style="padding-top:7px" id="legendPermitLabel">
-          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;With Permit</li>
-          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Without/Expired Permit</li>
-        </ul>
-    </div>
 
-    <!-- Deprectate Feature Menu
-    <div class="featureMenu">
-      <div id="asset_classes" >
-        <p>Asset Class
-          <ul class="nav nav-tabs nav-stacked">
-            <li data="Bulletin"><a href="#" class="query asset" title="Bulletin">Bulletin</a></li>
-            <li data="Digital"><a href="#" class="query asset" title="Digital">Digital</a></li>
-            <li data="Junior Poster"><a href="#" class="query asset" title="Junior Poster">Junior Poster</a></li>
-            <li data="Other"><a href="#" class="query asset" title="Other">Other</a></li>
-            <li data="Walls/Spectacular"><a href="#" class="query asset" title="Walls/Spectacular">Walls/Spectacular</a></li>
+        <div id="legendZoningLabel">
+        <p>Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#F79D00">No</span>)</p>
+        <p>Select Query Condition:</p>
+        <div class="btn-group" data-toggle="buttons-radio" style="padding-bottom:10px">
+          <button type="button" class="btn btn-primary" id="violationAndButton">And</button>
+          <button type="button" class="btn btn-primary" id="violoationOrButton">Or</button>
+        </div>
+        </div>
+
+          <div class="checkbox" id="violationAnd">
+            <label><input type="checkbox" id="spacingViolation">500ft Spacing</label>
+            <label><input type="checkbox" id="residentialViolation">Within 300ft of Residential</label>
+            <label><input type="checkbox" id="heightViolation">Billboard Height > 20ft</label>
+          </div>
+
+          <div class="checkbox" id="violationOR">
+            <label><input type="checkbox" id="spacingViolation2">500ft Spacing</label>
+            <label><input type="checkbox" id="residentialViolation2">Within 300ft of Residential</label>
+            <label><input type="checkbox" id="heightViolation2">Billboard Height > 20ft</label>
+          </div>
+
+        <div id="legendSourceLabel">
+          <ul class="unstyled" style="padding-top:7px">
+            <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Billboards in City Records</li>
+            <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Billboards NOT in City Records</li>
           </ul>
-        </p>
-      </div>
+        </div>
 
-    <div id="asset_classes" >
-      <p>Zoning Violations:</p>
-        <ul class="nav nav-tabs nav-stacked">
-            <li><a href="#" id="spacing" title="num_other_within_500ft" class="query permit">500ft Spacing</a></li>
-            <li><a href="#" id="res" title="within_300ft_res" class="query permit">Within 300ft of Residential</a></li>
-            <li><a href="#" id="res" title="face_rule" class="query permit">Billboard Face Height > 20ft</a></li>
-        </ul>
-        <ul class="nav nav-list">
-            <li class="divider">.</li>
-        </ul>
-        <ul class="nav nav-tabs nav-stacked">
-            <li><a href="#" title="All" id="all" class="query all">Show All</a></li>
-        </ul>
-      </div>
-      </div>
-    -->
+        <div id="legendOperatorLabel">
+          <ul class="unstyled" style="padding-top:7px">
+            <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Self-reported by operators</li>
+            <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;NOT self reported by operators</li>
+          </ul>
+        </div>
+
+    </div>
 
     <!-- Custom Script -->
     <script src="js/script_philly.js"></script>

@@ -3,7 +3,7 @@ html, body {
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	overflow: hidden
+	overflow: hidden;
 }
 /*General Framework*/
 #logo {
@@ -27,17 +27,18 @@ html, body {
 }
 #box{
 	z-index: 50;
-	height: 50px;
+	height: 40px !important;
 	width: 230px;
 	font-size: 10px;
 	line-height: 13px !important;
 	padding-top: 5px;
+	padding-bottom: 5px;
 	background-color: black;
 	border-color: white;
 	border-width: 1px;
 	border-style: solid;
-	overflow: hidden;
 	font-family: arial;
+	overflow: hidden;
 }
 #boxTitle{
 	color: #29abe2;
@@ -57,7 +58,7 @@ html, body {
 #control {
 	position: absolute;
 	height: 25px;
-	width: 180px;
+	width: 160px;
 	bottom: 0;
 	right: 4px;
 	background-color: black;
@@ -78,9 +79,9 @@ html, body {
 }
 #controlBig {
 	position: absolute;
-	height: 155px;
-	width: 210px;
-	bottom: -160px;
+	height: 200px;
+	width: 225px;
+	bottom: -210px;
 	right: 5px;
 	background-color: #F2F2F2;
 	border-top-style: solid;
@@ -97,12 +98,6 @@ html, body {
 	font-size: 12px;
 	z-index: 12;
 }
-#violationLegendLabel{
-	color: black;
-	padding-top: 13px;
-	font-size: 12px;
-	line-height: 13px;
-}
 #image_sidepanel{
 	height: 250px;
 	width: 	300px;
@@ -114,10 +109,10 @@ html, body {
 p {
 	font-size: 	12px;
 	line-height: 12px;
-	color: 	#AEAC9A;
+	color: 	black;
 }
 strong {
-	color: 	#cccac6;
+	color: 	#009bd6;
 }
 #headerButtons {
 	position: absolute;
@@ -350,7 +345,7 @@ a:hover {text-decoration:none;}
 	color: white;
 	text-align: center;
 	font-size: 12px;
-}
+}l
 #asset_classes a:hover {
 	color: black;
 }
@@ -383,8 +378,11 @@ a:hover {text-decoration:none;}
 	font-weight: bolder;
 	font-family: arial;
 }
+/*#printLabel{
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}*/
 #sidebarContent{
-	color: white;
+	color: blue;
 	font-size: 12px;
 	margin-left: 7px;
 	margin-top: 7px;
@@ -393,7 +391,8 @@ a:hover {text-decoration:none;}
 #sidebarProfile{
 	position: absolute;
 	top: 300px;
-	left: 230px;
+	left: 240px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	z-index: 5;
 }
 #sidebar_imgbox{
@@ -409,6 +408,7 @@ a:hover {text-decoration:none;}
 }
 #sidebar_toggle{
 	position: absolute;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	top: 180px;
 	left: 300px;
 	color: white;
@@ -440,4 +440,47 @@ a:hover {text-decoration:none;}
 }
 #aboutPage{
 	line-height: 16px;
+}
+#legendAssetLabel{
+	position: absolute;
+	bottom: 50px;
+	right: 80px;
+}
+#legendZoningLabel{
+	position: absolute;
+	bottom: 90px;
+	right: 45px;
+}
+#ruler{
+	position: absolute;
+	height:0px;
+	width: 218px;
+	right: 0px;
+	bottom: 176px;
+	border-top-color: gray;
+	border-top-style: solid;
+	border-top-width: 1px;
+	z-index: 100;
+}
+#violationAnd{
+	position: absolute;
+	bottom: 16px;
+	right: 15px;
+}
+#violationOR{
+	position: absolute;
+	bottom: 16px;
+	right: 15px;
+}
+#legendSourceLabel{
+	position: absolute;
+	bottom: 110px;
+	right: 5px;
+	width: 220px;
+}
+#legendOperatorLabel{
+	position: absolute;
+	bottom: 110px;
+	right: 5px;
+	width: 220px;
 }
