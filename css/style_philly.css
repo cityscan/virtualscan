@@ -27,7 +27,7 @@ html, body {
 }
 #box{
 	z-index: 50;
-	height: 40px !important;
+	height: 55px !important;
 	width: 230px;
 	font-size: 10px;
 	line-height: 13px !important;
@@ -448,8 +448,8 @@ a:hover {text-decoration:none;}
 }
 #legendZoningLabel{
 	position: absolute;
-	bottom: 90px;
-	right: 45px;
+	bottom: 140px;
+	right: 60px;
 }
 #ruler{
 	position: absolute;
@@ -469,8 +469,8 @@ a:hover {text-decoration:none;}
 }
 #violationOR{
 	position: absolute;
-	bottom: 16px;
-	right: 15px;
+	bottom: 36px;
+	right: 10px;
 }
 #legendSourceLabel{
 	position: absolute;
