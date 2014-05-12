@@ -165,12 +165,12 @@
     <!--Add CitySwitcher-->
     <div id="citySwitcher">
       <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Philadelphia <span class="caret"></span></button>
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Billboard&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="chicago.html">Chicago (Exelon)</a></li>
+          <li><a href="chicago.html">Utility&nbsp;&nbsp;&nbsp;</a></li>
           <!--<li><a href="#">Milwaukee</a></li>-->
-          <li><a href="index.html">New York </a></li>
-          <li><a href="dc.html">Washington D.C.</a></li>
+          <li><a href="index.html">Safety&nbsp;&nbsp;&nbsp;</a></li>
+          <!--<li><a href="dc.html">Washington D.C.</a></li>-->
         </ul>
       </div>
     </div>
@@ -186,7 +186,7 @@
     <!--DownloadSwitcher-->
       <div id="downloadData">
         <div class="btn-group">
-            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data <span class="caret"></span></button>
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data&nbsp;&nbsp;<span class="caret"></span></button>
           <ul class="dropdown-menu" role="menu">
               <li><a id="downkml" href="#" target="_blank">KML</a></li>
               <li><a id="downshp" href="#">Shapefile</a></li>
@@ -217,14 +217,14 @@
     <a href="#" title="Show Filter"><div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div></a>
     <div id="controlBig">
       <div class="btn-group" data-toggle="buttons-radio">
-        <button type="button" class="btn btn-primary" id="legendAsset">Asset</button>
-        <button type="button" class="btn btn-primary" id="legendZoning">Zoning</button>
+        <!--<button type="button" class="btn btn-primary" id="legendAsset">Asset</button>-->
+        <button type="button" class="btn btn-primary" id="legendZoning">Violation</button>
         <button type="button" class="btn btn-primary" id="legendSource">License</button>
         <button type="button" class="btn btn-primary" id="legendOperator">Operator</button>
       </div>
       <!--<div id="ruler"></div>-->
 
-        <div id="legendAssetLabel">
+        <!--<div id="legendAssetLabel">
         <ul class="unstyled" style="padding-top:7px">
           <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
           <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
@@ -232,15 +232,15 @@
           <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
           <li><a style='background:#88F71A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
         </ul>
-        </div>
+        </div>-->
 
         <div id="legendZoningLabel">
         <p>Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#F79D00">No</span>)</p>
-        <p>Select Query Condition:</p>
+        <!--<p>Select Query Condition:</p>
         <div class="btn-group" data-toggle="buttons-radio" style="padding-bottom:10px">
           <button type="button" class="btn btn-primary" id="violationAndButton">And</button>
           <button type="button" class="btn btn-primary" id="violoationOrButton">Or</button>
-        </div>
+        </div>-->
         </div>
 
           <div class="checkbox" id="violationAnd">
@@ -253,6 +253,7 @@
             <label><input type="checkbox" id="spacingViolation2">500ft Spacing</label>
             <label><input type="checkbox" id="residentialViolation2">Within 300ft of Residential</label>
             <label><input type="checkbox" id="heightViolation2">Billboard Height > 20ft</label>
+            <label><input type="checkbox" id="licenseViolation2">Billboards NOT in City Record</label>
           </div>
 
         <div id="legendSourceLabel">

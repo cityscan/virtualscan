@@ -96,8 +96,8 @@ $('document').ready( function() {
       type: 'cartodb',
       sublayers: [  
         {
-          sql: "SELECT * FROM wp_import",
-          cartocss: "#wp_import [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}",
+          sql: "SELECT * FROM wp_import WHERE num_violations=0",
+          cartocss: "#wp_import [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #F79D00;}",
           interactivity: "id,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,height_rule,imageurl,cartodb_id,thumbnail,num_violations"
         }]
         }).addTo(map)
@@ -117,9 +117,9 @@ $('document').ready( function() {
                 $("#control").animate({"bottom":"200px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
                 $("#legendAssetLabel").show();
-                $("#legendZoningLabel").hide();
+                $("#legendZoningLabel").show();
                 $("#legendSourceLabel").hide();
-                $("#violationOR").hide();
+                $("#violationOR").show();
                 $("#violationAnd").hide();
                 $("#legendOperatorLabel").hide();
 
@@ -136,7 +136,6 @@ $('document').ready( function() {
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
                 $("#violationOR").hide();
-                $("#violationAnd").hide();
                 $("#legendOperatorLabel").hide();
               });
              $('#legendZoning').click(function () {
@@ -146,17 +145,15 @@ $('document').ready( function() {
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").show();
                 $("#legendSourceLabel").hide();
-                $("#violationOR").hide();
-                $("#violationAnd").show();
+                $("#violationOR").show();
                 $("#legendOperatorLabel").hide();
               });
             $('#legendSource').click(function () {
                 layer.getSubLayer(0).setSQL('SELECT * FROM wp_import');
-                layer.getSubLayer(0).setCartoCSS('#wp_import [operator_self_reported=true]{marker-fill: #16D7CB;}[operator_self_reported=false]{marker-fill: #D7162D;}');
+                layer.getSubLayer(0).setCartoCSS('#wp_import [hansen_license_num="None"]{marker-fill: #D7162D;}[hansen_license_num!="None"]{marker-fill: #16D7CB;}');
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").show();
-                $("#violationAnd").hide();
                 $("#violationOR").hide();
                 $("#legendOperatorLabel").hide();
               });
@@ -166,7 +163,6 @@ $('document').ready( function() {
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
-                $("#violationAnd").hide();
                 $("#violationOR").hide();
                 $("#legendOperatorLabel").show();
               });
@@ -227,30 +223,56 @@ $('document').ready( function() {
                     var Spacing2 = $('#spacingViolation2')[0].checked;
                     var Residential2 = $('#residentialViolation2')[0].checked;
                     var Height2 = $('#heightViolation2')[0].checked;
+                    var License2 = $('#licenseViolation2')[0].checked;
           
-                    if (Spacing2==true && Residential2==false && Height2==false){
+                    if (Spacing2==true && Residential2==false && Height2==false && License2==false){
                     layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or num_violations=0');
                  console.log("spacing");
-                    }else if (Spacing2==true || Residential2==true && Height2==false){
+                    }else if (Spacing2==true && Residential2==true && Height2==false && License2==false){
                 layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or within_300ft_res or num_violations=0');
                  console.log("spacing or residential");
-                    }else if (Spacing2==true || Height2==true && Residential2==false ){
-                     layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0  or height_rule or num_violations=0');
-                 console.log("spacing or height");
-                    }else if (Spacing2==false && Height2==true && Residential2==false ){
-                     layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE height_rule or num_violations=0');
+                    }else if (Spacing2==false && Residential2==false && Height2==true && License2==false){
+                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE height_rule or num_violations=0');
                  console.log("height");
-                    }else if (Spacing2==false && Residential2==true && Height2==false){
-                     layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or num_violations=0');
+                    }else if (Spacing2==false && Residential2==true && Height2==false && License2==false){
+                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or num_violations=0');
                  console.log("residential");
-                    }else if (Spacing2==false && Residential2==true || Height2==true){
+                    }else if (Spacing2==true && Height2==true && Residential2==false && License2==false){
+                     layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or height_rule or num_violations=0');
+                 console.log("spacing or height");
+                    }else if (Spacing2==false && Residential2==true && Height2==true && License2==false){
                 layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or height_rule or num_violations=0');
                  console.log("residential or height");
-                    }else if (Spacing2==true && Residential2==true && Height2==true){
-                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import');
-                 console.log("residential and height and spacing");
-                   }else if (Spacing2==false && Residential2==false && Height2==false){
-                        layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_violations=0');
+                    }else if (Spacing2==false && Residential2==false && Height2==false && License2==true){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or num_violations=0");
+                 console.log("license");
+                    }else if (Spacing2==true && License2==true && Residential2==false && Height2==false){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or num_violations=0");
+                 console.log("license or spacing");
+                    }else if (Spacing2==false && License2==true && Residential2==true && Height2==false){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or within_300ft_res or num_violations=0");
+                 console.log("license or residential");
+                    }else if (Spacing2==false && Residential2==false && Height2==true && License2==true){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or height_rule or num_violations=0");
+                 console.log("license or height");
+                    }else if (Spacing2==true && Residential2==true && License2==true && Height2==true ){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or within_300ft_res or num_violations=0");
+                 console.log("spacing or residential or license");
+                    }else if (Spacing2==false && Residential2==true && Height2==true && License2==true){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or height_rule or within_300ft_res or num_violations=0");
+                 console.log("residential or height or license");
+                    }else if (Spacing2==true && Height2==true && License2==true && Residential2==false){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or height_rule or num_other_within_500ft>0 or num_violations=0");
+                 console.log("spacing or height or license");
+                   }else if (Spacing2==false && Residential2==false && Height2==false && License2==false){
+                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_violations=0');
+                 console.log("none");
+                   }else if (Spacing2==true && Residential2==true && Height2==true && License2==false){
+                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE height_rule or num_other_within_500ft>0 or within_300ft_res or num_violations=0');
+                 console.log("spacing or residential or height");
+                   }else if (Spacing2==true && Residential2==true && Height2==true && License2==true){
+                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE num_other_within_500ft>0 or height_rule or within_300ft_res or hansen_license_num ILIKE '%None%' or num_violations=0");
+                 console.log("all");
                    }
                 };
 
@@ -261,6 +283,9 @@ $('document').ready( function() {
                     updateMapByClient2();
                 });
                 $('#heightViolation2').click(function(){
+                    updateMapByClient2();
+                });
+                $('#licenseViolation2').click(function(){
                     updateMapByClient2();
                 });
 
@@ -371,6 +396,7 @@ $('document').ready( function() {
                     var dateFull = dateMM +"-"+ dateDD +"-"+ dateYY; console.log(dateFull);
 
                       $('#box').html('');
+                      $('#box').append('<span id="boxTitle">' + 'Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');   
                       $('#box').append('<span id="boxTitle">' + 'Address:&nbsp;</span><span id="boxContent">' +'</strong>'+ city1 +'</span><br/>');
                       $('#box').append('<span id="boxTitle">' + 'Operator:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].operator +'</span><br/>');    
                       $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].timestamp +'</span>');     
