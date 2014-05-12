@@ -44,6 +44,7 @@
       </div>
     
     <div id='headerButtons'>
+    </div><!--End CitySwitcher -->
       <!--Welcome Button -->
       <span class="bar">|&nbsp</span>
       <span class="aboutButton">
@@ -65,37 +66,46 @@
   </div>
   <!-- End of Header -->
 
+
   <!--Add Sub-Header-->
-  <div id='subheader'>
+  <div id='subheader'></div>
     <!--Add CitySwitcher-->
+
     <div id="citySwitcher">
       <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Chicago (Exelon) <span class="caret"></span></button>
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Chicago (Utility) <span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="index.html">New York </a></li>
           <!--<li><a href="#">Milwaukee</a></li>-->
-          <li><a href="philadelphia.html">Philadelphia </a></li>
+          <li><a href="index.html">New York </a></li>
+          <li><a href="philadelphia.html">Philadelphia</a></li>
           <li><a href="dc.html">Washington D.C.</a></li>
         </ul>
       </div>
-    </div><!--End CitySwitcher -->
-
-  <!-- Add Permit Status -->
-    
-  </div>
-
-    <!--DownloadSwitcher-->
-    <div id="downloadData">
-      <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a id="downkml" href="#" target="_blank">KML</a></li>
-            <li><a id="downshp" href="#">Shapefile</a></li>
-            <li><a id="downgeojson" href="#">GeoJSON</a></li>
-            <li><a id="downcsv" href="#">CSV</a></li>
-        </ul>
-      </div>
     </div>
+    <!--End CitySwitcher -->
+
+    <!-- Add Show All -->
+    <div id="showall_status">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default btn-sm"><a href="#" class="query all" title="Display All Features">Display All</a></button>
+    </div>
+    </div>
+    
+    <!--DownloadSwitcher-->
+      <div id="downloadData">
+        <div class="btn-group">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data <span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+              <li><a id="downkml" href="#" target="_blank">KML</a></li>
+              <li><a id="downshp" href="#">Shapefile</a></li>
+              <li><a id="downgeojson" href="#">GeoJSON</a></li>
+              <li><a id="downcsv" href="#">CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+  </div>
+    <!--DownloadSwitcher-->
 
   <!--About Info Panel -->
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -122,6 +132,43 @@
     </div>
     <!-- End of Info Panel -->
 
+    <!-- Filter -->
+    <a href="#" title="Show Filter"><div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div></a>
+    <div id="controlBig">
+      <span style="font-weight:bolder;color:black">VIEW FILTER BY</span>
+      <div class="btn-group" data-toggle="buttons-radio">
+        <button type="button" class="btn btn-primary" id="legendAsset">Asset</button>
+        <button type="button" class="btn btn-primary" id="legendZoning">Zoning</button>
+        <button type="button" class="btn btn-primary" id="legendSource">Source</button>
+        <button type="button" class="btn btn-primary" id="legendPermit">Permit</button>
+      </div>
+        <ul class="unstyled" style="padding-top:7px" id="legendAssetLabel">
+          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
+          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Junior Poster</li>
+          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
+          <li><a style='background:#88F71A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
+        </ul>
+        <div id="legendZoningLabel">
+        <p id="violationLegendLabel">Select Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#006E98">No</span>)</p>
+            <div class="btn-group" data-toggle="buttons-radio">
+              <button type="button" class="btn btn-primary" id="spacingViolation" style="width:170px">500ft Spacing</button><br />
+              <button type="button" class="btn btn-primary" id="residentialViolation" style="width:170px">Within 300ft of Residential</button><br />
+              <button type="button" class="btn btn-primary" id="heightViolation" style="width:170px">Billboard Height > 20ft</button><br />
+            </div>
+        </div>
+        <ul class="unstyled" style="padding-top:7px" id="legendSourceLabel">
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;City Records</li>
+          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;CityScan (lidar)</li>
+          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Market Records</li>
+        </ul>
+        <ul class="unstyled" style="padding-top:7px" id="legendPermitLabel">
+          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;With Permit</li>
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Without/Expired Permit</li>
+        </ul>
+    </div>
+
+    <!--
     <div class="featureMenu">
       <div id="asset_classes" >
         <p>Asset Class
@@ -131,11 +178,11 @@
           <li data="Manholes and Vaults"><a href="#" class="query asset" title="Manholes and Vaults">Manholes and Vaults</a></li>
           <li data="Streetlights"><a href="#" class="query asset" title="Streetlights">Streetlights</a></li>
           <li data="Wire Sag"><a href="#" class="query asset" title="Wire Sag">Wire Sag</a></li>
-          <li data="Show All"><a href="#" class="query all" id="all" title="All">Show All</a></li>
           </ul>
         </p>
       </div>
     </div>
+    -->
 
     <!-- Custom Script -->
     <script src="js/script_chicago.js"></script>

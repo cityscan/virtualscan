@@ -61,7 +61,7 @@ function createSelector(layer) {
       'Road': road
        };
 
-    L.control.layers(baseMaps).setPosition('topleft').addTo(map);
+    L.control.layers(baseMaps).setPosition('topright').addTo(map);
 
     cartodb.createLayer(map, {
       user_name: 'cityscan',
@@ -84,23 +84,7 @@ function createSelector(layer) {
                 SUB = subLayer;
               createSelector(subLayer);
 
-              subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-              var content = $('#box');
-              content.show();
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
-              
-              $('#box').html('');
-                      $('#box').append('<span id="boxTitle">' + 'Asset Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].asset_type +'</span><br/>');
-         
-                      $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
-                  });
-                  window.xcoord = pos.x;
-                  window.ycoord = pos.y;
-                    var containerObj =  content.position();
-                    $('#box').offset({ left: xcoord + 10 , top: ycoord + 70 })
-             
-           });
-
+              // TODO: add hover tooltips for fields in infowindow sidebar
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                       $('#sidebar').html('');
@@ -119,11 +103,25 @@ function createSelector(layer) {
                     });
                   // latlng parameter is where the mouse was clicked, not where the marker is
               });
-              subLayer.on('featureOut', function(e, latlng, pos, data) {
-                $('#box').hide();
-                });
               subLayer.setInteraction(true);
               subLayer.infowindow.set('template', $('#infowindow_template').html());
+              subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
+                  var content = $('#box');
+                  content.show();
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql?q=SELECT asset_type,collected_date FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                      content.html('');
+                      content.append('<span id="boxTitle">' + 'Type:&nbsp;</span><span id="boxContent">' + '</strong>' + data.rows[0].asset_type + '</span><br />');
+                      content.append('<span id="boxTitle">' + 'Collected On:&nbsp;</span><span id="boxContent">' + '</strong>' + data.rows[0].collected_date + '</span><br />');
+                      });
+                  window.xcoord = pos.x;
+                  window.ycoord = pos.y;
+                  var containerObj = content.position();
+                  $('#box').offset({ left:xcoord + 10, top: ycoord + 70 })
+              });
+              subLayer.on('featureOut', function(e, latlng, pos, data) {
+                  $('#box').hide()
+              });
+
              })
               .error(function(err) {
                 console.log(err);
@@ -142,6 +140,79 @@ function createSelector(layer) {
         provider: new L.GeoSearch.Provider.Google()
     }).addTo(map);
 
+              $('#legendAsset').click(function () {
+                layer.getSubLayer(0).setCartoCSS('#wp_import [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}');
+                $( "#legendAssetLabel" ).show();
+                $( "#legendZoningLabel" ).hide();
+                $( "#legendSourceLabel" ).hide();
+                $( "#legendPermitLabel" ).hide();
+              });
+              $('#legendZoning').click(function () {
+                layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #000000;}');
+                $( "#legendAssetLabel" ).hide();
+                $( "#legendZoningLabel" ).show();
+                $( "#legendSourceLabel" ).hide();
+                $( "#legendPermitabel" ).hide();
+              });
+              $('#legendSource').click(function () {
+                layer.getSubLayer(0).setCartoCSS('#wp_import [source=\"city_records\"]{marker-fill: #D7162D;}[source=\"lidar\"] {marker-fill: #F79D00;}[source=\"market_records\"]{marker-fill: #4B25EE;}');
+                $( "#legendAssetLabel" ).hide();
+                $( "#legendZoningLabel" ).hide();
+                $( "#legendSourceLabel" ).show();
+                $( "#legendPermitLabel" ).hide();
+              });
+                  $('#spacingViolation').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #F11810;}[num_other_within_500ft=null]{marker-fill: #006E98;}');
+                  });
+                  $('#residentialViolation').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [within_300ft_res=true]{marker-fill: #F11810;}[within_300ft_res=false]{marker-fill: #006E98;}');
+                  });
+                  $('#heightViolation').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #F11810;}[num_other_within_500ft=null]{marker-fill: #006E98;}');
+                  });
+              $('#legendPermit').click(function () {
+                    layer.getSubLayer(0).setCartoCSS('#wp_import [height_rule=true]{marker-fill: #16D7CB;}[height_rule=false]{marker-fill: #D7162D;}');
+                $( "#legendAssetLabel" ).hide();
+                $( "#legendZoningLabel" ).hide();
+                $( "#legendSourceLabel" ).hide();
+                $( "#legendPermitLabel" ).show();
+              });
+    // Sidebar Animation
+  $("#sidebar_toggle").toggle(function(){
+    $("#sidebar").animate({"left":"-300px"}, "slow");
+    $("#assetLabel").animate({"left":"10px"}, "slow");
+    $("#violationStatusLabel").animate({"left":"10px"}, "slow");
+    $("#asset_status").animate({"left":"65px"}, "slow");
+    $("#violation_status").animate({"left":"145px"}, "slow");
+    $("#sourceLabel").animate({"left":"445px"}, "slow");
+    $("#source_status").animate({"left":"500px"}, "slow");
+    $("#sidebarProfile").animate({"left":"-70px"}, "slow");
+    $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
+    $("#sidebar_toggle").animate({"left":"0px"}, "slow");
+    $('.leaflet-left .leaflet-control').animate({"margin-left":"-290px"}, "slow");
+    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"-300px"}, "slow");
+  },function(){
+    $("#sidebar").animate({"left":"0px"}, "slow");
+    $("#assetLabel").animate({"left":"308px"}, "slow");
+    $("#violationStatusLabel").animate({"left":"308px"}, "slow");
+    $("#asset_status").animate({"left":"360px"}, "slow");
+    $("#violation_status").animate({"left":"434px"}, "slow");
+    $("#sourceLabel").animate({"left":"740px"}, "slow");
+    $("#source_status").animate({"left":"800px"}, "slow");
+    $("#sidebar_toggle").animate({"left":"300px"}, "slow");
+    $("#sidebarProfile").animate({"left":"230px"}, "slow");
+    $('.leaflet-left .leaflet-control').animate({"margin-left":"10px"}, "slow");
+    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"0px"}, "slow");
+  });
+
+  //Legend Animation
+  $("#control").toggle(function(){
+    $("#control").animate({"bottom":"160px"}, "slow");
+    $("#controlBig").animate({"bottom":"0px"}, "slow");
+  },function(){
+    $("#control").animate({"bottom":"0px"}, "slow");
+    $("#controlBig").animate({"bottom":"-160px"}, "slow");
+  });
   //Download KML format           
   $('#downkml').click(function () {
     var nwlat = map.getBounds().getNorthWest().lat,
@@ -182,32 +253,46 @@ function createSelector(layer) {
     var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20exelon%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20latitude%20DESC%20LIMIT%202000&format=csv";
         $(this).attr("href", new_sql);
       });
-      
-      $("#sidebar_toggle").toggle(function(){
-    $("#sidebar").animate({"left":"-300px"}, "slow");
-    $("#assetLabel").animate({"left":"10px"}, "slow");
-    $("#violationStatusLabel").animate({"left":"10px"}, "slow");
-    $("#asset_status").animate({"left":"65px"}, "slow");
-    $("#violation_status").animate({"left":"145px"}, "slow");
-    $("#sourceLabel").animate({"left":"445px"}, "slow");
-    $("#source_status").animate({"left":"500px"}, "slow");
-    $("#sidebarProfile").animate({"left":"-70px"}, "slow");
-    $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"0px"}, "slow");
-    $('.leaflet-left .leaflet-control').animate({"margin-left":"-290px"}, "slow");
-    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"-300px"}, "slow");
+  //Legend Animation
+  $("#control").toggle(function(){
+    $("#control").animate({"bottom":"160px"}, "slow");
+    $("#controlBig").animate({"bottom":"0px"}, "slow");
   },function(){
-    $("#sidebar").animate({"left":"0px"}, "slow");
-    $("#assetLabel").animate({"left":"308px"}, "slow");
-    $("#violationStatusLabel").animate({"left":"308px"}, "slow");
-    $("#asset_status").animate({"left":"360px"}, "slow");
-    $("#violation_status").animate({"left":"434px"}, "slow");
-    $("#sourceLabel").animate({"left":"740px"}, "slow");
-    $("#source_status").animate({"left":"800px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"300px"}, "slow");
-    $("#sidebarProfile").animate({"left":"230px"}, "slow");
-    $('.leaflet-left .leaflet-control').animate({"margin-left":"10px"}, "slow");
-    $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"0px"}, "slow");
+    $("#control").animate({"bottom":"0px"}, "slow");
+    $("#controlBig").animate({"bottom":"-160px"}, "slow");
   });
+
+  //Button toggle for legend and other radio buttons
+  $('.btn-group').button();
+
+  //toggling classes for ui buttons 
+  $("#showall_status").click(function() {
+    var bulletin_button = $("#bulletin_button");
+    bulletin_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var digital_button = $("#digital_button");
+    digital_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var junior_button = $("#junior_button");
+    junior_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var other_button = $("#other_button");
+    other_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var walls_button = $("#walls_button");
+    walls_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var cityscan_button = $("#cityscan_button");
+    cityscan_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var city_button = $("#city_button");
+    city_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var market_button = $("#market_button");
+    market_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var spacing_button = $("#spacing_button");
+    spacing_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var residential_button = $("#residential_button");
+    residential_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var height_button = $("#height_button");
+    height_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var nopermit_button = $("#nopermit_button");
+    nopermit_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    var expired_button = $("#expired_button");
+    expired_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
+    });
 
   });
