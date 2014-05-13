@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>CityScan: New York</title>
+    <link rel="Shortcut Icon" href="http://cityscan.com/wp-content/themes/cityscan/images/favicon.ico" type="image/x-icon">
+    <link href="css/style_ny.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+
+    <!--[if lte IE 8]><link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" /><![endif]-->
+
+    <!-- Bootstrap Libraries -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/l.geosearch.mod.css" />
+
+    <!-- Mapbox and jQuery -->
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.js'></script>
+    <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.css' rel='stylesheet' />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/mapbox.jquery.js"></script>
+
+    <!-- Mapping Libraries -->  
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="js/l.geosearch.mod.js"></script>
+  </head>
+
+  <body onload="init()">
+
+  <!-- Add Map and SideBar -->
+  <div class="hidden"><div id='box'></div></div>
+
+  <div class="hidden"><div id='sidebar'></div></div>
+  <!--<a href="#" title="Hide Panel"><div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div></a>-->
+  <a href="#" title="Show Panel">
+    <div id='sidebar_toggle'>P<br/>A</br>N</br>E</br>L</br></div>
+  </a>
+  <div id='sidebar_imgbox'></div>
+
+  <!-- Add Header -->
+  <div id='header'>
+    <div id='logo'>
+      <a href="http://cityscan.com/"><img src="image/logo_ny.png" width="200" height="30" id="logo"></a>
+      <!--<a href="http://cityscan.com/"><img src="image/logo_dc.png" width="220" height="30" id="logo"></a>-->
+      </div>
+    
+    <div id='headerButtons'>
+      <!--Welcome Button -->
+      <span class="bar">|&nbsp</span>
+      <span class="aboutButton">
+      <a href="http://www.cityscan.com">WELCOME</a></span>
+      <!--Approach Button -->
+      <span class="bar">|&nbsp</span>        
+      <span class="aboutButton">
+      <a href="#" role="button" data-toggle="modal">APPROACH</a></span>
+      <!--Assumptions Button -->
+      <span class="bar">|&nbsp</span>
+      <span class="aboutButton">
+      <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span>
+      <!--About Button -->
+      <span class="bar">|&nbsp</span>
+      <span class="aboutButton">
+      <a href="#myModal" role="button" data-toggle="modal">
+      ABOUT</a></span>
+    </div>
+  </div>
+  <!-- End of Header -->
+
+  <!--Add Sub-Header-->
+  <div id='subheader'>
+    <!--Add CitySwitcher-->
+    <div id="citySwitcher">
+      <div class="btn-group">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">New York <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="chicago.html">Chicago (Utility)</a></li>
+          <!--<li><a href="#">Milwaukee</a></li>-->
+          <li><a href="philadelphia.html">Philadelphia </a></li>
+          <li><a href="dc.html">Washington D.C.</a></li>
+        </ul>
+      </div>
+    </div><!--End CitySwitcher -->
+
+  <!-- Add Permit Status -->
+    <span id="permitStatusLabel">Permit Status:</span>
+    <div id="permit_status">
+    <div class="btn-group">
+        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
+        <a href="#" id="expiredpermit" title="Expired Permit" class="query permit"><button class="btn btn-warning">Expired</a></button>
+        <a style="color: black;" href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
+    </div>
+    </div>
+  </div><!-- End Permit Status -->
+  </div>
+
+    <!--DownloadSwitcher-->
+    <div id="downloadData">
+      <div class="btn-group">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a id="downkml" href="#" target="_blank">KML</a></li>
+            <li><a id="downshp" href="#">Shapefile</a></li>
+            <li><a id="downgeojson" href="#">GeoJSON</a></li>
+            <li><a id="downcsv" href="#">CSV</a></li>
+        </ul>
+      </div>
+    </div>
+
+  <!--About Info Panel -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">About CityScan</h3>
+      </div>
+
+      <div class="modal-body">
+        <p><a href="http://cityscan.com/">CityScan</a> is a venture-backed company that inspects, observes and predict street-level activity to discover street-level conditions and proactively help respond to changes that impact your city. CityScan is headquartered in Chicago, Illinois and has raised significant funding from both institutional venture and angel investors.</p>
+        <hr>
+        <p><strong>Legend</strong></p>
+        <ul class="unstyled">
+          <li><a style='background:#B2DF8A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Awning</li>
+          <li><a style='background:#A6CEE3;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Billboard</li>
+          <li><a style='background:#E31A1C;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Dumpster</li>
+          <li><a style='background:#1F78B4;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Fence</li>
+          <li><a style='background:#33A02C;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Scaffolding</li>
+          <li><a style='background:#FB9A99;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Sidewalk Shed</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+    <!-- End of Info Panel -->
+
+    <div class="featureMenu">
+      <div id="asset_classes" >
+        <p>Asset Class
+          <ul class="nav nav-tabs nav-stacked">
+            <li data="Awning"><a href="#" class="query asset" title="Awning">Awning</a></li>
+            <li data="Billboard"><a href="#" class="query asset" title="Billboard">Billboard</a></li>
+            <li data="Dumpster"><a href="#" class="query asset" title="Dumpster">Dumpster</a></li>
+            <li data="Fence"><a href="#" class="query asset" title="Fence">Fence</a></li>
+            <li data="Scaffolding"><a href="#" class="query asset" title="Scaffolding">Scaffolding</a></li>
+            <li data="Sidewalk Shed"><a href="#" class="query asset" title="Sidewalk Shed">Sidewalk Shed</a></li>
+            <li data="Sidewalk Shed"><a href="#" class="query all" title="Sidewalk Shed">All</a></li>
+
+          </ul>
+        </p>
+      </div>
+    </div>
+
+    <!-- Custom Script -->
+    <script src="js/script_ny.js"></script>
+
+  </body>
+</html>
