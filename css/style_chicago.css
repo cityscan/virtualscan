@@ -289,8 +289,8 @@ a:hover {
 }
 #box {
 	z-index: 50;
-	height: 30px !important;
-	width: 200px;
+	height: 200px; !important;
+	width: 300px;
 	font-size: 10px;
 	line-height: 13px !important;
 	padding-top: 5px;

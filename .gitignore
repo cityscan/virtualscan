@@ -1,2 +1,7 @@
+# stupid vim
 *.swp
+
+# stupid gedit
+*~
+
 cartodb.uncompressed.js

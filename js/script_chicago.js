@@ -27,7 +27,7 @@ $('document').ready( function() {
               }
             else if (title != 'All' && queryType == 'query permit') {
                switch (title) {
-                    case "num_other_within_500ft":
+                    case "asset_type":
                         query = "SELECT * FROM exelon WHERE " + title + " > 0";
                         break;
                     case "within_300ft_res":
@@ -61,11 +61,10 @@ $('document').ready( function() {
     //Initialize Map
     var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
     var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');   
-    var map = L.map('map', {
-       center: new L.latLng(41.919108, -88.754425),
-       zoom: 9,
+    map = L.map('map', {
+       center: new L.latLng(41.94810425792558, -87.65721917152405),
+       zoom: 17,
        minZoom: 9,
-       maxZoom: 17
       });
  
     var baseMaps = {
@@ -113,8 +112,8 @@ $('document').ready( function() {
 
               //Change Colors Based on Asset Type
              $('#legendAsset').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
-                layer.getSubLayer(0).setCartoCSS('#exelon [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}');
+                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
+                //layer.getSubLayer(0).setCartoCSS('#exelon [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}');
                 $("#legendAssetLabel").show();
                 $("#legendZoningLabel").hide();
                 $("#violationOR").hide();
@@ -122,8 +121,8 @@ $('document').ready( function() {
               });
               //Change Colors Based on Zoning/Violation
              $('#legendZoning').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_violations=0');
-                layer.getSubLayer(0).setCartoCSS('#exelon [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #F79D00;}');
+                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_violations=0');
+                //layer.getSubLayer(0).setCartoCSS('#exelon [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #F79D00;}');
                 console.log("legend zoning working");
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").show();
@@ -143,8 +142,8 @@ $('document').ready( function() {
                   });
               //Change Colors Based on Source
             $('#legendSource').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
-                layer.getSubLayer(0).setCartoCSS('#exelon [hansen_license_num="None"]{marker-fill: #D7162D;}[hansen_license_num!="None"]{marker-fill: #16D7CB;}');
+                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
+                //layer.getSubLayer(0).setCartoCSS('#exelon [hansen_license_num="None"]{marker-fill: #D7162D;}[hansen_license_num!="None"]{marker-fill: #16D7CB;}');
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").show();
@@ -153,8 +152,8 @@ $('document').ready( function() {
               });
               //Change Colors Based on Operator
             $('#legendOperator').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
-                layer.getSubLayer(0).setCartoCSS('#exelon [operator_self_reported=true]{marker-fill: #16D7CB;}[operator_self_reported=false]{marker-fill: #D7162D;}');
+                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
+                //layer.getSubLayer(0).setCartoCSS('#exelon [operator_self_reported=true]{marker-fill: #16D7CB;}[operator_self_reported=false]{marker-fill: #D7162D;}');
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
@@ -164,135 +163,51 @@ $('document').ready( function() {
 
               //Prepare filter for AND Option for Zoning/Violation
                 function updateMapByClient(){
-                    var Spacing = $('#spacingViolation')[0].checked;console.log("Spacing: "+Spacing);
-                    var Residential = $('#residentialViolation')[0].checked;console.log("Residential: "+Residential);
-                    var Height = $('#heightViolation')[0].checked;console.log("Height: "+Height);
-					
-                    if (Spacing==true && Residential==false && Height==false){
-						        layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_other_within_500ft>0 or num_violations=0');
-								 console.log("spacing");
-                    }else if (Spacing==true && Residential==true && Height==false){
-								layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-								 console.log("spacing and residential");
-                    }else if (Spacing==true && Residential==false && Height==true){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_other_within_500ft>0  or height_rule or num_violations=0');
-								 console.log("spacing and height");
-                    }else if (Spacing==false && Residential==false && Height==true){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE height_rule or num_violations=0');
-								 console.log("height");
-                    }else if (Spacing==false && Residential==true && Height==false){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE within_300ft_res or num_violations=0');
-								 console.log("residential");
-                    }else if (Spacing==false && Residential==true && Height==true){
-								layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE within_300ft_res or height_rule or num_violations=0');
-								 console.log("residential and height");
-                    }else if (Spacing==true && Residential==true && Height==true){
-								layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE within_300ft_res or height_rule or num_other_within_500ft>0 or num_violations=0');
-								 console.log("residential and height and spacing");
-					         }else{
-                        layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_violations=0');
-					         }
+                    var Poles = $('#electricityUtilityPoles')[0].checked;console.log("Poles: "+Poles);
+                    var PoleDevices = $('#poleDevices')[0].checked;console.log("PoleDevices: "+PoleDevices);
+                    var Streetlights = $('#streetlights')[0].checked;console.log("Streetlights: "+Streetlights);
+                    var ManholesVaults = $('#manholesVaults')[0].checked;console.log("ManholesVaults: "+ManholesVaults);
+                    var WireSag = $('#wireSag')[0].checked;console.log("WireSag: "+WireSag);
+
+                    asset_types = {};
+                    asset_types['Electricity/Utility Poles'] = Poles;
+                    asset_types['Pole Devices'] = PoleDevices;
+                    asset_types['Streetlights'] = Streetlights;
+                    asset_types['Manholes and Vaults'] = ManholesVaults;
+                    asset_types['Wire Sag'] = WireSag;
+                    console.log(asset_types);
+                    sql = "SELECT * FROM exelon WHERE asset_type in(";
+                    for (var key in asset_types) {
+                        if (asset_types[key]) {
+                                sql += "'" + key + "', "
+                            }
+                        }
+                    sql = sql.slice(0, -2) + ")"
+                        console.log(sql)
+                    return sql;    
+
                 };
 
-                $('#spacingViolation').click(function(){
-                   updateMapByClient();
+                $('#electricityUtilityPoles').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#residentialViolation').click(function(){
-                    updateMapByClient();
+                $('#poleDevices').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#heightViolation').click(function(){
-                    updateMapByClient();
+                $('#manholesVaults').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                });
+                $('#streetlights').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                });
+                $('#wireSag').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
 
-              //Prepare filter for OR Option for Zoning/Violation
-                function updateMapByClient2(){
-                    var Spacing2 = $('#spacingViolation2')[0].checked;
-                    var Residential2 = $('#residentialViolation2')[0].checked;
-                    var Height2 = $('#heightViolation2')[0].checked;
-                    var License2 = $('#licenseViolation2')[0].checked;
-          
-                    if (Spacing2==true && Residential2==false && Height2==false && License2==false){
-                    layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_other_within_500ft>0 or num_violations=0');
-                 console.log("spacing");
-                    }
-                    else if (Spacing2==false && Residential2==true && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE within_300ft_res or num_violations=0');
-                 console.log("residential");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE height_rule or num_violations=0');
-                 console.log("height");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==false && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE hansen_license_num ILIKE '%None%' or num_violations=0");
-                 console.log("license");
-                    }
-                    else if (Spacing2==true && Residential2==true && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-                 console.log("spacing or residential");
-                    }
-                    else if (Spacing2==true && Height2==true && Residential2==false && License2==false){
-                     layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_other_within_500ft>0 or height_rule or num_violations=0');
-                 console.log("spacing or height");
-                    }
-                    else if (Spacing2==true && License2==true && Residential2==false && Height2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or num_violations=0");
-                 console.log("spacing or license");
-                    }
-                    else if (Spacing2==false && Residential2==true && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE within_300ft_res or height_rule or num_violations=0');
-                 console.log("residential or height");
-                    }
-                    else if (Spacing2==false && License2==true && Residential2==true && Height2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE hansen_license_num ILIKE '%None%' or within_300ft_res or num_violations=0");
-                 console.log("residential or license");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE hansen_license_num ILIKE '%None%' or height_rule or num_violations=0");
-                 console.log("license or height");
-                    }
-                    else if (Spacing2==true && Residential2==true && License2==true && Height2==false ){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or within_300ft_res or num_violations=0");
-                 console.log("spacing or residential or license");
-                    }
-                   else if (Spacing2==true && Residential2==true && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE height_rule or num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-                 console.log("spacing or residential or height");
-                   }
-                    else if (Spacing2==true && Height2==true && License2==true && Residential2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE hansen_license_num ILIKE '%None%' or height_rule or num_other_within_500ft>0 or num_violations=0");
-                 console.log("spacing or height or license");
-                   }
-                    else if (Spacing2==false && Residential2==true && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE hansen_license_num ILIKE '%None%' or height_rule or within_300ft_res or num_violations=0");
-                 console.log("residential or height or license");
-                    }
-                   else if (Spacing2==false && Residential2==false && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_violations=0');
-                 console.log("none");
-                   }
-                   else if (Spacing2==true && Residential2==true && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE num_other_within_500ft>0 or height_rule or within_300ft_res or hansen_license_num ILIKE '%None%' or num_violations=0");
-                 console.log("all");
-                   }
-                };
-
-                $('#spacingViolation2').click(function(){
-                   updateMapByClient2();
-                });
-                $('#residentialViolation2').click(function(){
-                    updateMapByClient2();
-                });
-                $('#heightViolation2').click(function(){
-                    updateMapByClient2();
-                });
-                $('#licenseViolation2').click(function(){
-                    updateMapByClient2();
-                });
 
 
               //Prepare DEFAULT content for Sidebar on Document Load   
-              createSelector(subLayer);
+              //createSelector(subLayer);
                       $('#sidebar').html('');
                       $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
@@ -300,7 +215,7 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Material:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Frame:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height (m):&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Streetlights (m):&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Altitude (m):&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Encroaching Vegetation:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Number of Devices:&nbsp;&nbsp;' +'</strong></p>');
@@ -310,16 +225,16 @@ $('document').ready( function() {
 
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
-                      $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].image + '" height="250" width="300" id="image_sidepanel"></a>');
+                      $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].imageurl_lowres + '" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].asset_type +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].collected_date +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Material:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Frame:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].frame +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height +'</p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Streetlights (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Altitude (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].altitude +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Encroaching Vegetation:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].encroaching_vegetation  +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Number of Devices:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].number_of_devices +'</p>');
@@ -347,9 +262,10 @@ $('document').ready( function() {
            subLayer.on('featureOver', function(e, latlng, pos, data) {
                 var content = $('#box');
               content.show();
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#box').html('');
+                  $('#box').append('<p align="center"><img height="150" width="200" src='+ data.rows[0].imageurl_lowres +'><p/>');
                       $('#box').append('<span id="boxTitle">' + 'Asset Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].asset_type +'</span><br/>');
          
                       $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
