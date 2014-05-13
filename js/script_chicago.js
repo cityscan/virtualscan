@@ -176,14 +176,21 @@ $('document').ready( function() {
                     asset_types['Manholes and Vaults'] = ManholesVaults;
                     asset_types['Wire Sag'] = WireSag;
                     console.log(asset_types);
-                    sql = "SELECT * FROM exelon WHERE asset_type in(";
+                    instring = ''
                     for (var key in asset_types) {
                         if (asset_types[key]) {
-                                sql += "'" + key + "', "
-                            }
-                        }
-                    sql = sql.slice(0, -2) + ")"
-                        console.log(sql)
+                                instring += "'" + key + "', "
+                            } 
+                    }
+                    // get rid of last trailing comma
+                    instring = instring.slice(0, -2); 
+                    console.log(instring);
+                    if (instring) {
+                        sql = "SELECT * FROM exelon WHERE asset_type in(" + instring + ")";
+                    } else {
+                        sql = "SELECT * FROM exelon"
+                    }
+                    console.log(sql)
                     return sql;    
 
                 };
@@ -274,11 +281,9 @@ $('document').ready( function() {
                   window.ycoord = pos.y;
                     var containerObj =  content.position();
                     $('#box').offset({ left: xcoord + 10 , top: ycoord + 70 })
-             console.log("featureOver");
            });
            subLayer.on('featureOut', function(e, latlng, pos, data) {
               $('#box').hide()
-             console.log("featureOut");
            });
 
               subLayer.setInteraction(true);
