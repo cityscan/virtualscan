@@ -235,7 +235,12 @@ $('document').ready( function() {
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
+                      if (data.rows[0].frame == '201') {
+                          $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" height="250" width="300" id="image_sidepanel"></a>');
+                      } else {
+
                       $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].imageurl_lowres + '" height="250" width="300" id="image_sidepanel"></a>');
+                      }
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].asset_type +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].collected_date +'</p>');
@@ -272,7 +277,12 @@ $('document').ready( function() {
               $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#box').html('');
+
+              if (data.rows[0].frame == '201') {
+                  $('#box').append('<p align="center"><img height="150" width="200" src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg"></p>');
+              } else {
                   $('#box').append('<p align="center"><img height="150" width="200" src='+ data.rows[0].imageurl_lowres +'><p/>');
+              }
                       $('#box').append('<span id="boxTitle">' + 'Asset Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].asset_type +'</span><br/>');
          
                       $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
