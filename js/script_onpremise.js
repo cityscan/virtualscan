@@ -126,7 +126,7 @@ $(".leaflet-popup-close-button").remove();
       layer.on({
           mouseover: fillInfo,
           //click: fillInfo
-          //mouseout: resetFeature
+          mouseout: resetFeature
           // can't move the mouse up to the popup to click on anything
       });
   }
@@ -209,7 +209,7 @@ $(".leaflet-popup-close-button").remove();
   var defaultStyle = {
           color: '#000',
           radius: 6,
-          fillColor: 'green',
+          fillColor: '#16D7CB',
           weight: 2,
           opacity: 1,
           fillOpacity: 0.8
