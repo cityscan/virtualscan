@@ -591,6 +591,10 @@ $("#sign").click(function() {
   loadVacantMarkers();
   });
  $("#display_all").click(function() {
+     $("#license").prop('checked', false);
+     $("#sign").prop('checked', false);
+     $("#vacant").prop('checked', false);
+
   if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_license)) {
     map.removeLayer(geojson_license);
     }
