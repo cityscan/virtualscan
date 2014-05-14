@@ -240,7 +240,7 @@ if (instring ) {
                             } 
                     }
                     // get rid of last trailing comma
-instring = instring.slice(0, -2); 
+                    instring = instring.slice(0, -2); 
                     if (instring && $("#violationAndButton").hasClass('active')) {
                         sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='No Permit'";
                     } else if (instring && $("#violationOrButton").hasClass('active')) {
@@ -278,12 +278,16 @@ instring = instring.slice(0, -2);
                    layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
                 $('#violationAndButton').click(function(){
-                    //$('#violationOrButton').toggleClass('active');
+                    if ($("#violationOrButton").hasClass('active')) {
+                        $("#violationOrButton").toggleClass('active');
+                    }
                     $(this).toggleClass('active');
                    layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
                 $('#violationOrButton').click(function(){
-                    //$('#violationAndButton').toggleClass('active');
+                    if ($("#violationAndButton").hasClass('active')) {
+                        $("#violationAndButton").toggleClass('active');
+                    }
                     $(this).toggleClass('active');
                    layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
