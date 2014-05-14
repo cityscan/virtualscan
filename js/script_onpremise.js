@@ -1,5 +1,18 @@
 $('document').ready( function() {
 
+// capture mouse coordinates
+if (window.Event) {
+	document.captureEvents(Event.MOUSEMOVE);
+	}
+	document.onmousemove = getCursorXY;
+
+function getCursorXY(e) {
+	posX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+	posY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+	return [posX, posY];
+
+}
+
     //Initialize Map
     var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
     var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');   
@@ -54,7 +67,22 @@ $('document').ready( function() {
       var lat = layer.feature.properties.lat;
       var lon = layer.feature.properties.lon;
       //layer.bindPopup('<p align="center"><a target="_blank" href='+layer.feature.properties.imageurl+'><img width="100" height="50" src='+layer.feature.properties.thumbnail+'></a></p><p align="center">'+layer.feature.properties.address+'</p>').openPopup();
-       layer.bindPopup('<ul><li>'+layer.feature.properties.address+'</li><li>Business Type: ' + layer.feature.properties.biz_type + '</li><li>Sign Type: ' + layer.feature.properties.sign_type + '</li></ul>').openPopup();
+	$('#box').html('');
+                      $('#box').append('<span id="boxTitle">' + 'Business Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ layer.feature.properties.biz_type +'</span><br/>');   
+                      $('#box').append('<span id="boxTitle">' + 'Address:&nbsp;</span><span id="boxContent">' +'</strong>'+ layer.feature.properties.address +'</span><br/>');
+                      $('#box').append('<span id="boxTitle">' + 'Sign Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ layer.feature.properties.sign_type +'</span><br/>');    
+                      $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ layer.feature.properties.timestamp +'</span>');                 
+
+//window.xcoord = getCursorXY(e);
+                  //window.ycoord = getCursorXY(e);
+                    //var containerObj =  $("#box").position();
+                    //$('#box').offset({ left: layer.clientX + 10 , top: layer.clientY + 70 }) 
+		//$('#box').offset({ left: window.event.pageX + 10 , top: window.event.pageY + 70 })        
+
+var popup = layer.bindPopup('<p><span id="boxTitle">Address: ' + '</span><span id="boxContent"> ' +layer.feature.properties.address+'</span></p><p><span id="boxTitle">Business Type: </span><span id="boxContent">' + layer.feature.properties.biz_type + '</span></p><p><span id="boxTitle">Sign Type: </span><span id=boxContent>' +  layer.feature.properties.sign_type + '</span></p>', {className: "popupBlack"});
+
+popup.openPopup();
+$(".leaflet-popup-close-button").remove();
       $('#sidebar').html('');
       $('#sidebar').append('<a href="' + layer.feature.properties.imageurl + '" target="_blank"><img src="' + layer.feature.properties.thumbnail + '" height="250" width="300" id="image_sidepanel"></a>');
      
@@ -90,6 +118,7 @@ $('document').ready( function() {
   function resetFeature(e) {
       var layer = e.target;
       layer.closePopup();
+	$('#box').hide()
   }
 
 
@@ -97,7 +126,7 @@ $('document').ready( function() {
       layer.on({
           mouseover: fillInfo,
           //click: fillInfo
-          mouseout: resetFeature
+          //mouseout: resetFeature
           // can't move the mouse up to the popup to click on anything
       });
   }
