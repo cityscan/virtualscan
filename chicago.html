@@ -209,12 +209,12 @@
 </a>
 <div id="controlBig">
 <div class="btn-group" data-toggle="buttons-radio"> 
-    <button type="button" class="btn btn-primary active" id="legendAsset">Legend</button>
+    <!--<button type="button" class="btn btn-primary active" id="legendAsset">Legend</button>
     <button type="button" class="btn btn-primary" id="legendZoning">Choose Asset</button>
-    <!--<button type="button" class="btn btn-primary" id="legendSource">License</button>
+    <button type="button" class="btn btn-primary" id="legendSource">License</button>
     <button type="button" class="btn btn-primary" id="legendOperator">Operator</button>-->
   </div>
-  
+    <p style="font-size:14px;font-weight:bolder">Select by Asset Type:</p>
     <div id="legendAssetLabel">
         <ul class="unstyled" style="padding-top:7px">
           <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Electricity/Utility Poles</li>
@@ -228,22 +228,23 @@
  <!-- Add Violations, aka Zoning, Filter Option --> 
 <div id="legendZoningLabel">
     <p>Select Asset Type(s):</p>
-</div>      
+</div> 
+<img src='image/asset_colors.png' width='30' height='6' id='assetLegend'>    
     <div class="checkbox" id="violationOR">
         <label>
-          <input type="checkbox" id="spacingViolation2">
+          <input type="checkbox" id="electricityUtilityPoles">
           Electricity/Utility Poles</label>
         <label>
-          <input type="checkbox" id="residentialViolation2">
+          <input type="checkbox" id="poleDevices">
           Pole Devices</label>
         <label>
-          <input type="checkbox" id="heightViolation2">
+          <input type="checkbox" id="manholesVaults">
           Manholes and Vaults</label>
         <label>
-          <input type="checkbox" id="licenseViolation2">
+          <input type="checkbox" id="streetlights">
           Streetlights</label>
         <label>
-          <input type="checkbox" id="licenseViolation2">
+          <input type="checkbox" id="wireSag">
           Wire Sag</label>
     </div>
 

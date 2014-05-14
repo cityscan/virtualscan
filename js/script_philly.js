@@ -80,7 +80,7 @@ $('document').ready( function() {
       sublayers: [  
         {
           sql: "SELECT * FROM wp_import WHERE num_violations=0",
-          cartocss: "#wp_import [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #F79D00;}",
+          cartocss: "#wp_import [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #16D7CB;}",
           interactivity: "id,route_id,lat,lon,altimeter,timestamp,width,height,type,face_count,operator,mount_type,display_permit,hansen_license_num,address,license_status,license_expiration_date,tag_string,image_filename,brt_id,num_other_within_500ft,within_300ft_res,height_rule,imageurl,cartodb_id,thumbnail,num_violations"
         }]
         }).addTo(map)
@@ -97,7 +97,7 @@ $('document').ready( function() {
 
               //Control (aka legend of filter) Animation
               $("#control").toggle(function(){
-                $("#control").animate({"bottom":"200px"}, "slow");
+                $("#control").animate({"bottom":"208px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
                 $("#legendAssetLabel").show();
                 $("#legendZoningLabel").show();
@@ -124,7 +124,7 @@ $('document').ready( function() {
               //Change Colors Based on Zoning/Violation
              $('#legendZoning').click(function () {
                 layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_violations=0');
-                layer.getSubLayer(0).setCartoCSS('#wp_import [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #F79D00;}');
+                layer.getSubLayer(0).setCartoCSS('#wp_import [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #16D7CB;}');
                 console.log("legend zoning working");
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").show();

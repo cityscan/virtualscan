@@ -4,10 +4,11 @@ html, body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 p {
-	font-size: 12px;
-	line-height: 12px;
+	font-size: 13px;
+	line-height: 13px;
 	color: black;
 }
 strong {
@@ -73,6 +74,9 @@ a:hover {
 	border-color: #006e98 !important;
 	;
 	border-radius: 0 !important;
+}
+.input, button, select, textarea {
+font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 /* Map */
 #map {
@@ -354,9 +358,9 @@ a:hover {
 	border-left-color: black;
 	border-width: 1px;
 	font-color: #000000;
-	padding-top: 4px;
+	padding-top: 8px;
 	padding-left: 8px !important;
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	z-index: 12;
 }
@@ -492,7 +496,9 @@ a:hover {
 #legendZoningLabel {
 	position: absolute;
 	bottom: 140px;
-	right: 60px;
+	right: 10px;
+	width: 210px;
+	font-weight: bolder;
 }
 #violationAnd {
 	position: absolute;

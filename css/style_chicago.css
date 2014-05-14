@@ -74,6 +74,9 @@ a:hover {
 	;
 	border-radius: 0 !important;
 }
+.input, button, select, textarea {
+font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
 /* Map */
 #map {
 	width: 100%;
@@ -289,8 +292,8 @@ a:hover {
 }
 #box {
 	z-index: 50;
-	height: 30px !important;
-	width: 200px;
+	height: 205px; !important;
+	width: 240px;
 	font-size: 10px;
 	line-height: 13px !important;
 	padding-top: 5px;
@@ -305,7 +308,7 @@ a:hover {
 #boxTitle {
 	color: #29abe2;
 	font-size: 10px;
-	margin-left: 7px;
+	margin-left: 20px;
 	margin-top: 2px;
 	font-weight: bolder;
 	font-family: arial;
@@ -354,9 +357,9 @@ a:hover {
 	border-left-color: black;
 	border-width: 1px;
 	font-color: #000000;
-	padding-top: 4px;
+	padding-top: 8px;
 	padding-left: 8px !important;
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	z-index: 12;
 }
@@ -418,6 +421,11 @@ a:hover {
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	font-size: 13px;
 	z-index: 20;
+}
+#assetLegend {
+	position: absolute;
+	bottom: 27px;
+	right: 177px;
 }
 #asset_status {
 	position: absolute;
@@ -494,7 +502,9 @@ a:hover {
 	position: absolute;
 	bottom: 140px;
 	right: 57px;
+	font-size: 14px;
 	width: 150px;
+	font-weight: bolder;
 }
 #violationAnd {
 	position: absolute;
@@ -503,8 +513,8 @@ a:hover {
 }
 #violationOR {
 	position: absolute;
-	bottom: 16px;
-	right: 20px;
+	bottom: 27px;
+	right: 15px;
 }
 #legendSourceLabel {
 	position: absolute;

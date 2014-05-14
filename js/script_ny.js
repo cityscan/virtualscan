@@ -108,23 +108,22 @@ $('document').ready( function() {
 
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
-                $("#controlBig").animate({"bottom":"-240px"}, "slow");
+                $("#controlBig").animate({"bottom":"-248px"}, "slow");
               });
 
               //Change Colors Based on Asset Type
              $('#legendAsset').click(function () {
                 layer.getSubLayer(0).setSQL('SELECT * FROM nyc');
-                layer.getSubLayer(0).setCartoCSS('#nyc [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}');
+                layer.getSubLayer(0).setCartoCSS('#nyc[type=\"Billboard\"]{marker-fill: #D7162D;}[type=\"Fence\"]{marker-fill: #16D7CB;}[type=\"Awning\"]{marker-fill: #F79D00;}[type=\"Scaffolding\"]{marker-fill: #88F71A;}[type=\"Sidewalk Shed\"]{marker-fill: #FF7316;}[type=\"Dumpster\"]{marker-fill: #4B25EE;}');
                 $("#legendAssetLabel").show();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
                 $("#violationOR").hide();
+                $("#violationAnd").hide();
                 $("#legendOperatorLabel").hide();
               });
               //Change Colors Based on Zoning/Violation
              $('#legendZoning').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_violations=0');
-                layer.getSubLayer(0).setCartoCSS('#nyc [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #F79D00;}');
                 console.log("legend zoning working");
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").show();
@@ -142,153 +141,115 @@ $('document').ready( function() {
                     $("#violationAnd").hide();
                     $("#violationOR").show();
                   });
-              //Change Colors Based on Source
-            $('#legendSource').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc');
-                layer.getSubLayer(0).setCartoCSS('#nyc [hansen_license_num="None"]{marker-fill: #D7162D;}[hansen_license_num!="None"]{marker-fill: #16D7CB;}');
-                $("#legendAssetLabel").hide();
-                $("#legendZoningLabel").hide();
-                $("#legendSourceLabel").show();
-                $("#violationOR").hide();
-                $("#legendOperatorLabel").hide();
-              });
-              //Change Colors Based on Operator
-            $('#legendOperator').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc');
-                layer.getSubLayer(0).setCartoCSS('#nyc [operator_self_reported=true]{marker-fill: #16D7CB;}[operator_self_reported=false]{marker-fill: #D7162D;}');
-                $("#legendAssetLabel").hide();
-                $("#legendZoningLabel").hide();
-                $("#legendSourceLabel").hide();
-                $("#violationOR").hide();
-                $("#legendOperatorLabel").show();
-              });
 
-              //Prepare filter for AND Option for Zoning/Violation
+                //Prepare filter for expired permits
                 function updateMapByClient(){
-                    var Spacing = $('#spacingViolation')[0].checked;console.log("Spacing: "+Spacing);
-                    var Residential = $('#residentialViolation')[0].checked;console.log("Residential: "+Residential);
-                    var Height = $('#heightViolation')[0].checked;console.log("Height: "+Height);
-					
-                    if (Spacing==true && Residential==false && Height==false){
-						        layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_other_within_500ft>0 or num_violations=0');
-								 console.log("spacing");
-                    }else if (Spacing==true && Residential==true && Height==false){
-								layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-								 console.log("spacing and residential");
-                    }else if (Spacing==true && Residential==false && Height==true){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_other_within_500ft>0  or height_rule or num_violations=0');
-								 console.log("spacing and height");
-                    }else if (Spacing==false && Residential==false && Height==true){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE height_rule or num_violations=0');
-								 console.log("height");
-                    }else if (Spacing==false && Residential==true && Height==false){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE within_300ft_res or num_violations=0');
-								 console.log("residential");
-                    }else if (Spacing==false && Residential==true && Height==true){
-								layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE within_300ft_res or height_rule or num_violations=0');
-								 console.log("residential and height");
-                    }else if (Spacing==true && Residential==true && Height==true){
-								layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE within_300ft_res or height_rule or num_other_within_500ft>0 or num_violations=0');
-								 console.log("residential and height and spacing");
-					         }else{
-                        layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_violations=0');
-					         }
+                    var Awning = $('#awningOr')[0].checked;console.log("Awning: "+Awning);
+                    var Billboard = $('#billboardOr')[0].checked;console.log("Billboard: "+Billboard);
+                    var Dumpster = $('#dumpsterOr')[0].checked;console.log("Dumpster: "+Dumpster);
+                    var Fence = $('#fenceOr')[0].checked;console.log("Fence: "+Fence);
+                    var Scaffolding = $('#scaffoldingOr')[0].checked;console.log("Scaffolding: "+Scaffolding);
+                    var Sidewalk = $('#sidewalkOr')[0].checked;console.log("Sidewalk: "+Sidewalk);
+
+                    asset_types = {};
+                    asset_types['Awning'] = Awning;
+                    asset_types['Billboard'] = Billboard;
+                    asset_types['Dumpster'] = Dumpster;
+                    asset_types['Fence'] = Fence;
+                    asset_types['Scaffolding'] = Scaffolding;
+                    asset_types['Sidewalk Shed'] = Sidewalk;
+                    console.log(asset_types);
+                    instring = ''
+                    for (var key in asset_types) {
+                        if (asset_types[key]) {
+                                instring += "'" + key + "', "
+                            } 
+                    }
+                    // get rid of last trailing comma
+                    instring = instring.slice(0, -2); 
+                    console.log(instring);
+                    if (instring) {
+                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='Expired Permit'";
+                    } else {
+                        sql = "SELECT * FROM nyc WHERE asset_id>1000"
+                    }
+                    console.log(sql)
+                    return sql;
+
                 };
 
-                $('#spacingViolation').click(function(){
-                   updateMapByClient();
+                $('#awningOr').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#residentialViolation').click(function(){
-                    updateMapByClient();
+                $('#billboardOr').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#heightViolation').click(function(){
-                    updateMapByClient();
+                $('#dumpsterOr').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                });
+                $('#fenceOr').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                });
+                $('#scaffoldingOr').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                });
+                $('#sidewalkOr').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
 
-              //Prepare filter for OR Option for Zoning/Violation
+                //prepare filter for no permits permits
                 function updateMapByClient2(){
-                    var Spacing2 = $('#spacingViolation2')[0].checked;
-                    var Residential2 = $('#residentialViolation2')[0].checked;
-                    var Height2 = $('#heightViolation2')[0].checked;
-                    var License2 = $('#licenseViolation2')[0].checked;
-          
-                    if (Spacing2==true && Residential2==false && Height2==false && License2==false){
-                    layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_other_within_500ft>0 or num_violations=0');
-                 console.log("spacing");
+                    var Awnings = $('#awningAnd')[0].checked;console.log("Awning: "+Awnings);
+                    var Billboards = $('#billboardAnd')[0].checked;console.log("Billboard: "+Billboards);
+                    var Dumpsters = $('#dumpsterAnd')[0].checked;console.log("Dumpster: "+Dumpsters);
+                    var Fences = $('#fenceAnd')[0].checked;console.log("Fence: "+Fences);
+                    var Scaffoldings = $('#scaffoldingAnd')[0].checked;console.log("Scaffolding: "+Scaffoldings);
+                    var Sidewalks = $('#sidewalkAnd')[0].checked;console.log("Sidewalk: "+Sidewalks);
+
+                    asset_types = {};
+                    asset_types['Awning'] = Awnings;
+                    asset_types['Billboard'] = Billboards;
+                    asset_types['Dumpster'] = Dumpsters;
+                    asset_types['Fence'] = Fences;
+                    asset_types['Scaffolding'] = Scaffoldings;
+                    asset_types['Sidewalk Shed'] = Sidewalks;
+                    console.log(asset_types);
+                    instring = ''
+                    for (var key in asset_types) {
+                        if (asset_types[key]) {
+                                instring += "'" + key + "', "
+                            } 
                     }
-                    else if (Spacing2==false && Residential2==true && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE within_300ft_res or num_violations=0');
-                 console.log("residential");
+                    // get rid of last trailing comma
+                    instring = instring.slice(0, -2); 
+                    console.log(instring);
+                    if (instring) {
+                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='None'";
+                    } else {
+                        sql = "SELECT * FROM nyc WHERE asset_id>1000"
                     }
-                    else if (Spacing2==false && Residential2==false && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE height_rule or num_violations=0');
-                 console.log("height");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==false && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE hansen_license_num ILIKE '%None%' or num_violations=0");
-                 console.log("license");
-                    }
-                    else if (Spacing2==true && Residential2==true && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-                 console.log("spacing or residential");
-                    }
-                    else if (Spacing2==true && Height2==true && Residential2==false && License2==false){
-                     layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_other_within_500ft>0 or height_rule or num_violations=0');
-                 console.log("spacing or height");
-                    }
-                    else if (Spacing2==true && License2==true && Residential2==false && Height2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or num_violations=0");
-                 console.log("spacing or license");
-                    }
-                    else if (Spacing2==false && Residential2==true && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE within_300ft_res or height_rule or num_violations=0');
-                 console.log("residential or height");
-                    }
-                    else if (Spacing2==false && License2==true && Residential2==true && Height2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE hansen_license_num ILIKE '%None%' or within_300ft_res or num_violations=0");
-                 console.log("residential or license");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE hansen_license_num ILIKE '%None%' or height_rule or num_violations=0");
-                 console.log("license or height");
-                    }
-                    else if (Spacing2==true && Residential2==true && License2==true && Height2==false ){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or within_300ft_res or num_violations=0");
-                 console.log("spacing or residential or license");
-                    }
-                   else if (Spacing2==true && Residential2==true && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE height_rule or num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-                 console.log("spacing or residential or height");
-                   }
-                    else if (Spacing2==true && Height2==true && License2==true && Residential2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE hansen_license_num ILIKE '%None%' or height_rule or num_other_within_500ft>0 or num_violations=0");
-                 console.log("spacing or height or license");
-                   }
-                    else if (Spacing2==false && Residential2==true && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE hansen_license_num ILIKE '%None%' or height_rule or within_300ft_res or num_violations=0");
-                 console.log("residential or height or license");
-                    }
-                   else if (Spacing2==false && Residential2==false && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE num_violations=0');
-                 console.log("none");
-                   }
-                   else if (Spacing2==true && Residential2==true && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE num_other_within_500ft>0 or height_rule or within_300ft_res or hansen_license_num ILIKE '%None%' or num_violations=0");
-                 console.log("all");
-                   }
+                    console.log(sql)
+                    return sql;
+
                 };
 
-                $('#spacingViolation2').click(function(){
-                   updateMapByClient2();
+                $('#awningAnd').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
-                $('#residentialViolation2').click(function(){
-                    updateMapByClient2();
+                $('#billboardAnd').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
-                $('#heightViolation2').click(function(){
-                    updateMapByClient2();
+                $('#dumpsterAnd').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
-                $('#licenseViolation2').click(function(){
-                    updateMapByClient2();
+                $('#fenceAnd').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
+                });
+                $('#scaffoldingAnd').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
+                });
+                $('#sidewalkAnd').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
 
 
