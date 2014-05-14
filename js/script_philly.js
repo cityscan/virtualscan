@@ -122,6 +122,8 @@ $('document').ready( function() {
                 $("#legendOperatorLabel").hide();
               });
               //Change Colors Based on Zoning/Violation
+	      // TODO: test if boxes are already checked.
+	  	// if 
              $('#legendZoning').click(function () {
                 layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_violations=0');
                 layer.getSubLayer(0).setCartoCSS('#wp_import [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #16D7CB;}');

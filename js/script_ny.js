@@ -132,15 +132,17 @@ $('document').ready( function() {
                 $("#legendOperatorLabel").hide();
               });
                  //Include Toggling for AND/OR option for Zoning/Violation
+             /*
                 $('#violationAndButton').click(function () {
                     $("#violationAnd").show();
                     $("#violationOR").hide();
                   });
 
-                $('#violoationOrButton').click(function () {
+                $('#violationOrButton').click(function () {
                     $("#violationAnd").hide();
                     $("#violationOR").show();
                   });
+                  */
 
                 //Prepare filter for expired permits
                 function updateMapByClient(){
@@ -168,11 +170,28 @@ $('document').ready( function() {
                     // get rid of last trailing comma
                     instring = instring.slice(0, -2); 
                     console.log(instring);
-                    if (instring) {
+                    if (instring && $("#violationAndButton").hasClass('active')) {
+                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='No Permit'";
+                    } else if (instring && $("#violationOrButton").hasClass('active')) {
+                        sql = "SELECT * FROM nyc WHERE type in (" + instring + ") AND asviolation = 'Expired Permit'";
+		} else if (instring && $("#violationAndButton").hasClass('active') == false && $("#violationOrButton").hasClass('active') == false) {
+			sql = "SELECT * FROM nyc WHERE type IN (" + instring + ")";
+		} else if (!instring && $("#violationAndButton").hasClass('active')) {
+                    sql = "SELECT * FROM nyc WHERE asviolation = 'No Permit'"
+                } else if (!instring && $("#violationOrButton").hasClass('active')) {
+                    sql = "SELECT * FROM nyc WHERE asviolation = 'Expired Permit'"
+                } else {
+			sql = "SELECT * FROM nyc";
+}
+                    
+
+/* GOOD BLOCK
+if (instring ) {
                         sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='Expired Permit'";
                     } else {
                         sql = "SELECT * FROM nyc WHERE asset_id>1000"
                     }
+*/
                     console.log(sql)
                     return sql;
 
@@ -221,13 +240,20 @@ $('document').ready( function() {
                             } 
                     }
                     // get rid of last trailing comma
-                    instring = instring.slice(0, -2); 
-                    console.log(instring);
-                    if (instring) {
-                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='None'";
-                    } else {
-                        sql = "SELECT * FROM nyc WHERE asset_id>1000"
-                    }
+instring = instring.slice(0, -2); 
+                    if (instring && $("#violationAndButton").hasClass('active')) {
+                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='No Permit'";
+                    } else if (instring && $("#violationOrButton").hasClass('active')) {
+                        sql = "SELECT * FROM nyc WHERE type in (" + instring + ") AND asviolation = 'Expired Permit'";
+		} else if (instring && $("#violationAndButton").hasClass('active') == false && $("#violationOrButton").hasClass('active') == false) {
+			sql = "SELECT * FROM nyc WHERE type IN (" + instring + ")";
+		} else if (!instring && $("#violationAndButton").hasClass('active')) {
+                    sql = "SELECT * FROM nyc WHERE asviolation = 'No Permit'"
+                } else if (!instring && $("#violationOrButton").hasClass('active')) {
+                    sql = "SELECT * FROM nyc WHERE asviolation = 'Expired Permit'"
+                } else {
+			sql = "SELECT * FROM nyc";
+}
                     console.log(sql)
                     return sql;
 
@@ -249,6 +275,16 @@ $('document').ready( function() {
                    layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
                 $('#sidewalkAnd').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
+                });
+                $('#violationAndButton').click(function(){
+                    //$('#violationOrButton').toggleClass('active');
+                    $(this).toggleClass('active');
+                   layer.getSubLayer(0).setSQL(updateMapByClient2());
+                });
+                $('#violationOrButton').click(function(){
+                    //$('#violationAndButton').toggleClass('active');
+                    $(this).toggleClass('active');
                    layer.getSubLayer(0).setSQL(updateMapByClient2());
                 });
 
@@ -314,11 +350,9 @@ $('document').ready( function() {
                   window.ycoord = pos.y;
                     var containerObj =  content.position();
                     $('#box').offset({ left: xcoord + 10 , top: ycoord + 70 })
-             console.log("featureOver");
            });
            subLayer.on('featureOut', function(e, latlng, pos, data) {
               $('#box').hide()
-             console.log("featureOut");
            });
 
               subLayer.setInteraction(true);

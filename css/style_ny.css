@@ -498,6 +498,9 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	right: 10px;
 	width: 210px;
 }
+#legendZoningLabel p {
+    padding-top: 10px;
+}
 #violationAnd {
 	position: absolute;
 	bottom: 2px;
