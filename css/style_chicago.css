@@ -423,11 +423,6 @@ a:hover {
 	font-size: 13px;
 	z-index: 20;
 }
-#assetLegend {
-	position: absolute;
-	bottom: 27px;
-	right: 177px;
-}
 #asset_status {
 	position: absolute;
 	top: 5px;
@@ -505,19 +500,24 @@ a:hover {
 	right: 57px;
 	font-size: 14px;
 	width: 150px;
+	height: 14px;/*made this change*/
 	font-weight: bolder;
-}
-#violationAnd {
-	position: absolute;
-	bottom: 16px;
-	right: 15px;
 }
 #violationOR {
 	position: absolute;
-	bottom: 27px;
-	right: 15px;
+	bottom: 21px;/*made this change*/
+	right: 5px;/*made this change*/
 	color: black;
+	height: 130px;/*made this change*/
+	width: 150px;/*made this change*/
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#assetLegend {
+	position: absolute;
+	bottom: 29px;
+	height: 125px;/*made this change*/
+	width: 25px;/*made this change*/
+	right: 177px;
 }
 #legendSourceLabel {
 	position: absolute;
