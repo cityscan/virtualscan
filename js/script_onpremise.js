@@ -239,6 +239,14 @@ $(".leaflet-popup-close-button").remove();
         return L.circleMarker(latlng, defaultStyle);
         }
     }
+    
+    function signViolStyle(feature, latlng) {
+      if (feature.properties.sign_viol_bool) {
+        return L.circleMarker(latlng, violStyleRed);
+        } else {
+        return L.circleMarker(latlng, defaultStyle);
+        }
+    }
         
 group = L.layerGroup();
 
@@ -280,8 +288,8 @@ var geojson_all ;
           group.addLayer(geojson_all);
   });
   }
-  function loadLicenseMarkers() {
-    geojson_license = $.getJSON(querystring("SELECT * FROM onpremise"), function(data) {
+  function loadLicenseMarkers(q) {
+    geojson_license = $.getJSON(querystring("SELECT * FROM onpremise" + q), function(data) {
       geojson_license = L.geoJson(data, {
           pointToLayer: bizViolStyle,
           onEachFeature: onEachFeature
@@ -292,7 +300,7 @@ var geojson_all ;
   
   function loadBizMarkers() {
   geojson_vacant = $.getJSON(querystring("SELECT * FROM onpremise"), function(data) {
-      geojson_vacant = L.geoJson(data, {
+      geojson_all = L.geoJson(data, {
           pointToLayer: markerStyle,
           style: function(feature) {
             switch (feature.properties.biz_type) {
@@ -335,6 +343,7 @@ var geojson_all ;
                 $( "#legendZoningLabel" ).show();
                 $( "#legendSourceLabel" ).hide();
                 $( "#legendPermitabel" ).hide();
+                
               });
               $('#legendSource').click(function () {
                 //layer.getSubLayer(0).setCartoCSS('#wp_import [source=\"city_records\"]{marker-fill: #006E98;}[source=\"lidar\"] {marker-fill: #474747;}[source=\"market_records\"]{marker-fill: #009900;}');
@@ -559,7 +568,9 @@ var geojson_all ;
     }
   //$("#license").attr('checked', false);
   //$("#vacant").attr('checked', false);
-  loadChangeMarkers();
+  
+  
+      
               });
                  //Include Toggling for AND/OR option for Zoning/Violation
                 $('#violationAndButton').click(function () {
@@ -669,14 +680,122 @@ var geojson_all ;
       }    
       });
       
-      
-loadBizMarkers();
-//$("#sign").click(function() {
-  
-  //$("#license").attr('checked', false);
-  //$("#vacant").attr('checked', false);
-  //loadChangeMarkers();
-  //});
+// both checked, show all signs, permitted or not
+function updateMapByClient(){
+               var signYes = $('#signYes').prop('checked');
+               var signNo = $("#signNo").prop('checked');
+               var licenseYes = $("#licenseYes").prop('checked');
+               var licenseNo = $("#licenseNo").prop('checked');
+               var params = {};
+               
+               if (signYes && signNo) {
+                params['sql'] = "SELECT * FROM onpremise"
+                params['style'] = 'signViolStyle'
+                // pass to signViolStyle
+                } else if (signYes && signNo == false) {
+                  params['sql'] = "SELECT * FROM onpremise WHERE NOT sign_viol_bool"
+                  params['style'] = 'signViolStyle'
+                  // pass to signViolStyle
+                } else if (signYes == false && signNo) {
+                  params['sql'] = "SELECT * FROM onpremise WHERE sign_viol_bool"
+                  params['style'] = 'signViolStyle'
+                  // pass to signViolStyle
+                } else if (signYes == false && signNo == false) {
+                  params['sql'] = "SELECT * FROm onpremise"
+                  params['style'] = 'markerStyle'
+                  // pass to markerStyle
+                } else if (licenseYes && licenseNo) {
+                  params['sql'] = "SELECT * FROM onpremise"
+                  params['style'] = 'bizViolStyle'
+                  // pass to bizViolStyle
+                  } else if (licenseYes && licenseNo == false) {
+                    params['sql'] = "SELECT * FROM onpremise WHERE NOT biz_viol_bool"
+                    params['style'] = bizViolStyle
+                  // pass to bizViolStyle
+                 } else if (licenseYes == false && licenseNo) {
+                    params['sql'] = "SELECT * FROM onpremise WHERE biz_viol != ''"
+                    params['style'] = 'bizViolStyle'
+                   // pass to bizViolStyle
+                 } else if (licenseYes == false && licenseNo == false) {
+                    params['sql'] = "SELECT * FROM onpremise"
+                    params['style'] = 'markerStyle'
+                   // pass to markerStyle
+              
+                } else {
+                  params['sql'] = "SELECT * FROM onpremise"
+                  params['style'] = 'markerStyle'
+                  // pass to markerStyle
+                  }
+                  return params
+                  }
+                  
+          loadBizMarkers();
+                  
+                $('#signYes').click(function(){
+                  $('#licenseYes').prop('checked', false);
+                  $('#licenseNo').prop('checked', false);
+                   var params = updateMapByClient();
+                   if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+                   $.getJSON(querystring(params['sql']), function(data) {
+                      geojson_all =  L.geoJson(data, {
+                      pointToLayer: signViolStyle,
+                      onEachFeature: onEachFeature
+                      }).addTo(map);
+                      group.addLayer(geojson_all);
+                    }); 
+                });
+                $('#signNo').click(function(){
+                  $('#licenseYes').prop('checked', false);
+                  $('#licenseNo').prop('checked', false);
+                   var params = updateMapByClient();
+                   if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+                   $.getJSON(querystring(params['sql']), function(data) {
+                      geojson_all =  L.geoJson(data, {
+                      pointToLayer: signViolStyle,
+                      onEachFeature: onEachFeature
+                      }).addTo(map);
+                      group.addLayer(geojson_all);
+                    }); 
+                });
+                $('#licenseYes').click(function(){
+                  $('#signYes').prop('checked', false);
+                  $('#signNo').prop('checked', false);
+                   var params = updateMapByClient();
+                   if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+                   $.getJSON(querystring(params['sql']), function(data) {
+                      geojson_all =  L.geoJson(data, {
+                      pointToLayer: bizViolStyle,
+                      onEachFeature: onEachFeature
+                      }).addTo(map);
+                      group.addLayer(geojson_all);
+                    }); 
+                });
+                $('#licenseNo').click(function(){
+                  $('#signYes').prop('checked', false);
+                  $('#signNo').prop('checked', false);
+                   var params = updateMapByClient();
+                   if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+                   $.getJSON(querystring(params['sql']), function(data) {
+                      geojson_all =  L.geoJson(data, {
+                      pointToLayer: bizViolStyle,
+                      onEachFeature: onEachFeature
+                      }).addTo(map);
+                      group.addLayer(geojson_all);
+                    }); 
+                });
+
+
+         
+
+/*
 
  $("#license").click(function() {
   $("#sign").attr('checked', false);
@@ -723,7 +842,7 @@ loadBizMarkers();
     }
   loadMarkers()
   });
-  
+  */
 /*
   var data = { 'q' : 'SELECT  * FROM onpremise', 'format': 'GeoJSON'};
   var url = 'http://cityscan.cartodb.com/api/v2/sql?'
