@@ -167,133 +167,41 @@ $('document').ready( function() {
 
               //Prepare filter for AND Option for Zoning/Violation
                 function updateMapByClient(){
-                    var Spacing = $('#spacingViolation')[0].checked;console.log("Spacing: "+Spacing);
-                    var Residential = $('#residentialViolation')[0].checked;console.log("Residential: "+Residential);
-                    var Height = $('#heightViolation')[0].checked;console.log("Height: "+Height);
+                    var Spacing = $('#spacingViolation2')[0].checked;console.log("Spacing: "+Spacing);
+                    var Residential = $('#residentialViolation2')[0].checked;console.log("Residential: "+Residential);
+                    var Height = $('#heightViolation2')[0].checked;console.log("Height: "+Height);
+                    
+                    zoning_rules = {};
+                    zoning_rules['num_other_within_500ft_bool'] = Spacing;
+                    zoning_rules['within_300ft_res'] = Residential;
+                    zoning_rules['face_rule'] = Height;
+                    wherestring = '';
+                    for (var key in zoning_rules) {
+                      if (zoning_rules[key]) {
+                        wherestring += key + " AND " 
+                        }
+                      }
+                    wherestring = wherestring.slice(0, -5);
+                    console.log(wherestring);
+                    
+                    if (wherestring) {
+                      sql = "SELECT * FROM wp_import WHERE " + wherestring;
+                      }
+                     layer.getSubLayer(0).setSQL(sql);
 					
-                    if (Spacing==true && Residential==false && Height==false){
-						        layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or num_violations=0');
-								 console.log("spacing");
-                    }else if (Spacing==true && Residential==true && Height==false){
-								layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-								 console.log("spacing and residential");
-                    }else if (Spacing==true && Residential==false && Height==true){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0  or height_rule or num_violations=0');
-								 console.log("spacing and height");
-                    }else if (Spacing==false && Residential==false && Height==true){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE height_rule or num_violations=0');
-								 console.log("height");
-                    }else if (Spacing==false && Residential==true && Height==false){
-						         layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or num_violations=0');
-								 console.log("residential");
-                    }else if (Spacing==false && Residential==true && Height==true){
-								layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or height_rule or num_violations=0');
-								 console.log("residential and height");
-                    }else if (Spacing==true && Residential==true && Height==true){
-								layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or height_rule or num_other_within_500ft>0 or num_violations=0');
-								 console.log("residential and height and spacing");
-					         }else{
-                        layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_violations=0');
-					         }
-                };
-
-                $('#spacingViolation').click(function(){
-                   updateMapByClient();
-                });
-                $('#residentialViolation').click(function(){
-                    updateMapByClient();
-                });
-                $('#heightViolation').click(function(){
-                    updateMapByClient();
-                });
-
-              //Prepare filter for OR Option for Zoning/Violation
-                function updateMapByClient2(){
-                    var Spacing2 = $('#spacingViolation2')[0].checked;
-                    var Residential2 = $('#residentialViolation2')[0].checked;
-                    var Height2 = $('#heightViolation2')[0].checked;
-                    var License2 = $('#licenseViolation2')[0].checked;
-          
-                    if (Spacing2==true && Residential2==false && Height2==false && License2==false){
-                    layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or num_violations=0');
-                 console.log("spacing");
-                    }
-                    else if (Spacing2==false && Residential2==true && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or num_violations=0');
-                 console.log("residential");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE height_rule or num_violations=0');
-                 console.log("height");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==false && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or num_violations=0");
-                 console.log("license");
-                    }
-                    else if (Spacing2==true && Residential2==true && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-                 console.log("spacing or residential");
-                    }
-                    else if (Spacing2==true && Height2==true && Residential2==false && License2==false){
-                     layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_other_within_500ft>0 or height_rule or num_violations=0');
-                 console.log("spacing or height");
-                    }
-                    else if (Spacing2==true && License2==true && Residential2==false && Height2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or num_violations=0");
-                 console.log("spacing or license");
-                    }
-                    else if (Spacing2==false && Residential2==true && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE within_300ft_res or height_rule or num_violations=0');
-                 console.log("residential or height");
-                    }
-                    else if (Spacing2==false && License2==true && Residential2==true && Height2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or within_300ft_res or num_violations=0");
-                 console.log("residential or license");
-                    }
-                    else if (Spacing2==false && Residential2==false && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or height_rule or num_violations=0");
-                 console.log("license or height");
-                    }
-                    else if (Spacing2==true && Residential2==true && License2==true && Height2==false ){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or num_other_within_500ft>0 or within_300ft_res or num_violations=0");
-                 console.log("spacing or residential or license");
-                    }
-                   else if (Spacing2==true && Residential2==true && Height2==true && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE height_rule or num_other_within_500ft>0 or within_300ft_res or num_violations=0');
-                 console.log("spacing or residential or height");
-                   }
-                    else if (Spacing2==true && Height2==true && License2==true && Residential2==false){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or height_rule or num_other_within_500ft>0 or num_violations=0");
-                 console.log("spacing or height or license");
-                   }
-                    else if (Spacing2==false && Residential2==true && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE hansen_license_num ILIKE '%None%' or height_rule or within_300ft_res or num_violations=0");
-                 console.log("residential or height or license");
-                    }
-                   else if (Spacing2==false && Residential2==false && Height2==false && License2==false){
-                layer.getSubLayer(0).setSQL('SELECT * FROM wp_import WHERE num_violations=0');
-                 console.log("none");
-                   }
-                   else if (Spacing2==true && Residential2==true && Height2==true && License2==true){
-                layer.getSubLayer(0).setSQL("SELECT * FROM wp_import WHERE num_other_within_500ft>0 or height_rule or within_300ft_res or hansen_license_num ILIKE '%None%' or num_violations=0");
-                 console.log("all");
-                   }
                 };
 
                 $('#spacingViolation2').click(function(){
-                   updateMapByClient2();
+                   updateMapByClient();
                 });
                 $('#residentialViolation2').click(function(){
-                    updateMapByClient2();
+                    updateMapByClient();
                 });
                 $('#heightViolation2').click(function(){
-                    updateMapByClient2();
-                });
-                $('#licenseViolation2').click(function(){
-                    updateMapByClient2();
+                    updateMapByClient();
                 });
 
-
+              
               //Prepare DEFAULT content for Sidebar on Document Load   
               createSelector(subLayer);
                       $('#sidebar').html('');
