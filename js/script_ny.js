@@ -135,6 +135,7 @@ $('document').ready( function() {
               });
 
                  //Include Toggling for AND/OR option for Zoning/Violation
+             /*
                 $('#violationAndButton').click(function () {
                     $("#violationAnd").show();
                     $("#violationOR").hide();
@@ -148,7 +149,11 @@ $('document').ready( function() {
                     $('input:checkbox').removeAttr('checked');
                     layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
                   });
+<<<<<<< HEAD
                   
+=======
+                  */
+>>>>>>> f093652134f0ef22c127d4548e6c5138bcca391f
 
                 //Prepare filter for expired permits
                 function updateMapByClient(){
