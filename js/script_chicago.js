@@ -105,10 +105,12 @@ $('document').ready( function() {
                 $("#violationOR").show();
                 $("#violationAnd").hide();
                 $("#legendOperatorLabel").hide();
+                $("#assetLegend").animate({"bottom":"28px"}, "slow");//new
 
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
                 $("#controlBig").animate({"bottom":"-210px"}, "slow");
+                $("#assetLegend").animate({"bottom":"25px"}, "slow");//new
               });
 
               //Change Colors Based on Asset Type
