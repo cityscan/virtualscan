@@ -499,23 +499,28 @@ a:hover {
 }
 #permitAssetLabel {
 	position: absolute;
-	bottom: 180px;
+	bottom: 180px;/*made this change*/
 	color: black;
-	right: 0px;
+	right: 0px;/*made this change*/
 	font-weight: bolder;
 	font-size: 16px;
-	width: 225px;
+	width: 225px;/*made this change*/
+	height: 15px;/*made this change*/
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #assetLegend {
 	position: absolute;
-	bottom: 27px;
-	right: 197px;
+	bottom: 25px;/*made this change*/
+	height: 143px;/*made this change*/
+	width: 25px;/*made this change*/
+	right: 195px;/*made this change*/
 }
 #assetCheck {
 	position: absolute;
-	bottom: 20px;
-	right: 73px;
+	bottom: 24px;/*made this change*/
+	height: 145px;/*made this change*/
+	width: 130px;/*made this change*/
+	right: 38px;/*made this change*/
 	color: black;
 }
 #legendZoningLabel {
@@ -526,15 +531,10 @@ a:hover {
 }
 #violationAnd {
 	position: absolute;
-	bottom: 127px;
-	right: 155px;
-	color: black;
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-#violationOR {
-	position: absolute;
-	bottom: 2px;
-	right: 107px;
+	bottom: 90px;/*made this change*/
+	right: 75px;/*made this change*/
+	height: 85px;/*made this change*/
+	width: 130px;/*made this change*/
 	color: black;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
