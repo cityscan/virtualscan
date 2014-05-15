@@ -3,6 +3,7 @@ $('document').ready( function() {
     $("#legendZoningLabel").hide();
     $("#permitAssetLabel").hide();
     $("#violationAnd").hide();
+    $('input:checkbox').attr( 'checked', true );
 
  function createSelector(layer) {
   var sql = new cartodb.SQL({ user: 'cityscan' });
