@@ -168,23 +168,13 @@
 </a>
 <div id="controlBig">
 <div class="btn-group" data-toggle="buttons-radio"> 
-    <button type="button" class="btn btn-primary" id="legendZoning">Sign Permit</button>
-    <button type="button" class="btn btn-primary" id="legendSource">License</button>
-    <button type="button" class="btn btn-primary" id="legendOperator">Type</button>
-  </div>
-  
- <!-- Add Violations, aka Zoning, Filter Option --> 
-    <div id="legendZoningLabel">
-    <p>Sign Permit (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
-    </div>
+    <button type="button" class="btn btn-primary" id="legendOperator">Asset Class</button>
+    <button type="button" class="btn btn-primary" id="legendZoning">Permit Status</button>
     
-    <div id="legendSourceLabel">
-      <p>Valid Business License (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
-      </div>
-      
-     
-     <div class="checkbox" id="legendOperatorLabel">
-      <p style="font-size:14px;font-weight:bolder">Business Type:</p>
+    
+  </div>
+  <div class="checkbox" id="legendOperatorLabel">
+      <p style="font-size:14px;font-weight:bolder">Asset Class:</p>
      <ul class="unstyled" style="padding-top:7px">
           <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Food Stores</li>
           <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Pharmacy</li>
@@ -193,6 +183,18 @@
           <li><a style='background:#FF7316;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Retail</li>
           <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Vacant</li>
         </ul>
+        </div>
+ <!-- Add Violations, aka Zoning, Filter Option --> 
+    <div id="legendZoningLabel">
+    <p>On-Premise Sign Permit (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
+    <p>Business License Status
+      <label>None<input type="radio" id="legendSource"></label>
+      <label>Valid<input type="radio" id="legendSourceValid"></label></p>
+    </div>
+   
+      
+     
+     
     
     <!--
     <label>
@@ -213,7 +215,7 @@
     <label>
       <input type="checkbox" id="heightViolation">
       Vacant</label> -->
-  </div>
+  
     
     
     

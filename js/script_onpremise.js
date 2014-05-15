@@ -259,6 +259,18 @@ var geojson_all ;
   
   }
   
+   function loadValidMarkers() {
+    
+    $.getJSON(querystring("SELECT * FROM onpremise WHERE NOT biz_viol_bool"), function(data) {
+    geojson_valid =  L.geoJson(data, {
+          pointToLayer: markerStyle,
+          onEachFeature: onEachFeature
+          }).addTo(map);
+          group.addLayer(geojson_all);
+  });
+  
+  }
+  
   function loadChangeMarkers() {
   $.getJSON(querystring("SELECT * FROM onpremise"), function(data) {
      geojson_sign =  L.geoJson(data, {
@@ -502,12 +514,12 @@ var geojson_all ;
         $("#control").toggle(function(){
                 $("#control").animate({"bottom":"192px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
-                $("#legendAssetLabel").show();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
                 $("#violationOR").show();
                 $("#violationAnd").hide();
-                $("#legendOperatorLabel").hide();
+                $("#legendOperatorLabel").show();
+               $("#legendOperatorLabel").toggleClass('active');
 
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
@@ -542,6 +554,9 @@ var geojson_all ;
   if (typeof(geojson_vacant) != 'undefined' && map.hasLayer(geojson_vacant)) {
     map.removeLayer(geojson_vacant);
     }
+     if (typeof(geojson_valid) != 'undefined' && map.hasLayer(geojson_valid)) {
+    map.removeLayer(geojson_valid);
+    }
   //$("#license").attr('checked', false);
   //$("#vacant").attr('checked', false);
   loadChangeMarkers();
@@ -575,7 +590,32 @@ var geojson_all ;
   if (typeof(geojson_vacant) != 'undefined' && map.hasLayer(geojson_vacant)) {
     map.removeLayer(geojson_vacant);
     }
+    if (typeof(geojson_valid) != 'undefined' && map.hasLayer(geojson_valid)) {
+    map.removeLayer(geojson_valid);
+    }
     loadLicenseMarkers();
+              });
+              
+              $('#legendSourceValid').click(function () {
+                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
+                //layer.getSubLayer(0).setCartoCSS('#exelon [hansen_license_num="None"]{marker-fill: #D7162D;}[hansen_license_num!="None"]{marker-fill: #16D7CB;}');
+                $("#legendAssetLabel").hide();
+                $("#legendAsset").hide();
+                $("#legendZoningLabel").hide();
+                $("#legendSourceLabel").show();
+                $("#violationOR").hide();
+                $("#legendOperatorLabel").hide();
+                if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+  if (typeof(geojson_license) != 'undefined' && map.hasLayer(geojson_license)) {
+    map.removeLayer(geojson_license);
+    }
+  if (typeof(geojson_vacant) != 'undefined' && map.hasLayer(geojson_vacant)) {
+    map.removeLayer(geojson_vacant);
+    }
+    
+    loadValidMarkers();
               });
               //Change Colors Based on Operator
             $('#legendOperator').click(function () {
@@ -595,6 +635,9 @@ var geojson_all ;
     }
   if (typeof(geojson_sign) != 'undefined' && map.hasLayer(geojson_sign)) {
     map.removeLayer(geojson_sign);
+    }
+    if (typeof(geojson_valid) != 'undefined' && map.hasLayer(geojson_valid)) {
+    map.removeLayer(geojson_valid);
     }
       loadBizMarkers();
               });
@@ -627,7 +670,7 @@ var geojson_all ;
       });
       
       
-loadMarkers();
+loadBizMarkers();
 //$("#sign").click(function() {
   
   //$("#license").attr('checked', false);
