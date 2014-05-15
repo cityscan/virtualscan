@@ -341,9 +341,9 @@ a:hover {
 }
 #controlBig {
 	position: absolute;
-	height: 145px;
+	height: 185px;
 	width: 225px;
-	bottom: -160px;
+	bottom: -200px;
 	right: 5px;
 	background-color: #F2F2F2;
 	border-top-style: solid;
@@ -492,8 +492,8 @@ a:hover {
 }
 #legendZoningLabel {
 	position: absolute;
-	bottom: 140px;
-	right: 57px;
+	bottom: 120px;
+	right: 70px;
 	width: 150px;
 }
 #violationAnd {
@@ -516,10 +516,14 @@ a:hover {
 }
 #legendOperatorLabel {
 	position: absolute;
-	bottom: 110px;
+
 	right: 5px;
 	width: 220px;
 }
+#legendOperatorLabel p {
+  margin: 0 0 5px;
+  padding-top: 10px;
+  }
 .my-legend .legend-title {
     text-align: left;
     margin-bottom: 5px;

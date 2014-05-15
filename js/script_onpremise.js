@@ -500,7 +500,7 @@ var geojson_all ;
       });
       
         $("#control").toggle(function(){
-                $("#control").animate({"bottom":"150px"}, "slow");
+                $("#control").animate({"bottom":"192px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
                 $("#legendAssetLabel").show();
                 $("#legendZoningLabel").hide();
