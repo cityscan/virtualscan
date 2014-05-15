@@ -7,7 +7,7 @@ html, body {
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 p {
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 13px;
 	color: black;
 }
@@ -76,7 +76,7 @@ a:hover {
 	border-radius: 0 !important;
 }
 .input, button, select, textarea {
-font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 /* Map */
 #map {
@@ -391,7 +391,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	border-width: 1px;
 	border-bottom-style: solid;
 	z-index: 2;
- */	background-color: #F2F2F2;
+ */ 	background-color: #F2F2F2;
 }
 #citySwitcher {
 	position: absolute;
@@ -508,7 +508,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #violationOR {
 	position: absolute;
-	bottom: 36px;
+	bottom: 40px;
 	right: 20px;
 	color: black;
 }

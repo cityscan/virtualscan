@@ -1,6 +1,8 @@
 $('document').ready( function() {
     //hide zoning label once document loads
-    $("#legendZoningLabel").hide(); 
+    $("#legendZoningLabel").hide();
+    $("#permitAssetLabel").hide();
+    $("#violationAnd").hide();
 
  function createSelector(layer) {
   var sql = new cartodb.SQL({ user: 'cityscan' });
@@ -99,13 +101,6 @@ $('document').ready( function() {
               $("#control").toggle(function(){
                 $("#control").animate({"bottom":"240px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
-                $("#legendAssetLabel").show();
-                $("#legendZoningLabel").hide();
-                $("#legendSourceLabel").hide();
-                $("#violationOR").hide();
-                $("#violationAnd").hide();
-                $("#legendOperatorLabel").hide();
-
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
                 $("#controlBig").animate({"bottom":"-248px"}, "slow");
@@ -113,59 +108,81 @@ $('document').ready( function() {
 
               //Change Colors Based on Asset Type
              $('#legendAsset').click(function () {
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc');
-                layer.getSubLayer(0).setCartoCSS('#nyc[type=\"Billboard\"]{marker-fill: #D7162D;}[type=\"Fence\"]{marker-fill: #16D7CB;}[type=\"Awning\"]{marker-fill: #F79D00;}[type=\"Scaffolding\"]{marker-fill: #88F71A;}[type=\"Sidewalk Shed\"]{marker-fill: #FF7316;}[type=\"Dumpster\"]{marker-fill: #4B25EE;}');
-                $("#legendAssetLabel").show();
+                console.log("legend asset working");
+                $('input:checkbox').removeAttr('checked');
+                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
+                $("#permitAssetLabel").hide();
+                $("#assetLegend").show();
+                $("#legendAssetLabel").show();
+                $("#assetCheck").show();
                 $("#violationOR").hide();
                 $("#violationAnd").hide();
                 $("#legendOperatorLabel").hide();
               });
               //Change Colors Based on Zoning/Violation
              $('#legendZoning').click(function () {
-                console.log("legend zoning working");
+                console.log("legend permit working");
                 $('input:checkbox').removeAttr('checked');
                 layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").show();
                 $("#legendSourceLabel").hide();
+                $("#permitAssetLabel").show();
+                $("#permitAssetLabel").show();
+                $("#assetLegend").hide();
+                $("#assetCheck").hide();
                 $("#violationAnd").show();
                 $("#legendOperatorLabel").hide();
               });
 
-                 //Include Toggling for AND/OR option for Zoning/Violation
-                $('#violationAndButton').click(function () {
-                    $("#violationAnd").show();
-                    $("#violationOR").hide();
-                    $('input:checkbox').removeAttr('checked');
-                    layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
-                  });
-
-                $('#violationOrButton').click(function () {
-                    $("#violationAnd").hide();
-                    $("#violationOR").show();
-                    $('input:checkbox').removeAttr('checked');
-                    layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
-                  });
-                  
-
                 //Prepare filter for expired permits
                 function updateMapByClient(){
-                    var Awning = $('#awningOr')[0].checked;console.log("Awning: "+Awning);
-                    var Billboard = $('#billboardOr')[0].checked;console.log("Billboard: "+Billboard);
-                    var Dumpster = $('#dumpsterOr')[0].checked;console.log("Dumpster: "+Dumpster);
-                    var Fence = $('#fenceOr')[0].checked;console.log("Fence: "+Fence);
-                    var Scaffolding = $('#scaffoldingOr')[0].checked;console.log("Scaffolding: "+Scaffolding);
-                    var Sidewalk = $('#sidewalkOr')[0].checked;console.log("Sidewalk: "+Sidewalk);
+                    var None = $('#none')[0].checked;console.log("None: "+None);
+                    var Expired = $('#expired')[0].checked;console.log("Expired: "+Expired);
+
+                    if(None==true && Expired==false){
+                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE permit_expiration_date IN ('NO PERMIT')");
+                          console.log("this works");
+                    }
+                    else if(None==false && Expired==true){
+                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE permit_expiration_date IN ('10/27/2011','10/27/2012','12/31/2002','3/6/2009','5/31/2002','7/2/2012','9/29/2010')");
+                          console.log("this works2");
+                    }
+                    else if(None==true && Expired==true){
+                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE permit_expiration_date IN ('NO PERMIT') OR permit_expiration_date IN ('10/27/2011','10/27/2012','12/31/2002','3/6/2009','5/31/2002','7/2/2012','9/29/2010')");
+                          console.log("this works3");
+                    }
+                    else if(None==false && Expired==false){
+                          layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
+                          console.log("this works4");
+                    }
+
+                };
+                $('#none').click(function(){
+                   updateMapByClient();
+                });
+                $('#expired').click(function(){
+                   updateMapByClient();
+                });
+
+
+                function updateMapByClientAsset(){
+                    var Awnings2 = $('#awningAsset')[0].checked;console.log("Awning: "+Awnings2);
+                    var Billboards2 = $('#billboardAsset')[0].checked;console.log("Billboard: "+Billboards2);
+                    var Dumpsters2 = $('#dumpsterAsset')[0].checked;console.log("Dumpster: "+Dumpsters2);
+                    var Fences2 = $('#fenceAsset')[0].checked;console.log("Fence: "+Fences2);
+                    var Scaffoldings2 = $('#scaffoldingAsset')[0].checked;console.log("Scaffolding: "+Scaffoldings2);
+                    var Sidewalks2 = $('#sidewalkAsset')[0].checked;console.log("Sidewalk: "+Sidewalks2);
 
                     asset_types = {};
-                    asset_types['Awning'] = Awning;
-                    asset_types['Billboard'] = Billboard;
-                    asset_types['Dumpster'] = Dumpster;
-                    asset_types['Fence'] = Fence;
-                    asset_types['Scaffolding'] = Scaffolding;
-                    asset_types['Sidewalk Shed'] = Sidewalk;
+                    asset_types['Awning'] = Awnings2;
+                    asset_types['Billboard'] = Billboards2;
+                    asset_types['Dumpster'] = Dumpsters2;
+                    asset_types['Fence'] = Fences2;
+                    asset_types['Scaffolding'] = Scaffoldings2;
+                    asset_types['Sidewalk Shed'] = Sidewalks2;
                     console.log(asset_types);
                     instring = ''
                     for (var key in asset_types) {
@@ -176,129 +193,50 @@ $('document').ready( function() {
                     // get rid of last trailing comma
                     instring = instring.slice(0, -2); 
                     console.log(instring);
-                    if (instring && $("#violationAndButton").hasClass('active')) {
-                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='No Permit'";
-                    } else if (instring && $("#violationOrButton").hasClass('active')) {
-                        sql = "SELECT * FROM nyc WHERE type in (" + instring + ") AND asviolation = 'Expired Permit'";
-		} else if (instring && $("#violationAndButton").hasClass('active') == false && $("#violationOrButton").hasClass('active') == false) {
-			sql = "SELECT * FROM nyc WHERE type IN (" + instring + ")";
-		} else if (!instring && $("#violationAndButton").hasClass('active')) {
-                    sql = "SELECT * FROM nyc WHERE asviolation = 'No Permit'"
-                } else if (!instring && $("#violationOrButton").hasClass('active')) {
-                    sql = "SELECT * FROM nyc WHERE asviolation = 'Expired Permit'"
-                } else {
-			sql = "SELECT * FROM nyc";
-}
-                    
-
-/* GOOD BLOCK
-if (instring ) {
-                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='Expired Permit'";
+                    if (instring) {
+                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ")";
                     } else {
                         sql = "SELECT * FROM nyc WHERE asset_id>1000"
                     }
-*/
                     console.log(sql)
-                    return sql;
+                    return sql;    
 
                 };
-
-                $('#awningOr').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                $('#awningAsset').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#billboardOr').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                $('#billboardAsset').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#dumpsterOr').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                $('#dumpsterAsset').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#fenceOr').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                $('#fenceAsset').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#scaffoldingOr').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                $('#scaffoldingAsset').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#sidewalkOr').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
-                });
-
-                //prepare filter for no permits permits
-                function updateMapByClient2(){
-                    var Awnings = $('#awningAnd')[0].checked;console.log("Awning: "+Awnings);
-                    var Billboards = $('#billboardAnd')[0].checked;console.log("Billboard: "+Billboards);
-                    var Dumpsters = $('#dumpsterAnd')[0].checked;console.log("Dumpster: "+Dumpsters);
-                    var Fences = $('#fenceAnd')[0].checked;console.log("Fence: "+Fences);
-                    var Scaffoldings = $('#scaffoldingAnd')[0].checked;console.log("Scaffolding: "+Scaffoldings);
-                    var Sidewalks = $('#sidewalkAnd')[0].checked;console.log("Sidewalk: "+Sidewalks);
-
-                    asset_types = {};
-                    asset_types['Awning'] = Awnings;
-                    asset_types['Billboard'] = Billboards;
-                    asset_types['Dumpster'] = Dumpsters;
-                    asset_types['Fence'] = Fences;
-                    asset_types['Scaffolding'] = Scaffoldings;
-                    asset_types['Sidewalk Shed'] = Sidewalks;
-                    console.log(asset_types);
-                    instring = ''
-                    for (var key in asset_types) {
-                        if (asset_types[key]) {
-                                instring += "'" + key + "', "
-                            } 
-                    }
-                    // get rid of last trailing comma
-                    instring = instring.slice(0, -2); 
-                    if (instring && $("#violationAndButton").hasClass('active')) {
-                        sql = "SELECT * FROM nyc WHERE type in(" + instring + ") AND asviolation='No Permit'";
-                    } else if (instring && $("#violationOrButton").hasClass('active')) {
-                        sql = "SELECT * FROM nyc WHERE type in (" + instring + ") AND asviolation = 'Expired Permit'";
-		} else if (instring && $("#violationAndButton").hasClass('active') == false && $("#violationOrButton").hasClass('active') == false) {
-			sql = "SELECT * FROM nyc WHERE type IN (" + instring + ")";
-		} else if (!instring && $("#violationAndButton").hasClass('active')) {
-                    sql = "SELECT * FROM nyc WHERE asviolation = 'No Permit'"
-                } else if (!instring && $("#violationOrButton").hasClass('active')) {
-                    sql = "SELECT * FROM nyc WHERE asviolation = 'Expired Permit'"
-                } else {
-			sql = "SELECT * FROM nyc";
-}
-                    console.log(sql)
-                    return sql;
-
-                };
-
-                $('#awningAnd').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
-                });
-                $('#billboardAnd').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
-                });
-                $('#dumpsterAnd').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
-                });
-                $('#fenceAnd').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
-                });
-                $('#scaffoldingAnd').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
-                });
-                $('#sidewalkAnd').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
-                });
-                $('#violationAndButton').click(function(){
-                    if ($("#violationOrButton").hasClass('active')) {
-                        $("#violationOrButton").toggleClass('active');
-                    }
-                    $(this).toggleClass('active');
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
-                });
-                $('#violationOrButton').click(function(){
-                    if ($("#violationAndButton").hasClass('active')) {
-                        $("#violationAndButton").toggleClass('active');
-                    }
-                    $(this).toggleClass('active');
-                   layer.getSubLayer(0).setSQL(updateMapByClient2());
+                $('#sidewalkAsset').click(function(){
+                   layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
 
+                /*
+                $('#violationAndButton').click(function () {
+                    $("#violationAnd").show();
+                    $("#violationOR").hide();
+                $('input:checkbox').removeAttr('checked');
+                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
+                    console.log("none button")
+                  });
 
+                $('#violationOrButton').click(function () {
+                    $("#violationAnd").hide();
+                    $("#violationOR").show();
+                $('input:checkbox').removeAttr('checked');
+                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
+                    console.log("expired button")
+                  });*/
               //Prepare DEFAULT content for Sidebar on Document Load   
               createSelector(subLayer);
                       $('#sidebar').html('');

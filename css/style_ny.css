@@ -75,7 +75,7 @@ a:hover {
 	border-radius: 0 !important;
 }
 .input, button, select, textarea {
-font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 /* Map */
 #map {
@@ -390,7 +390,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	border-width: 1px;
 	border-bottom-style: solid;
 	z-index: 2;
- */	background-color: #F2F2F2;
+ */ 	background-color: #F2F2F2;
 }
 #citySwitcher {
 	position: absolute;
@@ -489,28 +489,52 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #legendAssetLabel {
 	position: absolute;
-	bottom: 65px;
+	bottom: 174px;
 	color: black;
-	right: 115px;
+	right: 75px;
+	font-weight: bolder;
+	font-size: 16px;
+	width: 150px;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#permitAssetLabel {
+	position: absolute;
+	bottom: 180px;
+	color: black;
+	right: 0px;
+	font-weight: bolder;
+	font-size: 16px;
+	width: 225px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#assetLegend {
+	position: absolute;
+	bottom: 27px;
+	right: 197px;
+}
+#assetCheck {
+	position: absolute;
+	bottom: 20px;
+	right: 73px;
+	color: black;
 }
 #legendZoningLabel {
 	position: absolute;
-	bottom: 150px;
-	right: 10px;
+	bottom: 148px;
+	right: 15px;
 	width: 210px;
 }
 #violationAnd {
 	position: absolute;
-	bottom: 2px;
-	right: 103px;
+	bottom: 127px;
+	right: 155px;
 	color: black;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #violationOR {
 	position: absolute;
 	bottom: 2px;
-	right: 103px;
+	right: 107px;
 	color: black;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
