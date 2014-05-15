@@ -199,18 +199,18 @@ $(".leaflet-popup-close-button").remove();
 
   var violStyleRed = {
     color: '#000',
-          radius: 6,
+          radius: 5,
           fillColor: 'red',
-          weight: 2,
+          weight: 1,
           opacity: 1,
           fillOpacity: 0.8
       };
   
   var defaultStyle = {
           color: '#000',
-          radius: 6,
+          radius: 5,
           fillColor: '#16D7CB',
-          weight: 2,
+          weight: 1,
           opacity: 1,
           fillOpacity: 0.8
       };
@@ -226,6 +226,14 @@ $(".leaflet-popup-close-button").remove();
 
     function changeMarkerStyle(feature, latlng) {
       if (feature.properties.viol) {
+        return L.circleMarker(latlng, violStyleRed);
+        } else {
+        return L.circleMarker(latlng, defaultStyle);
+        }
+    }
+    
+    function bizViolStyle(feature, latlng) {
+      if (feature.properties.biz_viol_bool) {
         return L.circleMarker(latlng, violStyleRed);
         } else {
         return L.circleMarker(latlng, defaultStyle);
@@ -261,19 +269,29 @@ var geojson_all ;
   });
   }
   function loadLicenseMarkers() {
-    geojson_license = $.getJSON(querystring("SELECT * FROM onpremise WHERE biz_viol IN ('No Business License', 'Expired Business License')"), function(data) {
+    geojson_license = $.getJSON(querystring("SELECT * FROM onpremise"), function(data) {
       geojson_license = L.geoJson(data, {
-          pointToLayer: violStyle,
+          pointToLayer: bizViolStyle,
           onEachFeature: onEachFeature
           }).addTo(map);
   });
   
   }
   
-  function loadVacantMarkers() {
-  geojson_vacant = $.getJSON(querystring("SELECT * FROM onpremise WHERE biz_type = 'Vacant Storefront'"), function(data) {
+  function loadBizMarkers() {
+  geojson_vacant = $.getJSON(querystring("SELECT * FROM onpremise"), function(data) {
       geojson_vacant = L.geoJson(data, {
-          pointToLayer: violStyle,
+          pointToLayer: markerStyle,
+          style: function(feature) {
+            switch (feature.properties.biz_type) {
+              case 'Food Stores': return {color: '#000',radius: 5,fillColor: '#D7162D',    weight: 1, opacity: 1,fillOpacity: 0.8};
+              case 'Pharmacy': return {color: '#000',radius: 5,fillColor: '#16D7CB',    weight: 1, opacity: 1,fillOpacity: 0.8};
+              case 'Religious': return {color: '#000',radius: 5,fillColor: '#F79D00',    weight: 1, opacity: 1,fillOpacity: 0.8};
+              case 'Restaurants': return {color: '#000',radius: 5,fillColor: '#88F71A',    weight: 1, opacity: 1,fillOpacity: 0.8};
+              case 'Retail': return {color: '#000',radius: 5,fillColor: '#FF7316',    weight: 1, opacity: 1,fillOpacity: 0.8};
+              case 'Vacant Storefront':  return {color: '#000',radius: 5,fillColor: '#4B25EE',    weight: 1, opacity: 1,fillOpacity: 0.8};
+              }
+             },
           onEachFeature: onEachFeature
           }).addTo(map);
   });
@@ -294,13 +312,7 @@ var geojson_all ;
   $('.btn-group').button();
                 
               //Change colors of legend
-              $('#legendAsset').click(function () {
-                //layer.getSubLayer(0).setCartoCSS('#wp_import [type=\"Bulletin\"]{marker-fill: #006E98;}[type=\"Digital\"] {marker-fill: #3B007F;}[type=\"Walls/Spectacular\"]{marker-fill: #009900;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #F11810;}');
-                $( "#legendAssetLabel" ).show();
-                $( "#legendZoningLabel" ).hide();
-                $( "#legendSourceLabel" ).hide();
-                $( "#legendPermitLabel" ).hide();
-              });
+             
               $('#legendZoning').click(function () {
                 //layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #000000;}');
                 $( "#legendAssetLabel" ).hide();
@@ -511,9 +523,21 @@ var geojson_all ;
                 console.log("legend zoning working");
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").show();
-                $("#legendSourceLabel").hide();
+                $("#legendSource").hide();
                 $("#violationOR").show();
                 $("#legendOperatorLabel").hide();
+                if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+  if (typeof(geojson_license) != 'undefined' && map.hasLayer(geojson_license)) {
+    map.removeLayer(geojson_license);
+    }
+  if (typeof(geojson_vacant) != 'undefined' && map.hasLayer(geojson_vacant)) {
+    map.removeLayer(geojson_vacant);
+    }
+  //$("#license").attr('checked', false);
+  //$("#vacant").attr('checked', false);
+  loadChangeMarkers();
               });
                  //Include Toggling for AND/OR option for Zoning/Violation
                 $('#violationAndButton').click(function () {
@@ -530,10 +554,21 @@ var geojson_all ;
                 //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
                 //layer.getSubLayer(0).setCartoCSS('#exelon [hansen_license_num="None"]{marker-fill: #D7162D;}[hansen_license_num!="None"]{marker-fill: #16D7CB;}');
                 $("#legendAssetLabel").hide();
+                $("#legendAsset").hide();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").show();
                 $("#violationOR").hide();
                 $("#legendOperatorLabel").hide();
+                if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+  if (typeof(geojson_license) != 'undefined' && map.hasLayer(geojson_license)) {
+    map.removeLayer(geojson_license);
+    }
+  if (typeof(geojson_vacant) != 'undefined' && map.hasLayer(geojson_vacant)) {
+    map.removeLayer(geojson_vacant);
+    }
+    loadLicenseMarkers();
               });
               //Change Colors Based on Operator
             $('#legendOperator').click(function () {
@@ -544,6 +579,17 @@ var geojson_all ;
                 $("#legendSourceLabel").hide();
                 $("#violationOR").hide();
                 $("#legendOperatorLabel").show();
+                
+                if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
+    map.removeLayer(geojson_all);
+    }
+  if (typeof(geojson_license) != 'undefined' && map.hasLayer(geojson_license)) {
+    map.removeLayer(geojson_license);
+    }
+  if (typeof(geojson_sign) != 'undefined' && map.hasLayer(geojson_sign)) {
+    map.removeLayer(geojson_sign);
+    }
+      loadBizMarkers();
               });
 
       var hidden = $('.leaflet-left .leaflet-control');
@@ -575,20 +621,12 @@ var geojson_all ;
       
       
 loadMarkers();
-$("#sign").click(function() {
-  if (typeof(geojson_all) != 'undefined' && map.hasLayer(geojson_all)) {
-    map.removeLayer(geojson_all);
-    }
-  if (typeof(geojson_license) != 'undefined' && map.hasLayer(geojson_license)) {
-    map.removeLayer(geojson_license);
-    }
-  if (typeof(geojson_vacant) != 'undefined' && map.hasLayer(geojson_vacant)) {
-    map.removeLayer(geojson_vacant);
-    }
-  $("#license").attr('checked', false);
-  $("#vacant").attr('checked', false);
-  loadChangeMarkers();
-  });
+//$("#sign").click(function() {
+  
+  //$("#license").attr('checked', false);
+  //$("#vacant").attr('checked', false);
+  //loadChangeMarkers();
+  //});
 
  $("#license").click(function() {
   $("#sign").attr('checked', false);

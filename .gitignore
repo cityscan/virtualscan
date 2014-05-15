@@ -1,0 +1,5 @@
+# stupid vim
+*.sw[op]
+
+# stupid gedit
+*~

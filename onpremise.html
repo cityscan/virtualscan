@@ -168,13 +168,47 @@
 </a>
 <div id="controlBig">
 <div class="btn-group" data-toggle="buttons-radio"> 
-    <button type="button" class="btn btn-primary" id="legendZoning">Zoning Analysis</button>
-    <!--<button type="button" class="btn btn-primary" id="legendSource">License</button>
-    <button type="button" class="btn btn-primary" id="legendOperator">Operator</button>-->
+    <button type="button" class="btn btn-primary" id="legendZoning">Sign Permit</button>
+    <button type="button" class="btn btn-primary" id="legendSource">License</button>
+    <button type="button" class="btn btn-primary" id="legendOperator">Type</button>
   </div>
   
  <!-- Add Violations, aka Zoning, Filter Option --> 
-    <div class="radio" id="violationOR">
+    <div id="legendZoning">
+    <p>Sign Permit (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
+    </div>
+    
+    <div id="legendSource">
+      <p>Valid Business License (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
+      </div>
+      
+     <div class="checkbox" id="violationAnd">
+    <label>
+      <input type="checkbox" id="spacingViolation">
+      Food Stores</label>
+    <label>
+      <input type="checkbox" id="residentialViolation">
+      Pharmacy</label>
+    <label>
+      <input type="checkbox" id="heightViolation">
+      Religious</label>
+      <label>
+      <input type="checkbox" id="spacingViolation">
+      Restaurants</label>
+    <label>
+      <input type="checkbox" id="residentialViolation">
+      Retail</label>
+    <label>
+      <input type="checkbox" id="heightViolation">
+      Vacant</label>
+  </div>
+    
+    
+    
+    <!--<div class="radio" id="violationOR">
+        <label>
+          <input type="radio" id="sign">
+          Sign Permit</label>
         <label>
           <input type="radio" id="sign">
           Sign Permit</label>
@@ -184,7 +218,7 @@
         <label>
           <input type="radio" id="vacant">
           Vacant Storefront</label>
-    </div>
+    </div> -->
 
    
   

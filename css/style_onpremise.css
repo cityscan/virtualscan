@@ -342,7 +342,7 @@ a:hover {
 #controlBig {
 	position: absolute;
 	height: 145px;
-	width: 170px;
+	width: 225px;
 	bottom: -160px;
 	right: 5px;
 	background-color: #F2F2F2;
@@ -504,7 +504,7 @@ a:hover {
 #violationOR {
 	position: absolute;
 	bottom: 40px;
-	right: 35px;
+	right: 150px;
 	color: black;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
