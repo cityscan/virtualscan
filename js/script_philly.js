@@ -105,6 +105,12 @@ $('document').ready( function() {
                 $("#violationOR").show();
                 $("#violationAnd").hide();
                 $("#legendOperatorLabel").hide();
+              var button_violation = $("#legendZoning");
+                button_violation.removeClass("btn btn-primary").addClass("btn btn-primary active");
+              var button_source = $("#legendSource");
+                button_source.removeClass("btn btn-primary active").addClass("btn btn-primary");
+              var button_operator = $("#legendOperator");
+                button_operator.removeClass("btn btn-primary active").addClass("btn btn-primary");
 
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
