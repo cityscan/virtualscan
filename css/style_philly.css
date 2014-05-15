@@ -498,6 +498,7 @@ a:hover {
 	bottom: 140px;
 	right: -4px;
 	width: 210px;
+	height: 24px;/*made this change*/
 	font-weight: bolder;
 }
 #violationAnd {
@@ -508,23 +509,27 @@ a:hover {
 }
 #violationOR {
 	position: absolute;
-	bottom: 40px;
-	right: 20px;
+	bottom: 5px;/*made this change*/
+	right: 10px;
+	height: 130px;/*made this change*/
+	width: 177px;/*made this change*/
 	color: black;
 }
 #legendSourceLabel {
 	position: absolute;
-	bottom: 110px;
+	bottom: 130px;/*made this change*/
 	right: -12px;
 	width: 220px;
+	height: 40px;/*made this change*/
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: black;
 }
 #legendOperatorLabel {
 	position: absolute;
-	bottom: 110px;
+	bottom: 130px;/*made this change*/
 	right: -12px;
 	width: 220px;
+	height: 40px;/*made this change*/
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: black;
 }
