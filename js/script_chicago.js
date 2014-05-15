@@ -62,8 +62,8 @@ $('document').ready( function() {
     var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
     var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');   
     map = L.map('map', {
-       center: new L.latLng(41.94810425792558, -87.65721917152405),
-       zoom: 17,
+       center: new L.latLng(42.02481360781777, -88.981018066406250),
+       zoom: 9,
        minZoom: 9,
       });
  
