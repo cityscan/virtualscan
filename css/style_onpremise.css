@@ -4,11 +4,10 @@ html, body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 p {
-	font-size: 13px;
-	line-height: 13px;
+	font-size: 12px;
+	line-height: 12px;
 	color: black;
 }
 strong {
@@ -74,9 +73,6 @@ a:hover {
 	border-color: #006e98 !important;
 	;
 	border-radius: 0 !important;
-}
-.input, button, select, textarea {
-font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 /* Map */
 #map {
@@ -293,8 +289,8 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #box {
 	z-index: 50;
-	height: 55px !important;
-	width: 230px;
+	height: 40px !important;
+	width: 300px;
 	font-size: 10px;
 	line-height: 13px !important;
 	padding-top: 5px;
@@ -345,9 +341,9 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #controlBig {
 	position: absolute;
-	height: 200px;
-	width: 210px;
-	bottom: -210px;
+	height: 145px;
+	width: 170px;
+	bottom: -160px;
 	right: 5px;
 	background-color: #F2F2F2;
 	border-top-style: solid;
@@ -360,7 +356,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	font-color: #000000;
 	padding-top: 8px;
 	padding-left: 8px !important;
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 12px;
 	z-index: 12;
 }
@@ -491,40 +487,73 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 #legendAssetLabel {
 	position: absolute;
 	bottom: 50px;
-	right: 80px;
+	right: 40px;
+	width: 190;
 }
 #legendZoningLabel {
 	position: absolute;
 	bottom: 140px;
-	right: -4px;
-	width: 210px;
-	font-weight: bolder;
+	right: 57px;
+	width: 150px;
 }
 #violationAnd {
 	position: absolute;
 	bottom: 16px;
 	right: 15px;
-	color: black;
 }
 #violationOR {
 	position: absolute;
-	bottom: 65px;
-	right: 20px;
+	bottom: 40px;
+	right: 35px;
 	color: black;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #legendSourceLabel {
 	position: absolute;
 	bottom: 110px;
-	right: -12px;
+	right: 5px;
 	width: 220px;
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color: black;
 }
 #legendOperatorLabel {
 	position: absolute;
 	bottom: 110px;
-	right: -12px;
+	right: 5px;
 	width: 220px;
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color: black;
 }
+.my-legend .legend-title {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 90%;
+}
+  .my-legend .legend-scale ul {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    float: left;
+    list-style: none;
+    }
+  .my-legend .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    margin-left: 0;
+    line-height: 18px;
+    margin-bottom: 2px;
+    }
+  .my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 1px solid #999;
+    }
+  .my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+    }
+  .my-legend a {
+    color: #777;
+    }

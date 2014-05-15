@@ -1,157 +1,284 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <title>CityScan: New York</title>
-    <link rel="Shortcut Icon" href="http://cityscan.com/wp-content/themes/cityscan/images/favicon.ico" type="image/x-icon">
-    <link href="css/style_ny.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+<head>
+<title>CityScan: Philadelphia | Billboards</title>
+<link rel="Shortcut Icon" href="http://cityscan.com/wp-content/themes/cityscan/images/favicon.ico" type="image/x-icon">
+<link href="css/style_philly.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 
-    <!--[if lte IE 8]><link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" /><![endif]-->
+<!--[if lte IE 8]><link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" /><![endif]-->
 
-    <!-- Bootstrap Libraries -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/l.geosearch.mod.css" />
+<!-- Bootstrap Libraries -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" />
+<link rel="stylesheet" href="css/l.geosearch.mod.css" />
 
-    <!-- Mapbox and jQuery -->
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.js'></script>
-    <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.css' rel='stylesheet' />
-    <script src="js/jquery.min.js"></script>
-    <script src="js/mapbox.jquery.js"></script>
+<!-- Mapbox and jQuery -->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.js'></script>
+<link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.css' rel='stylesheet' />
+<script src="js/mapbox.jquery.js"></script>
 
-    <!-- Mapping Libraries -->  
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <script src="js/leaflet-hash.js"></script>
-    <script src="js/l.geosearch.mod.js"></script>
-  </head>
+<!-- Mapping Libraries -->
+<script src="http://libs.cartodb.com/cartodb.js/v3/cartodb.js"></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script src="js/l.geosearch.mod.js"></script>
+</head>
 
-  <body onload="init()">
+<body>
 
-  <!-- Add Map and SideBar -->
-  <div class="hidden"><div id='box'></div></div>
+<!-- Print Report --> 
+<script>
+  function wins(){
+    win = open("",'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=700');
+    win.document.write("<html><body><head></head><img src='image/logo.png' width='156' height='35' id='logo'><input value='Print Window' type='button' id='button' style='position:absolute;right:10px'></input><br /><br />"
+      + "<img src="+ image + " hspace='3' width='300px' height='240px'><br /><br />"
+      + "<strong>- ATTRIBUTE -</strong><br />"
+      + "<strong>Type: </strong>" + types + "<br />"
+      + "<strong>Date Collected: </strong>" + dateCollected + "<br />"
+      + "<strong>Operator: </strong>" + operator + "<br />"
+      + "<strong>Address: </strong>" + address + "<br />"
+      + "<strong>Mount Type: </strong>" + mountType + "<br />"
+      + "<strong>Width(in): </strong>" + widths + "&nbsp;&nbsp;&nbsp;<strong>Height(in):</strong>" + heights + "<br />"
+      + "<strong>Face Count: </strong>" + faceCount + "<br />"
+      + "<strong>Display Permit: </strong>" + displayPermit + "<br /><br />"
+      + "<strong>- CONDITION -</strong><br />"
+      + "<strong>Hansen License No.: </strong>" + licenseNum + "<br />" 
+      + "<strong>License Status: </strong>" + licenseStatus + "<br />" 
+      + "<strong>License Expiration Date: </strong>" + expirationDate + "<br />" 
+      + "<strong>No. within 500ft: </strong>" + within500ft + "<br />"
+      + "<strong>Within 300ft: </strong>" + within300ft + "&nbsp;&nbsp;&nbsp;<strong>Face Rule: </strong>" + faceRule + "<br /><br />" 
+      + "</body></html>");
+    // attach to button in target window, and use a handler in this one:
+    var button = win.document.getElementById('button');
+    button.onclick = function() {
+         win.print();
+         setTimeout('win.close()',500);
+      }
+    }
+  </script> 
 
-  <div class="hidden"><div id='sidebar'></div></div>
-  <!--<a href="#" title="Hide Panel"><div id='sidebar_toggle'><img src="image/arrow2.png" hspace="3" width="6" height="10" id="arrow"></div></a>-->
-  <a href="#" title="Show Panel">
-    <div id='sidebar_toggle'>P<br/>A</br>N</br>E</br>L</br></div>
-  </a>
-  <div id='sidebar_imgbox'></div>
+<!-- Add Map and SideBar -->
+<div id='map'></div>
+<div class="hidden"><!-- Hide hover window -->
+  <div id='box'></div>
+</div>
+<div class="hidden">
+  <div id='sidebar'></div>
+</div>
+<a href="#" title="Show Panel">
+  <div id='sidebar_toggle'>L<br/>
+    E</br>
+    S</br>
+    S</br>
+  </div>
+  <div id='sidebar_toggle2'>M<br/>
+    O</br>
+    R</br>
+    E</br>
+  </div>
+</a>
+<div id='sidebar_imgbox'></div><!-- Add white container around siidebar image -->
+<div id="sidebarProfile">
+  <button type="button" onclick="wins()">Print</button>
+</div>
 
-  <!-- Add Header -->
-  <div id='header'>
-    <div id='logo'>
-      <a href="http://cityscan.com/"><img src="image/logo_ny.png" width="200" height="30" id="logo"></a>
-      <!--<a href="http://cityscan.com/"><img src="image/logo_dc.png" width="220" height="30" id="logo"></a>-->
+<!-- Add Header -->
+<div id='header'>
+  <div id='logo'> <a href="http://cityscan.com/"><img src="image/logo_main.png" width="156" height="35" id="logo"></a> </div>
+  <div id='headerButtons'> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="http://www.cityscan.com">WELCOME</a></span> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
+</div>
+<!-- End of Header --> 
+
+<!--Add Sub-Header-->
+<div id='subheader'> 
+  
+  <!-- Add Assets 
+    <span id="assetLabel">ASSETS</span>
+    <div id="asset_status">
+          <div class="btn-group" data-toggle="buttons-radio">
+              <button type="button" class="btn btn-primary" id="bulletin_button"><a href="#" class="query asset" title="Bulletin" style="color:white">Bulletin</a></button>
+              <button type="button" class="btn btn-primary" id="digital_button"><a href="#" class="query asset" title="Digital" style="color:white">Digital</a></button>
+              <button type="button" class="btn btn-primary" id="junior_button"><a href="#" class="query asset" title="Junior Poster" style="color:white">Junior Poster</a></button>
+              <button type="button" class="btn btn-primary" id="other_button"><a href="#" class="query asset" title="Other" style="color:white">Other</a></button>
+              <button type="button" class="btn btn-primary" id="walls_button"><a href="#" class="query asset" title="Walls/Spectacular" style="color:white">Walls/Spectacular</a></button>
+          </div>--> 
+  <!--
+      <div class="btn-group">
+        <button type="button" class="btn"><a href="#" class="query asset" title="Bulletin">Bulletin</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Digital">Digital</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Junior Poster">Junior Poster</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Other">Other</a></button>
+        <button type="button" class="btn"><a href="#" class="query asset" title="Walls/Spectacular">Walls/Spectacular</a></button>
       </div>
-    
-    <div id='headerButtons'>
-      <!--Welcome Button -->
-      <span class="bar">|&nbsp</span>
-      <span class="aboutButton">
-      <a href="http://www.cityscan.com">WELCOME</a></span>
-      <!--Approach Button -->
-      <span class="bar">|&nbsp</span>        
-      <span class="aboutButton">
-      <a href="#" role="button" data-toggle="modal">APPROACH</a></span>
-      <!--Assumptions Button -->
-      <span class="bar">|&nbsp</span>
-      <span class="aboutButton">
-      <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span>
-      <!--About Button -->
-      <span class="bar">|&nbsp</span>
-      <span class="aboutButton">
-      <a href="#myModal" role="button" data-toggle="modal">
-      ABOUT</a></span>
+      --> 
+</div>
+
+<!-- Add Source 
+    <span id="sourceLabel">SOURCE</span>
+    <div id="source_status">
+          <div class="btn-group" data-toggle="buttons-radio">
+              <button type="button" class="btn btn-primary" id="cityscan_button"><a href="#" class="query record" title="lidar" style="color:white">&nbsp;CityScan</a></button>
+              <button type="button" class="btn btn-primary" id="market_button"><a href="#" class="query record" title="market_records" style="color:white">&nbsp;Market</a></button>
+              <button type="button" class="btn btn-primary" id="city_button"><a href="#" class="query record" title="city_records" style="color:white">&nbsp;City<a></button>
+          </div>--> 
+<!--
+      <div class="btn-group">
+        <button type="button" class="btn"><a href="#" class="query record" title="lidar">CityScan</a></button>
+        <button type="button" class="btn"><a href="#" class="query record" title="market_records">&nbsp;Market&nbsp;</a></button>
+        <button type="button" class="btn"><a href="#" class="query record" title="city_records">&nbsp;&nbsp;&nbsp;City&nbsp;&nbsp;&nbsp;</a></button>
+      </div>
+      
+</div>-->
+
+<!-- Add Violations 
+    <span id="violationStatusLabel">ZONING/CONDITION</span>
+        <div id="violation_status">
+          <div class="btn-group" data-toggle="buttons-checbox">
+              <button type="button" class="btn btn-primary" id="spacing_button" title="num_other_within_500ft"><a href="#" class="query permit" title="num_other_within_500ft" style="color:white">&nbsp;500ft Spacing</a></button>
+              <button type="button" class="btn btn-primary" id="residential_button" title="within_300ft_res"><a href="#" class="query permit" title="within_300ft_res" style="color:white">&nbsp;Within 300ft of Residential</a></button>
+              <button type="button" class="btn btn-primary" id="height_button" title="Height"><a href="#" class="query permit" title="face_rule" style="color:white">&nbsp;Billboard Height>20ft</a></button>
+              <button type="button" class="btn btn-primary" id="nopermit_button" title="face_rule"><a href="#" class="query permit" title="" style="color:white">&nbsp;No Permit</a></button>
+              <button type="button" class="btn btn-primary" id="expired_button" title="Permit"><a href="#" class="query permit" title="" style="color:white">&nbsp;Expired Permit</a></button>
+          </div>--> 
+<!--
+        <label title="Spacing"> 
+          <input type="checkbox" id="Spacing"><a href="#" class="query permit" title="num_other_within_500ft" style="color:black;weight:bold">&nbsp;500ft Spacing</a></input></label>
+        <label title="Residential">
+          <input type="checkbox" id="Residential"><a href="#" class="query permit" title="within_300ft_res" style="color:black;weight:bold">&nbsp;Within 300ft of Residential</a></input></label>
+        <label title="Height">
+          <input type="checkbox" id="Height"><a href="#" class="query permit" title="face_rule" style="color:black;weight:bold;padding-top:5px">&nbsp;Billboard Height>20ft</a></input></label>
+        <label title="NoPermit">
+          <input type="checkbox" id="NoPermit"><a href="#" class="query permit" title="" style="color:orange;weight:bold">&nbsp;No Permit</a></input></label>
+        <label title="Permit">
+          <input type="checkbox" id="Permit"><a href="#" class="query permit" title="" style="color:red;weight:bold">&nbsp;Expired Permit</a></input></label>
+        
+</div>-->
+
+<!--Add CitySwitcher-->
+<div id="citySwitcher">
+  <div class="btn-group">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Philadelphia - Billboard&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="chicago.html">Chicagoland - Utility&nbsp;&nbsp;&nbsp;</a></li>
+      <li><a href="newyork.html">New York - Safety&nbsp;&nbsp;&nbsp;</a></li>
+      <li><a href="onpremise.html">Chicago - On-Premise Signage&nbsp;&nbsp;&nbsp;</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Add Show All -->
+<div id="showall_status">
+  <div class="btn-group">
+    <button type="button" class="btn">
+    <a href="#" class="query all" title="Display All Features">Display All</a>
+    </button>
+  </div>
+</div>
+
+<!-- Download Switcher -->
+<div id="downloadData">
+  <div class="btn-group">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data&nbsp;&nbsp;<span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a id="downkml" href="#" target="_blank">KML</a></li>
+      <li><a id="downshp" href="#">Shapefile</a></li>
+      <li><a id="downgeojson" href="#">GeoJSON</a></li>
+      <li><a id="downcsv" href="#">CSV</a></li>
+    </ul>
+  </div>
+</div>
+
+<!--About Info Panel -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">About CityScan</h3>
+  </div>
+  <div class="modal-body">
+    <p id="aboutPage"><a href="http://cityscan.com/">CityScan</a> is a venture-backed company that inspects, observes and predict street-level activity to discover street-level conditions and proactively help respond to changes that impact your city. CityScan is headquartered in Chicago, Illinois and has raised significant funding from both institutional venture and angel investors.</p>
+    <hr>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
-  <!-- End of Header -->
+</div>
 
-  <!--Add Sub-Header-->
-  <div id='subheader'>
-    <!--Add CitySwitcher-->
-    <div id="citySwitcher">
-      <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">New York <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="chicago.html">Chicago (Utility)</a></li>
-          <!--<li><a href="#">Milwaukee</a></li>-->
-          <li><a href="philadelphia.html">Philadelphia </a></li>
-          <li><a href="dc.html">Washington D.C.</a></li>
+<!-- Filter, also known as control panel or legend --> 
+<a href="#" title="Show Filter">
+<div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
+</a>
+<div id="controlBig">
+  <div class="btn-group" data-toggle="buttons-radio"> 
+    <!--<button type="button" class="btn btn-primary" id="legendAsset">Asset</button>-->
+    <button type="button" class="btn btn-primary active" id="legendZoning">Violation</button>
+    <button type="button" class="btn btn-primary" id="legendSource">License</button>
+    <button type="button" class="btn btn-primary" id="legendOperator">Operator</button>
+  </div>
+  
+  <!--<div id="legendAssetLabel">
+        <ul class="unstyled" style="padding-top:7px">
+          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Bulletin</li>
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Digital</li>
+          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Junior Poster</li>
+          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Other</li>
+          <li><a style='background:#88F71A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Walls/Spectacular</li>
         </ul>
-      </div>
-    </div><!--End CitySwitcher -->
-
-  <!-- Add Permit Status -->
-    <span id="permitStatusLabel">Permit Status:</span>
-    <div id="permit_status">
-    <div class="btn-group">
-        <a href="#" id="nopermit" title="No Permit" class="query permit"><button class="btn btn-danger">None</a></button>
-        <a href="#" id="expiredpermit" title="Expired Permit" class="query permit"><button class="btn btn-warning">Expired</a></button>
-        <a style="color: black;" href="#" title="All" id="all" class="query all"><button class="btn">Show All</a></button>
-    </div>
-    </div>
-  </div><!-- End Permit Status -->
+        </div>-->
+  
+ <!-- Add Violations, aka Zoning, Filter Option --> 
+  <div id="legendZoningLabel">
+    <p>Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
+    <!--<p>Select Query Condition:</p>
+        <div class="btn-group" data-toggle="buttons-radio" style="padding-bottom:10px">
+          <button type="button" class="btn btn-primary" id="violationAndButton">And</button>
+          <button type="button" class="btn btn-primary" id="violoationOrButton">Or</button>
+        </div>--> 
+  </div>
+  <div class="checkbox" id="violationAnd">
+    <label>
+      <input type="checkbox" id="spacingViolation">
+      500ft Spacing</label>
+    <label>
+      <input type="checkbox" id="residentialViolation">
+      Within 300ft of Residential</label>
+    <label>
+      <input type="checkbox" id="heightViolation">
+      Billboard Height > 20ft</label>
+  </div>
+  <div class="checkbox" id="violationOR">
+    <label>
+      <input type="checkbox" id="spacingViolation2">
+      500ft Spacing</label>
+    <label>
+      <input type="checkbox" id="residentialViolation2">
+      Within 300ft of Residential</label>
+    <label>
+      <input type="checkbox" id="heightViolation2">
+      Billboard Height > 20ft</label>
   </div>
 
-    <!--DownloadSwitcher-->
-    <div id="downloadData">
-      <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a id="downkml" href="#" target="_blank">KML</a></li>
-            <li><a id="downshp" href="#">Shapefile</a></li>
-            <li><a id="downgeojson" href="#">GeoJSON</a></li>
-            <li><a id="downcsv" href="#">CSV</a></li>
-        </ul>
-      </div>
-    </div>
+   <!-- Add Source Option --> 
+  <div id="legendSourceLabel">
+    <ul class="unstyled" style="padding-top:7px">
+      <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Billboards in City Records</li>
+      <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Unlicensed Billboards</li>
+    </ul>
+  </div>
 
-  <!--About Info Panel -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">About CityScan</h3>
-      </div>
+  <!-- Add Operator Option --> 
+  <div id="legendOperatorLabel">
+    <ul class="unstyled" style="padding-top:7px">
+      <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Reported to City</li>
+      <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Not Reported to City</li>
+    </ul>
+  </div>
+</div>
 
-      <div class="modal-body">
-        <p><a href="http://cityscan.com/">CityScan</a> is a venture-backed company that inspects, observes and predict street-level activity to discover street-level conditions and proactively help respond to changes that impact your city. CityScan is headquartered in Chicago, Illinois and has raised significant funding from both institutional venture and angel investors.</p>
-        <hr>
-        <p><strong>Legend</strong></p>
-        <ul class="unstyled">
-          <li><a style='background:#B2DF8A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Awning</li>
-          <li><a style='background:#A6CEE3;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Billboard</li>
-          <li><a style='background:#E31A1C;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Dumpster</li>
-          <li><a style='background:#1F78B4;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Fence</li>
-          <li><a style='background:#33A02C;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Scaffolding</li>
-          <li><a style='background:#FB9A99;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Sidewalk Shed</li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      </div>
-    </div>
-    <!-- End of Info Panel -->
-
-    <div class="featureMenu">
-      <div id="asset_classes" >
-        <p>Asset Class
-          <ul class="nav nav-tabs nav-stacked">
-            <li data="Awning"><a href="#" class="query asset" title="Awning">Awning</a></li>
-            <li data="Billboard"><a href="#" class="query asset" title="Billboard">Billboard</a></li>
-            <li data="Dumpster"><a href="#" class="query asset" title="Dumpster">Dumpster</a></li>
-            <li data="Fence"><a href="#" class="query asset" title="Fence">Fence</a></li>
-            <li data="Scaffolding"><a href="#" class="query asset" title="Scaffolding">Scaffolding</a></li>
-            <li data="Sidewalk Shed"><a href="#" class="query asset" title="Sidewalk Shed">Sidewalk Shed</a></li>
-            <li data="Sidewalk Shed"><a href="#" class="query all" title="Sidewalk Shed">All</a></li>
-
-          </ul>
-        </p>
-      </div>
-    </div>
-
-    <!-- Custom Script -->
-    <script src="js/script_ny.js"></script>
-
-  </body>
+<!-- Custom Script --> 
+<script src="js/script_philly.js"></script>
+</body>
 </html>

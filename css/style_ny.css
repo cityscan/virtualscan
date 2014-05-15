@@ -490,7 +490,9 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 #legendAssetLabel {
 	position: absolute;
 	bottom: 65px;
+	color: black;
 	right: 115px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #legendZoningLabel {
 	position: absolute;
@@ -501,12 +503,16 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 #violationAnd {
 	position: absolute;
 	bottom: 2px;
-	right: 105px;
+	right: 103px;
+	color: black;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #violationOR {
 	position: absolute;
 	bottom: 2px;
-	right: 105px;
+	right: 103px;
+	color: black;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #legendSourceLabel {
 	position: absolute;

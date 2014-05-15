@@ -515,6 +515,8 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	position: absolute;
 	bottom: 27px;
 	right: 15px;
+	color: black;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #legendSourceLabel {
 	position: absolute;
