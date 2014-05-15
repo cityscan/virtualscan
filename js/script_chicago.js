@@ -1,6 +1,7 @@
 $('document').ready( function() {
     //hide zoning label once document loads
-    $("#legendZoningLabel").hide(); 
+    $("#legendZoningLabel").hide();
+    $('input:checkbox').attr( 'checked', true );
 
  function createSelector(layer) {
   var sql = new cartodb.SQL({ user: 'cityscan' });
@@ -98,6 +99,7 @@ $('document').ready( function() {
               $("#control").toggle(function(){
                 $("#control").animate({"bottom":"208px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
+                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE altitude>1000");
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
