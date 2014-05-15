@@ -99,7 +99,6 @@ $('document').ready( function() {
               $("#control").toggle(function(){
                 $("#control").animate({"bottom":"208px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
-                layer.getSubLayer(0).setSQL("SELECT * FROM exelon WHERE altitude>1000");
                 $("#legendAssetLabel").hide();
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
