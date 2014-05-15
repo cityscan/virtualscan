@@ -310,12 +310,16 @@ var geojson_all ;
   //Legend Animation
   //Button toggle for legend and other radio buttons
   $('.btn-group').button();
+  
+              $("#legendOperatorLabel").hide();
                 
               //Change colors of legend
              
               $('#legendZoning').click(function () {
                 //layer.getSubLayer(0).setCartoCSS('#wp_import [num_other_within_500ft>1]{marker-fill: #000000;}');
                 $( "#legendAssetLabel" ).hide();
+                $("#legendOperatorLabel").hide();
+                $("#legendSource").hide();
                 $( "#legendZoningLabel" ).show();
                 $( "#legendSourceLabel" ).hide();
                 $( "#legendPermitabel" ).hide();
@@ -324,6 +328,8 @@ var geojson_all ;
                 //layer.getSubLayer(0).setCartoCSS('#wp_import [source=\"city_records\"]{marker-fill: #006E98;}[source=\"lidar\"] {marker-fill: #474747;}[source=\"market_records\"]{marker-fill: #009900;}');
                 $( "#legendAssetLabel" ).hide();
                 $( "#legendZoningLabel" ).hide();
+                $("#legendZoning").hide();
+                $("#legendOperatorLabel").hide();
                 $( "#legendSourceLabel" ).show();
                 $( "#legendPermitLabel" ).hide();
               });
@@ -339,6 +345,7 @@ var geojson_all ;
               $('#legendPermit').click(function () {
                     //layer.getSubLayer(0).setCartoCSS('#wp_import [height_rule=true]{marker-fill: #F11810;}[height_rule=false]{marker-fill: #006E98;}');
                 $( "#legendAssetLabel" ).hide();
+                $("#legendOperatorLabel").hide();
                 $( "#legendZoningLabel" ).hide();
                 $( "#legendSourceLabel" ).hide();
                 $( "#legendPermitLabel" ).show();
