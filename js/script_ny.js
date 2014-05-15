@@ -143,15 +143,15 @@ $('document').ready( function() {
                     var Expired = $('#expired')[0].checked;console.log("Expired: "+Expired);
 
                     if(None==true && Expired==false){
-                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE permit_expiration_date IN ('NO PERMIT')");
+                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE asviolation IN ('None')");
                           console.log("this works");
                     }
                     else if(None==false && Expired==true){
-                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE permit_expiration_date IN ('10/27/2011','10/27/2012','12/31/2002','3/6/2009','5/31/2002','7/2/2012','9/29/2010')");
+                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE asviolation IN ('Expired Permit')");
                           console.log("this works2");
                     }
                     else if(None==true && Expired==true){
-                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE permit_expiration_date IN ('NO PERMIT') OR permit_expiration_date IN ('10/27/2011','10/27/2012','12/31/2002','3/6/2009','5/31/2002','7/2/2012','9/29/2010')");
+                          layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE asviolation IN ('None') OR asviolation IN ('Expired Permit')");
                           console.log("this works3");
                     }
                     else if(None==false && Expired==false){
