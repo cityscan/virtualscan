@@ -1,6 +1,11 @@
 $('document').ready( function() {
     //hide zoning label once document loads
-    $("#legendZoningLabel").hide(); 
+    $("#legendZoningLabel").hide();
+     $("#legendAssetLabel").show();
+     $("#legendZoningLabel").show();
+     $("#legendSourceLabel").hide();
+     $("#violationAnd").hide();
+     $("#legendOperatorLabel").hide();
 
  function createSelector(layer) {
   var sql = new cartodb.SQL({ user: 'cityscan' });
@@ -99,18 +104,6 @@ $('document').ready( function() {
               $("#control").toggle(function(){
                 $("#control").animate({"bottom":"208px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
-                $("#legendAssetLabel").show();
-                $("#legendZoningLabel").show();
-                $("#legendSourceLabel").hide();
-                $("#violationOR").show();
-                $("#violationAnd").hide();
-                $("#legendOperatorLabel").hide();
-              var button_violation = $("#legendZoning");
-                button_violation.removeClass("btn btn-primary").addClass("btn btn-primary active");
-              var button_source = $("#legendSource");
-                button_source.removeClass("btn btn-primary active").addClass("btn btn-primary");
-              var button_operator = $("#legendOperator");
-                button_operator.removeClass("btn btn-primary active").addClass("btn btn-primary");
 
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
