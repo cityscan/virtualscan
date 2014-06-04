@@ -55,18 +55,18 @@
 <!-- Add Map and SideBar -->
 <div id='map'></div>
 <div class="hidden"><!-- Hide hover window -->
-  <div id='box'></div>
+  <div id='hoverbox'></div>
 </div>
 <div class="hidden">
   <div id='sidebar'></div>
 </div>
 <a href="#" title="Show Panel">
-<div id='sidebar_toggle'>L<br/>
+<div id='sidebarToggle'>L<br/>
   E</br>
   S</br>
   S</br>
 </div>
-<div id='sidebar_toggle2'>M<br/>
+<div id='sidebarToggle2'>M<br/>
   O</br>
   R</br>
   E</br>
@@ -137,50 +137,50 @@
   </div>
 </div>
 
-<!-- Filter, also known as control panel or legend --> 
+<!-- Add Asset Option -->
 <a href="#" title="Show Filter">
 <div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
 </a>
-<div id="controlBig">
+<div id="controlExtend">
   <div class="btn-group" data-toggle="buttons-radio">
-    <button type="button" class="btn btn-primary active" id="legendAsset">Asset Type</button>
-    <button type="button" class="btn btn-primary" id="legendZoning">Permit Status</button>
+    <button type="button" class="btn btn-primary active" id="control_Asset">Asset Type</button>
+    <button type="button" class="btn btn-primary" id="control_Permit">Permit Status</button>
   </div>
-  <div id="legendAssetLabel">
+  <div id="control_AssetLabel">
     <p style="font-size:14px">Select Asset Type:</p>
   </div>
-  <img src='image/asset_colors_ny.png' width='26' height='5' id='assetLegend'>
-  <div class="checkbox" id="assetCheck">
+  <img src='image/asset_colors_ny.png' width='26' height='5' id='control_AssetLegend'>
+  <div class="checkbox" id="control_AssetCheckbox">
     <label>
-      <input type="checkbox" id="awningAsset">
+      <input type="checkbox" id="control_AssetAwning">
       Awning</label>
     <label>
-      <input type="checkbox" id="billboardAsset">
+      <input type="checkbox" id="control_AssetBillboard">
       Billboard</label>
     <label>
-      <input type="checkbox" id="dumpsterAsset">
+      <input type="checkbox" id="control_AssetDumpster">
       Dumpster</label>
     <label>
-      <input type="checkbox" id="fenceAsset">
+      <input type="checkbox" id="control_AssetFence">
       Fence</label>
     <label>
-      <input type="checkbox" id="scaffoldingAsset">
+      <input type="checkbox" id="control_AssetScaffold">
       Scaffolding</label>
     <label>
-      <input type="checkbox" id="sidewalkAsset">
+      <input type="checkbox" id="control_AssetSidewalk">
       Sidewalk Stand</label>
   </div>
   
-  <!-- Add Violations, aka Zoning, Filter Option -->
-  <div id="permitAssetLabel">
+  <!-- Add Permit Option -->
+  <div id="control_PermitLabel">
     <p style="font-size:14px">Select Permit Status:</p>
   </div>
-  <div class="checkbox" id="violationAnd">
+  <div class="checkbox" id="control_PermitCheckbox">
     <label>
-      <input type="checkbox" id="none">
+      <input type="checkbox" id="control_PermitNone">
       None</label>
     <label>
-      <input type="checkbox" id="expired">
+      <input type="checkbox" id="control_PermitExpired">
       Expired</label>
   </div>
 </div>

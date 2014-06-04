@@ -78,6 +78,15 @@ a:hover {
 .input, button, select, textarea {
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
+.nav-tabs.nav-stacked {
+	border-radius: 0px;
+}
+.bar {
+	color: #dbdedd;
+}
+.bar:hover {
+	text-decoration: none;
+}
 /* Map */
 #map {
 	width: 100%;
@@ -114,32 +123,6 @@ a:hover {
 	top: -60px;
 }
 */
-
-/* Feature Filter for Layer 
-#legendButton {
-	position: absolute;
-	top: 90px;
-	right: 10px;
-	width: 400px;
-	height: 60px;
-	background: transparent;
-	font-family: "Arial", Helvetica, sans-serif;
-	z-index: 2;
-}
-#legendButton a {
-	float: right;
-	width: 85px;
-	padding: 8px;
-	text-align: center;
-	font: bold 11px "Helvetica", Arial;
-	line-height: normal;
-	color: #555;
-	border-radius: 3px;
-	border: 1px solid #777777;
-	background: #ffffff;
-	text-decoration: none;
-	cursor: pointer;
-}*/
 /* Feature Filter within Map */
 .featureMenu {
 	color: white;
@@ -150,7 +133,7 @@ a:hover {
 	position: absolute;
 	width: 120px;
 	padding: 8px;
-	background-color: black; /*original color #272822*/
+	background-color: black; 
 	z-index: 5;
 	text-align: center;
 	height: 480px;
@@ -169,25 +152,39 @@ a:hover {
 	border-width: 1px;
 	border-bottom-style: solid;
 }
+#headerButtons {
+	position: absolute;
+	right: 10px;
+	top: 8px;
+	z-index: 6;
+}
 #aboutPage {
 	line-height: 16px;
 }
-.aboutButton a {
+.headerButton a {
 	color: #DBDEDD;
 	width: 40px;
 	line-height: 19px;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-decoration: none;
 }
-.aboutButton a:hover {
+.headerButton a:hover {
 	color: white;
 	text-decoration: none;
 }
-.bar {
-	color: #dbdedd;
+#downloadData {
+	position: absolute;
+	top: 41px;
+	right: 7px;
+	z-index: 20;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
-.bar:hover {
-	text-decoration: none;
+#showallButton {
+	position: absolute;
+	top: 42px;
+	right: 140px;
+	z-index: 20;
+	font-size: 12px;
 }
 /* SideBar */
 #sidebar {
@@ -195,7 +192,7 @@ a:hover {
 	top: 36px;
 	bottom: 0px;
 	left: 0px;
-	background-color: black; /*original color #272822*/
+	background-color: black;
 	padding-top: 15px;
 	width: 300px;
 	border-right-color: white;
@@ -206,24 +203,6 @@ a:hover {
 	z-index: 3;
 	float: left;
 	overflow: hidden;
-}
-#sidebarTitle {
-	color: #29abe2;
-	font-size: 13px;
-	margin-left: 7px;
-	margin-top: 2px;
-	font-weight: bolder;
-	font-family: arial;
-}
-/*#printLabel{
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}*/
-#sidebarContent {
-	color: blue;
-	font-size: 12px;
-	margin-left: 7px;
-	margin-top: 7px;
-	font-family: arial;
 }
 #sidebarProfile {
 	position: absolute;
@@ -243,7 +222,7 @@ a:hover {
 	border-bottom-style: solid;
 	z-index: 7;
 }
-#sidebar_toggle {
+#sidebarToggle {
 	position: absolute;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	top: 202px;
@@ -263,7 +242,7 @@ a:hover {
 	padding-left: 10px;
 	z-index: 2;
 }
-#sidebar_toggle2 {
+#sidebarToggle2 {
 	position: absolute;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	top: 202px;
@@ -284,6 +263,11 @@ a:hover {
 	display: none;
 	z-index: 2;
 }
+#image_sidepanel {
+	height: 250px;
+	width: 300px;
+	margin-top: -14px;
+}
 /*General Framework*/
 #logo {
 	position: relative;
@@ -291,7 +275,7 @@ a:hover {
 	top: -1px;
 	z-index: 5;
 }
-#box {
+#hoverbox {
 	z-index: 50;
 	height: 55px !important;
 	width: 230px;
@@ -306,7 +290,7 @@ a:hover {
 	font-family: arial;
 	overflow: hidden;
 }
-#boxTitle {
+#hoverboxTitle {
 	color: #29abe2;
 	font-size: 10px;
 	margin-left: 7px;
@@ -314,7 +298,7 @@ a:hover {
 	font-weight: bolder;
 	font-family: arial;
 }
-#boxContent {
+#hoverboxContent {
 	color: white;
 	font-size: 10px;
 	margin-left: 7px;
@@ -343,7 +327,7 @@ a:hover {
 	padding-bottom: 1px;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-#controlBig {
+#controlExtend {
 	position: absolute;
 	height: 200px;
 	width: 210px;
@@ -363,20 +347,6 @@ a:hover {
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	z-index: 12;
-}
-#image_sidepanel {
-	height: 250px;
-	width: 300px;
-	margin-top: -14px;
-}
-.nav-tabs.nav-stacked {
-	border-radius: 0px;
-}
-#headerButtons {
-	position: absolute;
-	right: 10px;
-	top: 8px;
-	z-index: 6;
 }
 /* SubHeader Framework*/
 #subheader {
@@ -399,137 +369,41 @@ a:hover {
 	right: 235px;
 	z-index: 20;
 }
-#showall_status {
-	position: absolute;
-	top: 42px;
-	right: 140px;
-	z-index: 20;
-	font-size: 12px;
-}
-#downloadData {
-	position: absolute;
-	top: 41px;
-	right: 7px;
-	z-index: 20;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-}
-#assetLabel {
-	position: absolute;
-	color: black;
-	top: 6px;
-	left: 308px;
-	font-weight: bold;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	font-size: 13px;
-	z-index: 20;
-}
-#asset_status {
-	position: absolute;
-	top: 5px;
-	left: 360px;
-	z-index: 20;
-	font-size: 12px;
-	color: black;
-}
-#asset_classes a {
-	color: white;
-	text-align: center;
-	font-size: 12px;
-}
-#asset_classes a:hover {
-	color: black;
-}
-#asset_classes a.selected {
- background-color: #ddd color: black;
-}
-#sourceLabel {
-	position: absolute;
-	color: black;
-	top: 6px;
-	left: 740px;
-	font-weight: bold;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	font-size: 13px;
-	z-index: 20;
-}
-#source_status {
-	position: absolute;
-	top: 5px;
-	left: 800px;
-	z-index: 20;
-	font-size: 12px;
-	color: black;
-}
-#violation_status {
-	position: absolute;
-	top: 34px;
-	left: 434px;
-	z-index: 20;
-}
-#violationStatusLabel {
-	position: absolute;
-	color: black;
-	top: 35px;
-	left: 308px;
-	font-weight: bold;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	font-size: 13px;
-	z-index: 20;
-}
-#violation_status label {
-	float: left;
-	padding-left: 5px;
-	font-family: arial;
-	font-size: 11px;
-	height: 11px;
-	line-height: 11px;
-}
 #Spacing #Residential #Height {
 	font-color: black;
 	padding-top: 3px;
 }
-#legendAssetLabel {
-	position: absolute;
-	bottom: 50px;
-	right: 80px;
-}
-#legendZoningLabel {
+#control_ViolationLabel {
 	position: absolute;
 	bottom: 140px;
 	right: -4px;
 	width: 210px;
-	height: 24px;/*made this change*/
+	height: 24px;
 	font-weight: bolder;
 }
-#violationAnd {
+#control_ViolationCheckbox {
 	position: absolute;
-	bottom: 16px;
-	right: 15px;
-	color: black;
-}
-#violationOR {
-	position: absolute;
-	bottom: 5px;/*made this change*/
+	bottom: 5px;
 	right: 10px;
-	height: 130px;/*made this change*/
-	width: 177px;/*made this change*/
+	height: 130px;
+	width: 177px;
 	color: black;
 }
-#legendSourceLabel {
+#control_SourceLabel {
 	position: absolute;
-	bottom: 130px;/*made this change*/
+	bottom: 130px;
 	right: -12px;
 	width: 220px;
-	height: 40px;/*made this change*/
+	height: 40px;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: black;
 }
-#legendOperatorLabel {
+#control_OperatorLabel {
 	position: absolute;
-	bottom: 130px;/*made this change*/
+	bottom: 130px;
 	right: -12px;
 	width: 220px;
-	height: 40px;/*made this change*/
+	height: 40px;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: black;
 }

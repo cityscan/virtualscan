@@ -1,6 +1,5 @@
 $('document').ready( function() {
-    //hide zoning label once document loads
-    $("#legendZoningLabel").hide();
+    $("#control_AssetLabel").hide();
     $('input:checkbox').attr( 'checked', true );
 
  function createSelector(layer) {
@@ -8,10 +7,6 @@ $('document').ready( function() {
           
   var $options = $('.query');
   $options.click(function(e) {
-    // get the asset type
-    // TODO: split this off as a function and return its value (asset_class) in this case
-    // and pass it to another function that checks if anything else is toggled
-    // before constructing SQL query
     var $a = $(e.target);
     var title = $a.attr('title');
     var queryType = $a.attr('class');
@@ -22,7 +17,7 @@ $('document').ready( function() {
 
     var query = "SELECT * FROM exelon";
             
-// create query based on data from the layer
+    // create query based on data from the layer
             if(title !== 'All' && queryType == 'query asset') {
               query = "SELECT * FROM exelon WHERE type = '" + title + "'";
               }
@@ -50,14 +45,12 @@ $('document').ready( function() {
                     case "market_records":
                         query = "SELECT * FROM exelon WHERE source ='" + title + "'";
                         break;
-               }
-                        
+               }   
             }
               console.log(query);
               layer.setSQL(query);
     });
     }
-
 
     //Initialize Map
     var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
@@ -95,82 +88,28 @@ $('document').ready( function() {
                 var subLayer = layer.getSubLayer(0);
                 var infoSubLayer = layer.getSubLayer(0);
 
-              //Control (aka legend of filter) Animation
-              $("#control").toggle(function(){
-                $("#control").animate({"bottom":"208px"}, "slow");
-                $("#controlBig").animate({"bottom":"0px"}, "slow");
-                $("#legendAssetLabel").hide();
-                $("#legendZoningLabel").hide();
-                $("#legendSourceLabel").hide();
-                $("#violationOR").show();
-                $("#violationAnd").hide();
-                $("#legendOperatorLabel").hide();
-                $("#assetLegend").animate({"bottom":"28px"}, "slow");//new
+                //Control (aka legend of filter) Animation
+                $("#control").toggle(function(){
+                  $("#control").animate({"bottom":"208px"}, "slow");
+                  $("#controlExtend").animate({"bottom":"0px"}, "slow");
+                  $("#control_AssetLabel").hide();
+                  $("#control_AssetCheckbox").show();
+                  $("#legendOperatorLabel").hide();
+                  $("#control_AssetLegend").animate({"bottom":"28px"}, "slow");
 
-              },function(){
-                $("#control").animate({"bottom":"0px"}, "slow");
-                $("#controlBig").animate({"bottom":"-210px"}, "slow");
-                $("#assetLegend").animate({"bottom":"25px"}, "slow");//new
-              });
+                },function(){
+                  $("#control").animate({"bottom":"0px"}, "slow");
+                  $("#controlExtend").animate({"bottom":"-210px"}, "slow");
+                  $("#control_AssetLegend").animate({"bottom":"25px"}, "slow");
+                });
 
-              //Change Colors Based on Asset Type
-             $('#legendAsset').click(function () {
-                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
-                //layer.getSubLayer(0).setCartoCSS('#exelon [type=\"Bulletin\"]{marker-fill: #F79D00;}[type=\"Digital\"] {marker-fill: #D7162D;}[type=\"Walls/Spectacular\"]{marker-fill: #88F71A;}[type=\"null\"]{marker-fill: #474747;}[type=\"Junior Poster\"]{marker-fill: #4B25EE;}');
-                $("#legendAssetLabel").show();
-                $("#legendZoningLabel").show();
-                $("#violationOR").hide();
-                $("#legendOperatorLabel").hide();
-              });
-              //Change Colors Based on Zoning/Violation
-             $('#legendZoning').click(function () {
-                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon WHERE num_violations=0');
-                //layer.getSubLayer(0).setCartoCSS('#exelon [num_violations>0]{marker-fill: #D7162D;}[num_violations=0]{marker-fill: #F79D00;}');
-                console.log("legend zoning working");
-                $("#legendAssetLabel").hide();
-                $("#legendZoningLabel").show();
-                $("#legendSourceLabel").hide();
-                $("#violationOR").show();
-                $("#legendOperatorLabel").hide();
-              });
-                 //Include Toggling for AND/OR option for Zoning/Violation
-                $('#violationAndButton').click(function () {
-                    $("#violationAnd").show();
-                    $("#violationOR").hide();
-                  });
-
-                $('#violoationOrButton').click(function () {
-                    $("#violationAnd").hide();
-                    $("#violationOR").show();
-                  });
-              //Change Colors Based on Source
-            $('#legendSource').click(function () {
-                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
-                //layer.getSubLayer(0).setCartoCSS('#exelon [hansen_license_num="None"]{marker-fill: #D7162D;}[hansen_license_num!="None"]{marker-fill: #16D7CB;}');
-                $("#legendAssetLabel").hide();
-                $("#legendZoningLabel").hide();
-                $("#legendSourceLabel").show();
-                $("#violationOR").hide();
-                $("#legendOperatorLabel").hide();
-              });
-              //Change Colors Based on Operator
-            $('#legendOperator').click(function () {
-                //layer.getSubLayer(0).setSQL('SELECT * FROM exelon');
-                //layer.getSubLayer(0).setCartoCSS('#exelon [operator_self_reported=true]{marker-fill: #16D7CB;}[operator_self_reported=false]{marker-fill: #D7162D;}');
-                $("#legendAssetLabel").hide();
-                $("#legendZoningLabel").hide();
-                $("#legendSourceLabel").hide();
-                $("#violationOR").hide();
-                $("#legendOperatorLabel").show();
-              });
-
-              //Prepare filter for AND Option for Zoning/Violation
+                //Prepare filter for AND Option for Assets
                 function updateMapByClient(){
-                    var Poles = $('#electricityUtilityPoles')[0].checked;console.log("Poles: "+Poles);
-                    var PoleDevices = $('#poleDevices')[0].checked;console.log("PoleDevices: "+PoleDevices);
-                    var Streetlights = $('#streetlights')[0].checked;console.log("Streetlights: "+Streetlights);
-                    var ManholesVaults = $('#manholesVaults')[0].checked;console.log("ManholesVaults: "+ManholesVaults);
-                    var WireSag = $('#wireSag')[0].checked;console.log("WireSag: "+WireSag);
+                    var Poles = $('#control_ElectricityUtilityPolesCheckbox')[0].checked;console.log("Poles: "+Poles);
+                    var PoleDevices = $('#control_PoleDevicesCheckbox')[0].checked;console.log("PoleDevices: "+PoleDevices);
+                    var Streetlights = $('#control_StreetlightsCheckbox')[0].checked;console.log("Streetlights: "+Streetlights);
+                    var ManholesVaults = $('#control_ManholeVaultsCheckbox')[0].checked;console.log("ManholesVaults: "+ManholesVaults);
+                    var WireSag = $('#control_WireSagCheckbox')[0].checked;console.log("WireSag: "+WireSag);
 
                     asset_types = {};
                     asset_types['Electricity/Utility Poles'] = Poles;
@@ -195,26 +134,23 @@ $('document').ready( function() {
                     }
                     console.log(sql)
                     return sql;    
-
                 };
 
-                $('#electricityUtilityPoles').click(function(){
+                $('#control_ElectricityUtilityPolesCheckbox').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#poleDevices').click(function(){
+                $('#control_PoleDevicesCheckbox').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#manholesVaults').click(function(){
+                $('#control_ManholeVaultsCheckbox').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#streetlights').click(function(){
+                $('#control_StreetlightsCheckbox').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-                $('#wireSag').click(function(){
+                $('#control_WireSagCheckbox').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
-
-
 
               //Prepare DEFAULT content for Sidebar on Document Load   
               //createSelector(subLayer);
@@ -278,36 +214,34 @@ $('document').ready( function() {
 
            //Prepare content for hover window
            subLayer.on('featureOver', function(e, latlng, pos, data) {
-                var content = $('#box');
+                var content = $('#hoverbox');
               content.show();
               $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
-              $('#box').html('');
+              $('#hoverbox').html('');
 
               if (data.rows[0].frame == '201') {
-                  $('#box').append('<p align="center"><img height="150" width="200" src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg"></p>');
+                  $('#hoverbox').append('<p align="center"><img height="150" width="200" src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg"></p>');
               } else {
-                  $('#box').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].imageurl_lowres +'><p/>');
+                  $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].imageurl_lowres +'><p/>');
               }
-                      $('#box').append('<span id="boxTitle">' + 'Asset Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].asset_type +'</span><br/>');
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Asset Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].asset_type +'</span><br/>');
          
-                      $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
                   });
                   window.xcoord = pos.x;
                   window.ycoord = pos.y;
                     var containerObj =  content.position();
-                    $('#box').offset({ left: xcoord + 10 , top: ycoord + 70 })
+                    $('#hoverbox').offset({ left: xcoord + 10 , top: ycoord + 70 })
            });
            subLayer.on('featureOut', function(e, latlng, pos, data) {
-              $('#box').hide()
+              $('#hoverbox').hide()
            });
-
               subLayer.setInteraction(true);
 			       })
               .error(function(err) {
                 console.log(err);
                });
-
               map.addLayer(road, {insertAtTheBottom:true});
 
     //Geocoder Parameters
@@ -364,34 +298,22 @@ $('document').ready( function() {
   });
   
   //Enable sidebar animation   
-  $("#sidebar_toggle").click(function(){
+  $("#sidebarToggle").click(function(){
     $("#sidebar").animate({"left":"-300px"}, "slow");
-    $("#assetLabel").animate({"left":"10px"}, "slow");
-    $("#violationStatusLabel").animate({"left":"10px"}, "slow");
-    $("#asset_status").animate({"left":"65px"}, "slow");
-    $("#violation_status").animate({"left":"145px"}, "slow");
-    $("#sourceLabel").animate({"left":"445px"}, "slow");
-    $("#source_status").animate({"left":"500px"}, "slow");
     $("#sidebarProfile").animate({"left":"-70px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"0px"}, "slow");
-    $("#sidebar_toggle2").show();
+    $("#sidebarToggle").animate({"left":"0px"}, "slow");
+    $("#sidebarToggle2").show();
     $('.leaflet-left .leaflet-control').animate({"margin-left":"-290px"}, "slow");
     $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"-300px"}, "slow");
   });
-  $("#sidebar_toggle2").click(function(){
+  $("#sidebarToggle2").click(function(){
     $("#sidebar").animate({"left":"0px"}, "slow");
-    $("#assetLabel").animate({"left":"308px"}, "slow");
-    $("#violationStatusLabel").animate({"left":"308px"}, "slow");
-    $("#asset_status").animate({"left":"360px"}, "slow");
-    $("#violation_status").animate({"left":"434px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"0px"}, "slow");
-    $("#sourceLabel").animate({"left":"740px"}, "slow");
-    $("#source_status").animate({"left":"800px"}, "slow");
-    $("#sidebar_toggle2").hide();
-    $("#sidebar_toggle2").animate({"left":"0px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"300px"}, "slow");
-    $("#sidebar_toggle").show();
+    $("#sidebarToggle2").hide();
+    $("#sidebarToggle2").animate({"left":"0px"}, "slow");
+    $("#sidebarToggle").animate({"left":"300px"}, "slow");
+    $("#sidebarToggle").show();
     $("#sidebarProfile").animate({"left":"230px"}, "slow");
     $('.leaflet-left .leaflet-control').animate({"margin-left":"10px"}, "slow");
     $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"0px"}, "slow");
@@ -401,7 +323,7 @@ $('document').ready( function() {
   $('.btn-group').button();
 
   //Toggling classes for UI ButtonS (if relevant)
-  $("#showall_status").click(function() {
+  $("#showallButton").click(function() {
     var bulletin_button = $("#bulletin_button");
       bulletin_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
     var digital_button = $("#digital_button");

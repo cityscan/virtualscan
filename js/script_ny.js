@@ -1,8 +1,6 @@
 $('document').ready( function() {
-    //hide zoning label once document loads
-    $("#legendZoningLabel").hide();
-    $("#permitAssetLabel").hide();
-    $("#violationAnd").hide();
+    $("#control_PermitLabel").hide();
+    $("#control_PermitCheckbox").hide();
     $('input:checkbox').attr( 'checked', true );
 
  function createSelector(layer) {
@@ -11,9 +9,6 @@ $('document').ready( function() {
   var $options = $('.query');
   $options.click(function(e) {
     // get the asset type
-    // TODO: split this off as a function and return its value (asset_class) in this case
-    // and pass it to another function that checks if anything else is toggled
-    // before constructing SQL query
     var $a = $(e.target);
     var title = $a.attr('title');
     var queryType = $a.attr('class');
@@ -52,14 +47,12 @@ $('document').ready( function() {
                     case "market_records":
                         query = "SELECT * FROM nyc WHERE source ='" + title + "'";
                         break;
-               }
-                        
+               }         
             }
               console.log(query);
               layer.setSQL(query);
     });
     }
-
 
     //Initialize Map
     var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
@@ -101,47 +94,47 @@ $('document').ready( function() {
               //Control (aka legend of filter) Animation
               $("#control").toggle(function(){
                 $("#control").animate({"bottom":"240px"}, "slow");
-                $("#controlBig").animate({"bottom":"0px"}, "slow");
+                $("#controlExtend").animate({"bottom":"0px"}, "slow");
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
-                $("#controlBig").animate({"bottom":"-248px"}, "slow");
+                $("#controlExtend").animate({"bottom":"-248px"}, "slow");
               });
 
               //Change Colors Based on Asset Type
-             $('#legendAsset').click(function () {
+             $('#control_Asset').click(function () {
                 console.log("legend asset working");
                 $('input:checkbox').removeAttr('checked');
                 layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
                 $("#legendZoningLabel").hide();
                 $("#legendSourceLabel").hide();
-                $("#permitAssetLabel").hide();
-                $("#assetLegend").show();
-                $("#legendAssetLabel").show();
-                $("#assetCheck").show();
+                $("#control_PermitLabel").hide();
+                $("#control_AssetLegend").show();
+                $("#control_AssetLabel").show();
+                $("#control_AssetCheckbox").show();
                 $("#violationOR").hide();
-                $("#violationAnd").hide();
+                $("#control_PermitCheckbox").hide();
                 $("#legendOperatorLabel").hide();
               });
               //Change Colors Based on Zoning/Violation
-             $('#legendZoning').click(function () {
+             $('#control_Permit').click(function () {
                 console.log("legend permit working");
                 $('input:checkbox').removeAttr('checked');
                 layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
-                $("#legendAssetLabel").hide();
+                $("#control_AssetLabel").hide();
                 $("#legendZoningLabel").show();
                 $("#legendSourceLabel").hide();
-                $("#permitAssetLabel").show();
-                $("#permitAssetLabel").show();
-                $("#assetLegend").hide();
-                $("#assetCheck").hide();
-                $("#violationAnd").show();
+                $("#control_PermitLabel").show();
+                $("#control_PermitLabel").show();
+                $("#control_AssetLegend").hide();
+                $("#control_AssetCheckbox").hide();
+                $("#control_PermitCheckbox").show();
                 $("#legendOperatorLabel").hide();
               });
 
                 //Prepare filter for expired permits
                 function updateMapByClient(){
-                    var None = $('#none')[0].checked;console.log("None: "+None);
-                    var Expired = $('#expired')[0].checked;console.log("Expired: "+Expired);
+                    var None = $('#control_PermitNone')[0].checked;console.log("None: "+None);
+                    var Expired = $('#control_PermitExpired')[0].checked;console.log("Expired: "+Expired);
 
                     if(None==true && Expired==false){
                           layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE asviolation IN ('None')");
@@ -161,21 +154,21 @@ $('document').ready( function() {
                     }
 
                 };
-                $('#none').click(function(){
+                $('#control_PermitNone').click(function(){
                    updateMapByClient();
                 });
-                $('#expired').click(function(){
+                $('#control_PermitExpired').click(function(){
                    updateMapByClient();
                 });
 
 
                 function updateMapByClientAsset(){
-                    var Awnings2 = $('#awningAsset')[0].checked;console.log("Awning: "+Awnings2);
-                    var Billboards2 = $('#billboardAsset')[0].checked;console.log("Billboard: "+Billboards2);
-                    var Dumpsters2 = $('#dumpsterAsset')[0].checked;console.log("Dumpster: "+Dumpsters2);
-                    var Fences2 = $('#fenceAsset')[0].checked;console.log("Fence: "+Fences2);
-                    var Scaffoldings2 = $('#scaffoldingAsset')[0].checked;console.log("Scaffolding: "+Scaffoldings2);
-                    var Sidewalks2 = $('#sidewalkAsset')[0].checked;console.log("Sidewalk: "+Sidewalks2);
+                    var Awnings2 = $('#control_AssetAwning')[0].checked;console.log("Awning: "+Awnings2);
+                    var Billboards2 = $('#control_AssetBillboard')[0].checked;console.log("Billboard: "+Billboards2);
+                    var Dumpsters2 = $('#control_AssetDumpster')[0].checked;console.log("Dumpster: "+Dumpsters2);
+                    var Fences2 = $('#control_AssetFence')[0].checked;console.log("Fence: "+Fences2);
+                    var Scaffoldings2 = $('#control_AssetScaffold')[0].checked;console.log("Scaffolding: "+Scaffoldings2);
+                    var Sidewalks2 = $('#control_AssetSidewalk')[0].checked;console.log("Sidewalk: "+Sidewalks2);
 
                     asset_types = {};
                     asset_types['Awning'] = Awnings2;
@@ -203,41 +196,25 @@ $('document').ready( function() {
                     return sql;    
 
                 };
-                $('#awningAsset').click(function(){
+                $('#control_AssetAwning').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#billboardAsset').click(function(){
+                $('#control_AssetBillboard').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#dumpsterAsset').click(function(){
+                $('#control_AssetDumpster').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#fenceAsset').click(function(){
+                $('#control_AssetFence').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#scaffoldingAsset').click(function(){
+                $('#control_AssetScaffold').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
-                $('#sidewalkAsset').click(function(){
+                $('#control_AssetSidewalk').click(function(){
                    layer.getSubLayer(0).setSQL(updateMapByClientAsset());
                 });
 
-                /*
-                $('#violationAndButton').click(function () {
-                    $("#violationAnd").show();
-                    $("#violationOR").hide();
-                $('input:checkbox').removeAttr('checked');
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
-                    console.log("none button")
-                  });
-
-                $('#violationOrButton').click(function () {
-                    $("#violationAnd").hide();
-                    $("#violationOR").show();
-                $('input:checkbox').removeAttr('checked');
-                layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
-                    console.log("expired button")
-                  });*/
               //Prepare DEFAULT content for Sidebar on Document Load   
               createSelector(subLayer);
                       $('#sidebar').html('');
@@ -290,30 +267,28 @@ $('document').ready( function() {
 
            //Prepare content for hover window
            subLayer.on('featureOver', function(e, latlng, pos, data) {
-                var content = $('#box');
-              $('#box').show();
+                var content = $('#hoverbox');
+              $('#hoverbox').show();
               $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT bin,lat,lon,address,date,asviolation,height_meters,imageurl,notes,permit_expiration_date,permit_issuance_date,type,width_meters FROM nyc WHERE cartodb_id = ' + data.cartodb_id), function(data) {
-              $('#box').html('');
-                      $('#box').append('<span id="boxTitle">' + 'Type:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');   
-                      $('#box').append('<span id="boxTitle">' + 'Address:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].address +'</span><br/>');
-                      $('#box').append('<span id="boxTitle">' + 'BIN:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].bin +'</span><br/>');    
-                      $('#box').append('<span id="boxTitle">' + 'Date Collected:&nbsp;</span><span id="boxContent">' +'</strong>'+ data.rows[0].date +'</span>');     
+              $('#hoverbox').html('');
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');   
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Address:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].address +'</span><br/>');
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'BIN:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].bin +'</span><br/>');    
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].date +'</span>');     
                   });
                   window.xcoord = pos.x;
                   window.ycoord = pos.y;
                     var containerObj =  content.position();
-                    $('#box').offset({ left: xcoord + 10 , top: ycoord + 70 })
+                    $('#hoverbox').offset({ left: xcoord + 10 , top: ycoord + 70 })
            });
            subLayer.on('featureOut', function(e, latlng, pos, data) {
-              $('#box').hide()
+              $('#hoverbox').hide()
            });
-
               subLayer.setInteraction(true);
 			       })
               .error(function(err) {
                 console.log(err);
                });
-
               map.addLayer(road, {insertAtTheBottom:true});
 
     //Geocoder Parameters
@@ -370,7 +345,7 @@ $('document').ready( function() {
   });
   
   //Enable sidebar animation   
-  $("#sidebar_toggle").click(function(){
+  $("#sidebarToggle").click(function(){
     $("#sidebar").animate({"left":"-300px"}, "slow");
     $("#assetLabel").animate({"left":"10px"}, "slow");
     $("#violationStatusLabel").animate({"left":"10px"}, "slow");
@@ -380,12 +355,12 @@ $('document').ready( function() {
     $("#source_status").animate({"left":"500px"}, "slow");
     $("#sidebarProfile").animate({"left":"-70px"}, "slow");
     $("#sidebar_imgbox").animate({"left":"-300px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"0px"}, "slow");
-    $("#sidebar_toggle2").show();
+    $("#sidebarToggle").animate({"left":"0px"}, "slow");
+    $("#sidebarToggle2").show();
     $('.leaflet-left .leaflet-control').animate({"margin-left":"-290px"}, "slow");
     $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"-300px"}, "slow");
   });
-  $("#sidebar_toggle2").click(function(){
+  $("#sidebarToggle2").click(function(){
     $("#sidebar").animate({"left":"0px"}, "slow");
     $("#assetLabel").animate({"left":"308px"}, "slow");
     $("#violationStatusLabel").animate({"left":"308px"}, "slow");
@@ -394,10 +369,10 @@ $('document').ready( function() {
     $("#sidebar_imgbox").animate({"left":"0px"}, "slow");
     $("#sourceLabel").animate({"left":"740px"}, "slow");
     $("#source_status").animate({"left":"800px"}, "slow");
-    $("#sidebar_toggle2").hide();
-    $("#sidebar_toggle2").animate({"left":"0px"}, "slow");
-    $("#sidebar_toggle").animate({"left":"300px"}, "slow");
-    $("#sidebar_toggle").show();
+    $("#sidebarToggle2").hide();
+    $("#sidebarToggle2").animate({"left":"0px"}, "slow");
+    $("#sidebarToggle").animate({"left":"300px"}, "slow");
+    $("#sidebarToggle").show();
     $("#sidebarProfile").animate({"left":"230px"}, "slow");
     $('.leaflet-left .leaflet-control').animate({"margin-left":"10px"}, "slow");
     $('.leaflet-control-geosearch, .leaflet-control-geosearch ul').animate({"margin-left":"0px"}, "slow");
