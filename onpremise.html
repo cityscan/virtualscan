@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -245,3 +246,252 @@
 <script src="js/script_onpremise.js"></script>
 </body>
 </html>
+=======
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>CityScan: Chicago | On-Premise Signage</title>
+<link rel="Shortcut Icon" href="http://cityscan.com/wp-content/themes/cityscan/images/favicon.ico" type="image/x-icon">
+<link href="css/style_onpremise.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+<style>
+.popupBlack, .leaflet-popup-content-wrapper, .leaflet-popup-content {
+	z-index: 50;
+	height: 125px !important;
+	width: 250px;
+	font-size: 10px;
+	line-height: 13px !important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: black !important;
+	/*border-color: white;
+	border-width: 1px; 
+	border-style: solid; */
+	font-family: arial;
+	overflow: hidden;
+}
+
+</style>
+
+<!--[if lte IE 8]><link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" /><![endif]-->
+
+<!-- Bootstrap Libraries -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" />
+<link rel="stylesheet" href="css/l.geosearch.mod.css" />
+
+<!-- Mapbox and jQuery -->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.js'></script>
+<link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.css' rel='stylesheet' />
+<script src="js/mapbox.jquery.js"></script>
+
+<!-- Mapping Libraries -->
+<script src="http://libs.cartodb.com/cartodb.js/v3/cartodb.js"></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script src="js/l.geosearch.mod.js"></script>
+</head>
+
+<body>
+
+<!-- Print Report --> 
+<script>
+  function wins(){
+    win = open("",'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=700');
+    win.document.write("<html><body><head></head><img src='image/logo.png' width='156' height='35' id='logo'><input value='Print Window' type='button' id='button' style='position:absolute;right:10px'></input><br /><br />"
+      + "<img src="+ image + " hspace='3' width='300px' height='240px'><br /><br />"
+      + "<strong>- ATTRIBUTE -</strong><br /><br />"
+      + "<strong>Type: </strong>" + types + "<br />"
+      + "<strong>Date Collected: </strong>" + dateCollected + "<br />"
+      + "<strong>Material: </strong>" + material + "<br />"
+      + "<strong>Frame: </strong>" + materialFrame + "<br />"
+      + "<strong>Height (m): </strong>" + heights + "<br />"
+      + "<strong>Altitude (m): </strong>" + altitude + "<br />"
+      + "<strong>Encroaching Vegetation: </strong>" + encroachingVegetation + "<br />"
+      + "<strong>Number of Devices: </strong>" + numberDevices + "<br />"
+      + "<strong>Pole ID: </strong>" + poleId + "<br />"
+      + "<strong>Pole Tilt: </strong>" + poleTilt + "<br />"
+      + "<strong>Comments: </strong>" + raterComments + "<br />"
+      + "</body></html>");
+    // attach to button in target window, and use a handler in this one:
+    var button = win.document.getElementById('button');
+    button.onclick = function() {
+         win.print();
+         setTimeout('win.close()',500);
+      }
+    }
+  </script> 
+
+<!-- Add Map and SideBar -->
+<div id='map'></div>
+<div class="hidden"><!-- Hide hover window -->
+  <div id='box'></div>
+</div>
+<div class="hidden">
+  <div id='sidebar'></div>
+</div>
+<a href="#" title="Show Panel">
+  <div id='sidebar_toggle'>L<br/>
+    E</br>
+    S</br>
+    S</br>
+  </div>
+  <div id='sidebar_toggle2'>M<br/>
+    O</br>
+    R</br>
+    E</br>
+  </div>
+</a>
+<div id='sidebar_imgbox'></div><!-- Add white container around siidebar image -->
+<div id="sidebarProfile">
+  <button type="button" onclick="wins()">Print</button>
+</div>
+
+<!-- Add Header -->
+<div id='header'>
+  <div id='logo'> <a href="http://cityscan.com/"><img src="image/logo_main.png" width="156" height="35" id="logo"></a> </div>
+  <div id='headerButtons'> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="http://www.cityscan.com">WELCOME</a></span> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> 
+    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
+</div>
+<!-- End of Header --> 
+
+<!--Add Sub-Header-->
+<div id='subheader'> 
+  
+</div>
+
+<!--Add CitySwitcher-->
+<div id="citySwitcher">
+  <div class="btn-group">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Chicago - On-Premise Signage&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="philadelphia.html">Philadelphia - Billboard&nbsp;&nbsp;&nbsp;</a></li>
+      <li><a href="newyork.html">New York - Safety&nbsp;&nbsp;&nbsp;</a></li>
+      <li><a href="chicago.html">Chicagoland - Utility&nbsp;&nbsp;&nbsp;</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Add Show All -->
+<div id="showall_status">
+  <div class="btn-group">
+    <button type="button" class="btn">
+    <a href="#" class="query all" id="display_all" title="Display All Features">Display All</a>
+    </button>
+  </div>
+</div>
+
+<!-- Download Switcher -->
+<div id="downloadData">
+  <div class="btn-group">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data&nbsp;&nbsp;<span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a id="downkml" href="#" target="_blank">KML</a></li>
+      <li><a id="downshp" href="#">Shapefile</a></li>
+      <li><a id="downgeojson" href="#">GeoJSON</a></li>
+      <li><a id="downcsv" href="#">CSV</a></li>
+    </ul>
+  </div>
+</div>
+
+<!--About Info Panel -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">About CityScan</h3>
+  </div>
+  <div class="modal-body">
+    <p id="aboutPage"><a href="http://cityscan.com/">CityScan</a> is a venture-backed company that inspects, observes and predict street-level activity to discover street-level conditions and proactively help respond to changes that impact your city. CityScan is headquartered in Chicago, Illinois and has raised significant funding from both institutional venture and angel investors.</p>
+    <hr>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Filter, also known as control panel or legend --> 
+<a href="#" title="Show Filter">
+<div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
+</a>
+<div id="controlBig">
+<div class="btn-group" data-toggle="buttons-radio"> 
+    <button type="button" class="btn btn-primary" id="legendOperator">Asset Class</button>
+    <button type="button" class="btn btn-primary" id="legendZoning">Permit Status</button>
+    
+    
+  </div>
+  <div class="checkbox" id="legendOperatorLabel">
+      <p style="font-size:14px;font-weight:bolder">Asset Class:</p>
+     <ul class="unstyled" style="padding-top:7px">
+          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Food Stores</li>
+          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Pharmacy</li>
+          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Religious</li>
+          <li><a style='background:#88F71A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Restaurants</li>
+          <li><a style='background:#FF7316;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Retail</li>
+          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Vacant</li>
+        </ul>
+        </div>
+ <!-- Add Violations, aka Zoning, Filter Option --> 
+    <div id="legendZoningLabel">
+    <p>On-Premise Sign Permit 
+      <label><input type="checkbox" id="signYes">Yes</label>
+      <label><input type="checkbox" id="signNo">No</label>
+      </p>
+    <p>Business License Status
+      <label><input type="checkbox" id="licenseNo">None</label>
+      <label><input type="checkbox" id="licenseYes">Valid</label></p>
+    </div>
+   
+      
+     
+     
+    
+    <!--
+    <label>
+      <input type="checkbox" id="spacingViolation">
+      Food Stores</label>
+    <label>
+      <input type="checkbox" id="residentialViolation">
+      Pharmacy</label>
+    <label>
+      <input type="checkbox" id="heightViolation">
+      Religious</label>
+      <label>
+      <input type="checkbox" id="spacingViolation">
+      Restaurants</label>
+    <label>
+      <input type="checkbox" id="residentialViolation">
+      Retail</label>
+    <label>
+      <input type="checkbox" id="heightViolation">
+      Vacant</label> -->
+  
+    
+    
+    
+    <!--<div class="radio" id="violationOR">
+        <label>
+          <input type="radio" id="sign">
+          Sign Permit</label>
+        <label>
+          <input type="radio" id="sign">
+          Sign Permit</label>
+        <label>
+          <input type="radio" id="license">
+          Business License</label>
+        <label>
+          <input type="radio" id="vacant">
+          Vacant Storefront</label>
+    </div> -->
+
+   
+  
+</div>
+
+<!-- Custom Script --> 
+<script src="js/script_onpremise.js"></script>
+</body>
+</html>
+>>>>>>> abd29b839bdbfbb6939c8530eff7727632236168
