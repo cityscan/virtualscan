@@ -75,7 +75,7 @@ a:hover {
 	border-radius: 0 !important;
 }
 .input, button, select, textarea {
-font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 /* Map */
 #map {
@@ -390,7 +390,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	border-width: 1px;
 	border-bottom-style: solid;
 	z-index: 2;
- */	background-color: #F2F2F2;
+ */ 	background-color: #F2F2F2;
 }
 #citySwitcher {
 	position: absolute;
@@ -489,31 +489,52 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #legendAssetLabel {
 	position: absolute;
-	bottom: 65px;
+	bottom: 174px;
 	color: black;
-	right: 115px;
+	right: 75px;
+	font-weight: bolder;
+	font-size: 16px;
+	width: 150px;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#permitAssetLabel {
+	position: absolute;
+	bottom: 180px;/*made this change*/
+	color: black;
+	right: 0px;/*made this change*/
+	font-weight: bolder;
+	font-size: 16px;
+	width: 225px;/*made this change*/
+	height: 15px;/*made this change*/
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#assetLegend {
+	position: absolute;
+	bottom: 25px;/*made this change*/
+	height: 143px;/*made this change*/
+	width: 25px;/*made this change*/
+	right: 195px;/*made this change*/
+}
+#assetCheck {
+	position: absolute;
+	bottom: 24px;/*made this change*/
+	height: 145px;/*made this change*/
+	width: 130px;/*made this change*/
+	right: 38px;/*made this change*/
+	color: black;
 }
 #legendZoningLabel {
 	position: absolute;
-	bottom: 150px;
-	right: 10px;
+	bottom: 148px;
+	right: 15px;
 	width: 210px;
-}
-#legendZoningLabel p {
-    padding-top: 10px;
 }
 #violationAnd {
 	position: absolute;
-	bottom: 2px;
-	right: 103px;
-	color: black;
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-#violationOR {
-	position: absolute;
-	bottom: 2px;
-	right: 103px;
+	bottom: 90px;/*made this change*/
+	right: 75px;/*made this change*/
+	height: 85px;/*made this change*/
+	width: 130px;/*made this change*/
 	color: black;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

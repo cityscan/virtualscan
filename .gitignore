@@ -1,7 +1,5 @@
 # stupid vim
-*.swp
+*.sw[op]
 
 # stupid gedit
 *~
-
-cartodb.uncompressed.js

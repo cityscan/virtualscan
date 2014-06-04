@@ -7,7 +7,7 @@ html, body {
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 p {
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 13px;
 	color: black;
 }
@@ -76,7 +76,7 @@ a:hover {
 	border-radius: 0 !important;
 }
 .input, button, select, textarea {
-font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 /* Map */
 #map {
@@ -391,7 +391,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	border-width: 1px;
 	border-bottom-style: solid;
 	z-index: 2;
- */	background-color: #F2F2F2;
+ */ 	background-color: #F2F2F2;
 }
 #citySwitcher {
 	position: absolute;
@@ -498,6 +498,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	bottom: 140px;
 	right: -4px;
 	width: 210px;
+	height: 24px;/*made this change*/
 	font-weight: bolder;
 }
 #violationAnd {
@@ -508,23 +509,27 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #violationOR {
 	position: absolute;
-	bottom: 65px;
-	right: 20px;
+	bottom: 5px;/*made this change*/
+	right: 10px;
+	height: 130px;/*made this change*/
+	width: 177px;/*made this change*/
 	color: black;
 }
 #legendSourceLabel {
 	position: absolute;
-	bottom: 110px;
+	bottom: 130px;/*made this change*/
 	right: -12px;
 	width: 220px;
+	height: 40px;/*made this change*/
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: black;
 }
 #legendOperatorLabel {
 	position: absolute;
-	bottom: 110px;
+	bottom: 130px;/*made this change*/
 	right: -12px;
 	width: 220px;
+	height: 40px;/*made this change*/
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: black;
 }

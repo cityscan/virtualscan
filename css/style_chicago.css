@@ -75,7 +75,7 @@ a:hover {
 	border-radius: 0 !important;
 }
 .input, button, select, textarea {
-font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 /* Map */
 #map {
@@ -292,7 +292,8 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 #box {
 	z-index: 50;
-	height: 205px; !important;
+	height: 205px;
+!important;
 	width: 240px;
 	font-size: 10px;
 	line-height: 13px !important;
@@ -390,7 +391,7 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	border-width: 1px;
 	border-bottom-style: solid;
 	z-index: 2;
- */	background-color: #F2F2F2;
+ */ 	background-color: #F2F2F2;
 }
 #citySwitcher {
 	position: absolute;
@@ -421,11 +422,6 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	font-size: 13px;
 	z-index: 20;
-}
-#assetLegend {
-	position: absolute;
-	bottom: 27px;
-	right: 177px;
 }
 #asset_status {
 	position: absolute;
@@ -504,19 +500,24 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	right: 57px;
 	font-size: 14px;
 	width: 150px;
+	height: 14px;/*made this change*/
 	font-weight: bolder;
-}
-#violationAnd {
-	position: absolute;
-	bottom: 16px;
-	right: 15px;
 }
 #violationOR {
 	position: absolute;
-	bottom: 27px;
-	right: 15px;
+	bottom: 21px;/*made this change*/
+	right: 5px;/*made this change*/
 	color: black;
+	height: 130px;/*made this change*/
+	width: 150px;/*made this change*/
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#assetLegend {
+	position: absolute;
+	bottom: 29px;
+	height: 125px;/*made this change*/
+	width: 25px;/*made this change*/
+	right: 177px;
 }
 #legendSourceLabel {
 	position: absolute;
@@ -531,39 +532,39 @@ font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	width: 220px;
 }
 .my-legend .legend-title {
-    text-align: left;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 90%;
+	text-align: left;
+	margin-bottom: 5px;
+	font-weight: bold;
+	font-size: 90%;
 }
-  .my-legend .legend-scale ul {
-    margin: 0;
-    margin-bottom: 5px;
-    padding: 0;
-    float: left;
-    list-style: none;
-    }
-  .my-legend .legend-scale ul li {
-    font-size: 80%;
-    list-style: none;
-    margin-left: 0;
-    line-height: 18px;
-    margin-bottom: 2px;
-    }
-  .my-legend ul.legend-labels li span {
-    display: block;
-    float: left;
-    height: 16px;
-    width: 30px;
-    margin-right: 5px;
-    margin-left: 0;
-    border: 1px solid #999;
-    }
-  .my-legend .legend-source {
-    font-size: 70%;
-    color: #999;
-    clear: both;
-    }
-  .my-legend a {
-    color: #777;
-    }
+.my-legend .legend-scale ul {
+	margin: 0;
+	margin-bottom: 5px;
+	padding: 0;
+	float: left;
+	list-style: none;
+}
+.my-legend .legend-scale ul li {
+	font-size: 80%;
+	list-style: none;
+	margin-left: 0;
+	line-height: 18px;
+	margin-bottom: 2px;
+}
+.my-legend ul.legend-labels li span {
+	display: block;
+	float: left;
+	height: 16px;
+	width: 30px;
+	margin-right: 5px;
+	margin-left: 0;
+	border: 1px solid #999;
+}
+.my-legend .legend-source {
+	font-size: 70%;
+	color: #999;
+	clear: both;
+}
+.my-legend a {
+	color: #777;
+}

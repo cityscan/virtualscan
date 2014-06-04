@@ -1,6 +1,11 @@
 $('document').ready( function() {
     //hide zoning label once document loads
-    $("#legendZoningLabel").hide(); 
+    $("#legendZoningLabel").hide();
+     $("#legendAssetLabel").show();
+     $("#legendZoningLabel").show();
+     $("#legendSourceLabel").hide();
+     $("#violationAnd").hide();
+     $("#legendOperatorLabel").hide();
 
  function createSelector(layer) {
   var sql = new cartodb.SQL({ user: 'cityscan' });
@@ -99,12 +104,6 @@ $('document').ready( function() {
               $("#control").toggle(function(){
                 $("#control").animate({"bottom":"208px"}, "slow");
                 $("#controlBig").animate({"bottom":"0px"}, "slow");
-                $("#legendAssetLabel").show();
-                $("#legendZoningLabel").show();
-                $("#legendSourceLabel").hide();
-                $("#violationOR").show();
-                $("#violationAnd").hide();
-                $("#legendOperatorLabel").hide();
 
               },function(){
                 $("#control").animate({"bottom":"0px"}, "slow");
@@ -172,22 +171,27 @@ $('document').ready( function() {
                     var Spacing = $('#spacingViolation2')[0].checked;console.log("Spacing: "+Spacing);
                     var Residential = $('#residentialViolation2')[0].checked;console.log("Residential: "+Residential);
                     var Height = $('#heightViolation2')[0].checked;console.log("Height: "+Height);
+                    var License = $('#licenseViolation2')[0].checked;console.log("License: "+License);
                     
                     zoning_rules = {};
-                    zoning_rules['num_other_within_500ft_bool'] = Spacing;
-                    zoning_rules['within_300ft_res'] = Residential;
-                    zoning_rules['face_rule'] = Height;
+                    zoning_rules["num_other_within_500ft_bool"] = Spacing;
+                    zoning_rules["within_300ft_res"] = Residential;
+                    zoning_rules["face_rule"] = Height;
+                    zoning_rules["hansen_license_num='None'"] = License;
                     wherestring = '';
                     for (var key in zoning_rules) {
                       if (zoning_rules[key]) {
-                        wherestring += key + " AND " 
+                        wherestring += key + " OR " 
                         }
                       }
-                    wherestring = wherestring.slice(0, -5);
+                    wherestring = wherestring.slice(0, -4);
                     console.log(wherestring);
                     
                     if (wherestring) {
-                      sql = "SELECT * FROM wp_import WHERE " + wherestring;
+                      sql = "SELECT * FROM wp_import WHERE " + wherestring +" OR num_violations=0";
+                      }
+                    else if (Spacing==false && Residential==false && Height==false && License==false) {
+                        sql = "SELECT * FROM wp_import WHERE num_violations=0";
                       }
                      layer.getSubLayer(0).setSQL(sql);
 					
@@ -202,6 +206,9 @@ $('document').ready( function() {
                 $('#heightViolation2').click(function(){
                     updateMapByClient();
                 });
+                $('#licenseViolation2').click(function(){
+                    updateMapByClient();
+                });
 
               
               //Prepare DEFAULT content for Sidebar on Document Load   
@@ -214,6 +221,8 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Title:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Operator:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Address:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Mount Type:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Width (in):&nbsp;&nbsp;' +'</strong><span style="color:white;margin-left:37px;font-family:arial"><strong>' + 'Height (in):&nbsp;&nbsp;' +'</strong></span></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Face Count:&nbsp;&nbsp;' +'</strong></p>');
@@ -262,6 +271,8 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Date Collected:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].timestamp +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Operator:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].operator +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Address:&nbsp;&nbsp;' +'</strong> '+ city1 +'</p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lat +'</p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lon +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Mount Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].mount_type +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Width (in):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].width +'<span style="color:white;margin-left:37px;font-family:arial"><strong>' + 'Height (in):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height +'</span></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Face Count:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].face_count +'</p>');
