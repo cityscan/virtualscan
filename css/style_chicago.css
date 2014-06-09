@@ -201,7 +201,7 @@ a:hover {
 	border-width: 1px;
 	border-bottom-style: solid;
 	z-index: 2;
- */ 	background-color: #F2F2F2;
+	background-color: #F2F2F2;
 }
 #citySwitcher {
 	position: absolute;
@@ -310,9 +310,6 @@ a:hover {
 	font-weight: bolder;
 	font-family: arial;
 }
-/*#printLabel{
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}*/
 #sidebarContent {
 	color: blue;
 	font-size: 12px;

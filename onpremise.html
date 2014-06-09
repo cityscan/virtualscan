@@ -5,24 +5,6 @@
 <link rel="Shortcut Icon" href="http://cityscan.com/wp-content/themes/cityscan/images/favicon.ico" type="image/x-icon">
 <link href="css/style_onpremise.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
-<style>
-.popupBlack, .leaflet-popup-content-wrapper, .leaflet-popup-content {
-	z-index: 50;
-	height: 125px !important;
-	width: 250px;
-	font-size: 10px;
-	line-height: 13px !important;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	background-color: black !important;
-	/*border-color: white;
-	border-width: 1px; 
-	border-style: solid; */
-	font-family: arial;
-	overflow: hidden;
-}
-
-</style>
 
 <!--[if lte IE 8]><link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" /><![endif]-->
 
@@ -50,18 +32,18 @@
     win = open("",'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=700');
     win.document.write("<html><body><head></head><img src='image/logo.png' width='156' height='35' id='logo'><input value='Print Window' type='button' id='button' style='position:absolute;right:10px'></input><br /><br />"
       + "<img src="+ image + " hspace='3' width='300px' height='240px'><br /><br />"
-      + "<strong>- ATTRIBUTE -</strong><br /><br />"
-      + "<strong>Type: </strong>" + types + "<br />"
-      + "<strong>Date Collected: </strong>" + dateCollected + "<br />"
-      + "<strong>Material: </strong>" + material + "<br />"
-      + "<strong>Frame: </strong>" + materialFrame + "<br />"
-      + "<strong>Height (m): </strong>" + heights + "<br />"
-      + "<strong>Altitude (m): </strong>" + altitude + "<br />"
-      + "<strong>Encroaching Vegetation: </strong>" + encroachingVegetation + "<br />"
-      + "<strong>Number of Devices: </strong>" + numberDevices + "<br />"
-      + "<strong>Pole ID: </strong>" + poleId + "<br />"
-      + "<strong>Pole Tilt: </strong>" + poleTilt + "<br />"
-      + "<strong>Comments: </strong>" + raterComments + "<br />"
+      + "<strong>- ATTRIBUTE -</strong><br />"
+      + "<strong>Collection Date: </strong>" + collectionDate + "<br />"
+      + "<strong>Sign Type: </strong>" + signType + "<br />"
+      + "<strong>Business Type: </strong>" + businessType + "<br />"
+      + "<strong>Address: </strong>" + address + "<br />"
+      + "<strong>Lat/Lon: </strong>" + lat + ", "+ lon + "<br /><br/>"
+      + "<strong>- CONDITION-</strong><br />"
+      + "<strong>Building Permit ID: </strong>" + buildingPermitID + "<br />"
+      + "<strong>Business License ID: </strong>" + businessLicenseID + "<br />"
+      + "<strong>Sign Violation: </strong>" + signViolation + "<br />"
+      + "<strong>Business License Violation: </strong>" + businessLicenseViolation + "<br />"
+      + "<strong>License Expiration Date: </strong>" + licenseExpirationDate + "<br />"
       + "</body></html>");
     // attach to button in target window, and use a handler in this one:
     var button = win.document.getElementById('button');
@@ -75,24 +57,27 @@
 <!-- Add Map and SideBar -->
 <div id='map'></div>
 <div class="hidden"><!-- Hide hover window -->
-  <div id='box'></div>
+  <div id='hoverbox'></div>
 </div>
 <div class="hidden">
   <div id='sidebar'></div>
 </div>
 <a href="#" title="Show Panel">
-  <div id='sidebar_toggle'>L<br/>
-    E</br>
-    S</br>
-    S</br>
-  </div>
-  <div id='sidebar_toggle2'>M<br/>
-    O</br>
-    R</br>
-    E</br>
-  </div>
+<div id='sidebarToggle'>
+  L<br/>
+  E</br>
+  S</br>
+  S</br>
+</div>
+<div id='sidebarToggle2'>
+  M<br/>
+  O</br>
+  R</br>
+  E</br>
+</div>
 </a>
-<div id='sidebar_imgbox'></div><!-- Add white container around siidebar image -->
+<div id='sidebar_imgbox'></div>
+<!-- Add white container around siidebar image -->
 <div id="sidebarProfile">
   <button type="button" onclick="wins()">Print</button>
 </div>
@@ -100,18 +85,12 @@
 <!-- Add Header -->
 <div id='header'>
   <div id='logo'> <a href="http://cityscan.com/"><img src="image/logo_main.png" width="156" height="35" id="logo"></a> </div>
-  <div id='headerButtons'> 
-    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="http://www.cityscan.com">WELCOME</a></span> 
-    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> 
-    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> 
-    <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
+  <div id='headerButtons'> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="http://www.cityscan.com">WELCOME</a></span> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
 </div>
 <!-- End of Header --> 
 
 <!--Add Sub-Header-->
-<div id='subheader'> 
-  
-</div>
+<div id='subheader'></div>
 
 <!--Add CitySwitcher-->
 <div id="citySwitcher">
@@ -129,7 +108,7 @@
 <div id="showall_status">
   <div class="btn-group">
     <button type="button" class="btn">
-    <a href="#" class="query all" id="display_all" title="Display All Features">Display All</a>
+    <a href="#" class="query all" title="Display All Features">Display All</a>
     </button>
   </div>
 </div>
@@ -162,83 +141,59 @@
   </div>
 </div>
 
-<!-- Filter, also known as control panel or legend --> 
+<!-- Add Asset Option -->
 <a href="#" title="Show Filter">
 <div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
 </a>
-<div id="controlBig">
-<div class="btn-group" data-toggle="buttons-radio"> 
-    <button type="button" class="btn btn-primary" id="legendOperator">Asset Class</button>
-    <button type="button" class="btn btn-primary" id="legendZoning">Permit Status</button>
-    
-    
+<div id="controlExtend">
+  <div class="btn-group" data-toggle="buttons-radio">
+    <button type="button" class="btn btn-primary active" id="control_Asset">Asset Type</button>
+    <button type="button" class="btn btn-primary" id="control_Permit">Permit Status</button>
+    <button type="button" class="btn btn-primary" id="control_License">License</button>
   </div>
-  <div class="checkbox" id="legendOperatorLabel">
-      <p style="font-size:14px;font-weight:bolder">Asset Class:</p>
-     <ul class="unstyled" style="padding-top:7px">
-          <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Food Stores</li>
-          <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Pharmacy</li>
-          <li><a style='background:#F79D00;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Religious</li>
-          <li><a style='background:#88F71A;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Restaurants</li>
-          <li><a style='background:#FF7316;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Retail</li>
-          <li><a style='background:#4B25EE;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;Vacant</li>
-        </ul>
-        </div>
- <!-- Add Violations, aka Zoning, Filter Option --> 
-    <div id="legendZoningLabel">
-    <p>On-Premise Sign Permit 
-      <label><input type="checkbox" id="signYes">Yes</label>
-      <label><input type="checkbox" id="signNo">No</label>
-      </p>
-    <p>Business License Status
-      <label><input type="checkbox" id="licenseNo">None</label>
-      <label><input type="checkbox" id="licenseYes">Valid</label></p>
-    </div>
-   
-      
-     
-     
-    
-    <!--
+  <div id="control_AssetLabel">
+    <p style="font-size:14px">Select Asset Type:</p>
+  </div>
+  <img src='image/asset_colors_ny.png' width='26' height='5' id='control_AssetLegend'>
+  <div class="checkbox" id="control_AssetCheckbox">
     <label>
-      <input type="checkbox" id="spacingViolation">
+      <input type="checkbox" id="control_AssetFoodStores">
       Food Stores</label>
     <label>
-      <input type="checkbox" id="residentialViolation">
+      <input type="checkbox" id="control_AssetPharmacy">
       Pharmacy</label>
     <label>
-      <input type="checkbox" id="heightViolation">
-      Religious</label>
-      <label>
-      <input type="checkbox" id="spacingViolation">
+      <input type="checkbox" id="control_AssetReligious">
+      Reigious</label>
+    <label>
+      <input type="checkbox" id="control_AssetRestaurants">
       Restaurants</label>
     <label>
-      <input type="checkbox" id="residentialViolation">
+      <input type="checkbox" id="control_AssetRetail">
       Retail</label>
     <label>
-      <input type="checkbox" id="heightViolation">
-      Vacant</label> -->
+      <input type="checkbox" id="control_AssetVacantStorefront">
+      Vacant Storefront</label>
+  </div>
   
-    
-    
-    
-    <!--<div class="radio" id="violationOR">
-        <label>
-          <input type="radio" id="sign">
-          Sign Permit</label>
-        <label>
-          <input type="radio" id="sign">
-          Sign Permit</label>
-        <label>
-          <input type="radio" id="license">
-          Business License</label>
-        <label>
-          <input type="radio" id="vacant">
-          Vacant Storefront</label>
-    </div> -->
+    <!-- Add Permit Option -->
+  <div id="control_PermitLabel">
+    <ul class="unstyled" style="padding-top:7px">
+      <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Valid Sign Permit</li>
+      <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;No Sign Permit</li>
+    </ul>
+  </div>
+  
+  <!-- Add License Option -->
+  <div id="control_LicenseLabel">
+    <ul class="unstyled" style="padding-top:7px">
+      <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Valid Business License</li>
+      <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;No Business License</li>
+    </ul>
+  </div>
+</div>
 
-   
-  
+
 </div>
 
 <!-- Custom Script --> 

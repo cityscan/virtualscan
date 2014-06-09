@@ -1,8 +1,6 @@
 $('document').ready( function() {
-     $("#control_ViolationLabel").show();
-     $("#control_SourceLabel").hide();
-     $("#control_OperatorLabel").hide();
-
+   $("#control_SourceLabel").hide();
+   $("#control_OperatorLabel").hide();
  function createSelector(layer) {
   var sql = new cartodb.SQL({ user: 'cityscan' });
           
@@ -18,7 +16,7 @@ $('document').ready( function() {
 
     var query = "SELECT * FROM wp_import";
             
-    // create query based on data from the layer
+    //Create query based on data from the layer
             if(title !== 'All' && queryType == 'query asset') {
               query = "SELECT * FROM wp_import WHERE type = '" + title + "'";
               }
@@ -46,12 +44,14 @@ $('document').ready( function() {
                     case "market_records":
                         query = "SELECT * FROM wp_import WHERE source ='" + title + "'";
                         break;
-              }          
+               }
+                        
             }
               console.log(query);
               layer.setSQL(query);
     });
     }
+
     //Initialize Map
     var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.i1op8pcc/{z}/{x}/{y}.png');
     var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');   
@@ -128,7 +128,7 @@ $('document').ready( function() {
                 $("#control_ViolationCheckbox").hide();
                 $("#control_OperatorLabel").show();
               });
-              //Prepare filter for AND Option for Zoning/Violation
+              //Prepare filter for Violation
                 function updateMapByClient(){
                     var Spacing = $('#control_ViolationSpacing')[0].checked;console.log("Spacing: "+Spacing);
                     var Residential = $('#control_ViolationResidential')[0].checked;console.log("Residential: "+Residential);
@@ -300,7 +300,7 @@ $('document').ready( function() {
              console.log("featureOut");
              });
               subLayer.setInteraction(true);
-			       })
+             })
               .error(function(err) {
                 console.log(err);
                });
@@ -383,33 +383,3 @@ $('document').ready( function() {
 
   //Button toggle for legend and other radio buttons
   $('.btn-group').button();
-
-  //Toggling classes for UI ButtonS (if relevant)
-  $("#showallButton").click(function() {
-    var bulletin_button = $("#bulletin_button");
-      bulletin_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var digital_button = $("#digital_button");
-      digital_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var junior_button = $("#junior_button");
-      junior_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var other_button = $("#other_button");
-      other_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var walls_button = $("#walls_button");
-      walls_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var cityscan_button = $("#cityscan_button");
-      cityscan_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var city_button = $("#city_button");
-      city_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var market_button = $("#market_button");
-      market_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var spacing_button = $("#spacing_button");
-      spacing_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var residential_button = $("#residential_button");
-      residential_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var height_button = $("#height_button");
-      height_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var nopermit_button = $("#nopermit_button");
-      nopermit_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var expired_button = $("#expired_button");
-      expired_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    });

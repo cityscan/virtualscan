@@ -8,7 +8,6 @@ $('document').ready( function() {
           
   var $options = $('.query');
   $options.click(function(e) {
-    // get the asset type
     var $a = $(e.target);
     var title = $a.attr('title');
     var queryType = $a.attr('class');
@@ -19,36 +18,10 @@ $('document').ready( function() {
 
     var query = "SELECT * FROM nyc";
             
-// create query based on data from the layer
+    //Create query based on data from the layer
             if(title !== 'All' && queryType == 'query asset') {
               query = "SELECT * FROM nyc WHERE type = '" + title + "'";
               }
-            else if (title != 'All' && queryType == 'query permit') {
-               switch (title) {
-                    case "num_other_within_500ft":
-                        query = "SELECT * FROM nyc WHERE " + title + " > 0";
-                        break;
-                    case "within_300ft_res":
-                        query = "SELECT * FROM nyc WHERE " + title;
-                        break;
-                    case "face_rule":
-                        query = "SELECT * FROM nyc WHERE " + title;
-                        break;
-               }
-             }
-            else if (title != 'All' && queryType == 'query record') {
-               switch (title) {
-                    case "lidar":
-                        query = "SELECT * FROM nyc WHERE source ='" + title + "'";
-                        break;
-                    case "city_records":
-                        query = "SELECT * FROM nyc WHERE source ='" + title + "'";
-                        break;
-                    case "market_records":
-                        query = "SELECT * FROM nyc WHERE source ='" + title + "'";
-                        break;
-               }         
-            }
               console.log(query);
               layer.setSQL(query);
     });
@@ -111,7 +84,6 @@ $('document').ready( function() {
                 $("#control_AssetLegend").show();
                 $("#control_AssetLabel").show();
                 $("#control_AssetCheckbox").show();
-                $("#violationOR").hide();
                 $("#control_PermitCheckbox").hide();
                 $("#legendOperatorLabel").hide();
               });
@@ -138,19 +110,15 @@ $('document').ready( function() {
 
                     if(None==true && Expired==false){
                           layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE asviolation IN ('None')");
-                          console.log("this works");
                     }
                     else if(None==false && Expired==true){
                           layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE asviolation IN ('Expired Permit')");
-                          console.log("this works2");
                     }
                     else if(None==true && Expired==true){
                           layer.getSubLayer(0).setSQL("SELECT * FROM nyc WHERE asviolation IN ('None') OR asviolation IN ('Expired Permit')");
-                          console.log("this works3");
                     }
                     else if(None==false && Expired==false){
                           layer.getSubLayer(0).setSQL('SELECT * FROM nyc WHERE asset_id>10000');
-                          console.log("this works4");
                     }
 
                 };
@@ -380,33 +348,3 @@ $('document').ready( function() {
 
   //Button toggle for legend and other radio buttons
   $('.btn-group').button();
-
-  //Toggling classes for UI ButtonS (if relevant)
-  $("#showall_status").click(function() {
-    var bulletin_button = $("#bulletin_button");
-      bulletin_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var digital_button = $("#digital_button");
-      digital_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var junior_button = $("#junior_button");
-      junior_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var other_button = $("#other_button");
-      other_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var walls_button = $("#walls_button");
-      walls_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var cityscan_button = $("#cityscan_button");
-      cityscan_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var city_button = $("#city_button");
-      city_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var market_button = $("#market_button");
-      market_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var spacing_button = $("#spacing_button");
-      spacing_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var residential_button = $("#residential_button");
-      residential_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var height_button = $("#height_button");
-      height_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var nopermit_button = $("#nopermit_button");
-      nopermit_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var expired_button = $("#expired_button");
-      expired_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    });

@@ -17,7 +17,7 @@ $('document').ready( function() {
 
     var query = "SELECT * FROM exelon";
             
-    // create query based on data from the layer
+    //Create query based on data from the layer
             if(title !== 'All' && queryType == 'query asset') {
               query = "SELECT * FROM exelon WHERE type = '" + title + "'";
               }
@@ -153,7 +153,7 @@ $('document').ready( function() {
                 });
 
               //Prepare DEFAULT content for Sidebar on Document Load   
-              //createSelector(subLayer);
+              createSelector(subLayer);
                       $('#sidebar').html('');
                       $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
@@ -174,7 +174,7 @@ $('document').ready( function() {
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
-              //Prepare DYNAMIC content for Sidebar on Document Load   
+                  //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
                       if (data.rows[0].frame == '201') {
                           $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" height="250" width="300" id="image_sidepanel"></a>');
@@ -321,33 +321,3 @@ $('document').ready( function() {
 
   //Button toggle for legend and other radio buttons
   $('.btn-group').button();
-
-  //Toggling classes for UI ButtonS (if relevant)
-  $("#showallButton").click(function() {
-    var bulletin_button = $("#bulletin_button");
-      bulletin_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var digital_button = $("#digital_button");
-      digital_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var junior_button = $("#junior_button");
-      junior_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var other_button = $("#other_button");
-      other_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var walls_button = $("#walls_button");
-      walls_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var cityscan_button = $("#cityscan_button");
-      cityscan_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var city_button = $("#city_button");
-      city_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var market_button = $("#market_button");
-      market_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var spacing_button = $("#spacing_button");
-      spacing_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var residential_button = $("#residential_button");
-      residential_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var height_button = $("#height_button");
-      height_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var nopermit_button = $("#nopermit_button");
-      nopermit_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    var expired_button = $("#expired_button");
-      expired_button.removeClass("btn btn-primary active").addClass("btn btn-primary");
-    });
