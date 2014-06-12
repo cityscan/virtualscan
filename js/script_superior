@@ -57,7 +57,7 @@ $('document').ready( function() {
     var sat = L.tileLayer('http://a.tiles.mapbox.com/v3/osaez.gkblk7bk/{z}/{x}/{y}.png');   
     map = L.map('map', {
        center: new L.latLng(33.2860185, -111.1132315),
-       zoom: 13,
+       zoom: 14,
        minZoom: 9,
       });
  
