@@ -74,7 +74,7 @@ $('document').ready( function() {
         {
           sql: "SELECT * FROM superior",
           cartocss: "#superior[type=\"Vacant Lots\"]{marker-fill: #F79D00;}[type=\"On-Premise Signage\"]{marker-fill: #4B25EE;}[type=\"Billboards\"]{marker-fill: #16D7CB;}",
-          interactivity: "height_abve_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id"
+          interactivity: "height_above_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id"
         }]
         }).addTo(map)
 
@@ -127,7 +127,7 @@ $('document').ready( function() {
                     if (instring) {
                         sql = "SELECT * FROM superior WHERE type in(" + instring + ")";
                     } else {
-                        sql = "SELECT * FROM superior WHERE altitude>1000"
+                        sql = "SELECT * FROM superior WHERE >1000"
                     }
                     console.log(sql)
                     return sql;    
@@ -165,7 +165,7 @@ $('document').ready( function() {
 
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_abve_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
                       if (data.rows[0].frame == '201') {
@@ -208,7 +208,8 @@ $('document').ready( function() {
            subLayer.on('featureOver', function(e, latlng, pos, data) {
                 var content = $('#hoverbox');
               content.show();
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#hoverbox').html('');
 
