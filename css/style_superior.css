@@ -396,9 +396,9 @@ a:hover {
 }
 #controlExtend {
 	position: absolute;
-	height: 200px;
+	height: 150px;
 	width: 210px;
-	bottom: -210px;
+	bottom: -160px;
 	right: 5px;
 	background-color: #F2F2F2;
 	border-top-style: solid;
@@ -436,7 +436,7 @@ a:hover {
 #control_AssetLegend {
 	position: absolute;
 	bottom: 29px;
-	height: 125px;
+	height: 75px;
 	width: 25px;
 	right: 177px;
 }
@@ -445,7 +445,7 @@ a:hover {
 	bottom: 21px;
 	right: 5px;
 	color: black;
-	height: 130px;
+	height: 80px;
 	width: 150px;
 	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

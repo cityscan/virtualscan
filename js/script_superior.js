@@ -73,7 +73,7 @@ $('document').ready( function() {
       sublayers: [  
         {
           sql: "SELECT * FROM superior",
-          cartocss: "#superior[type=\"Vacant Lots\"]{marker-fill: #F79D00;}[type=\"On-Premise Signage\"]{marker-fill: #4B25EE;}[type=\"Billboards\"]{marker-fill: #16D7CB;}",
+          cartocss: "#superior[type=\"Vacant Lot\"]{marker-fill: #F79D00;}[type=\"On-Premise Signage\"]{marker-fill: #4B25EE;}[type=\"Billboards\"]{marker-fill: #16D7CB;}",
           interactivity: "height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id"
         }]
         }).addTo(map)
@@ -90,7 +90,7 @@ $('document').ready( function() {
 
                 //Control (aka legend of filter) Animation
                 $("#control").toggle(function(){
-                  $("#control").animate({"bottom":"208px"}, "slow");
+                  $("#control").animate({"bottom":"158px"}, "slow");
                   $("#controlExtend").animate({"bottom":"0px"}, "slow");
                   $("#control_AssetLabel").hide();
                   $("#control_AssetCheckbox").show();
