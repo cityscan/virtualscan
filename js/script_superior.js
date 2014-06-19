@@ -147,7 +147,8 @@ $('document').ready( function() {
               //Prepare DEFAULT content for Sidebar on Document Load   
               createSelector(subLayer);
                       $('#sidebar').html('');
-                      $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" height="250" width="300" id="image_sidepanel"></a>');
+                      
+                      $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-demo-img/superior_onpremise/61.JPG " target="_blank"><img src="https://s3.amazonaws.com/cityscan-demo-img/superior_onpremise/61.JPG" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong></p>');
@@ -165,12 +166,7 @@ $('document').ready( function() {
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
-                      if (data.rows[0].frame == '201') {
-                          $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" height="250" width="300" id="image_sidepanel"></a>');
-                      } else {
-
-                      $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
-                      }
+                      $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                        $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].collected_date +' </p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height Above Ground Level (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height_above_ground_level_meters +' </p>');
