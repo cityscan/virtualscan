@@ -172,7 +172,7 @@ $('document').ready( function() {
                           $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" height="250" width="300" id="image_sidepanel"></a>');
                       } else {
 
-                      $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].imageurl_lowres + '" height="250" width="300" id="image_sidepanel"></a>');
+                      $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
                       }
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
@@ -216,7 +216,7 @@ $('document').ready( function() {
               if (data.rows[0].frame == '201') {
                   $('#hoverbox').append('<p align="center"><img height="150" width="200" src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg"></p>');
               } else {
-                  $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].imageurl_lowres +'><p/>');
+                  $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].thumbnail_url +'><p/>');
               }
                       $('#hoverbox').append('<span id="hoverboxTitle">' + 'Asset Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
          
