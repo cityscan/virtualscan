@@ -110,7 +110,7 @@ $('document').ready( function() {
                     var Billboards = $('#control_Billboards')[0].checked;console.log("Billboards: "+Billboards);
 
                     types = {};
-                    types['Vacant Lots'] = VacantLots;
+                    types['Vacant Lot'] = VacantLots;
                     types['On-Premise Signage'] = Signage;
                     types['Billboards'] = Billboards;
 
@@ -126,21 +126,44 @@ $('document').ready( function() {
                     console.log(instring);
                     if (instring) {
                         sql = "SELECT * FROM superior WHERE type in(" + instring + ")";
+                        console.log(sql)
+                        return sql;    
                     } else {
-                        sql = "SELECT * FROM superior WHERE >1000"
+                        
+                        return false;
+                        //sql = "SELECT * FROM superior"
                     }
-                    console.log(sql)
-                    return sql;    
                 };
 
                 $('#control_VacantLots').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                    sql = updateMapByClient();
+                    if (sql) {
+                        layer.getSubLayer(0).show();
+                        layer.getSubLayer(0).setSQL(sql);
+                    } else {
+                        layer.getSubLayer(0).hide();
+                    }
+                   //layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
                 $('#control_On-PremiseSignage').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                    sql = updateMapByClient()
+                    if (sql) {
+                        layer.getSubLayer(0).show();
+                        layer.getSubLayer(0).setSQL(sql);
+                    } else {
+                        layer.getSubLayer(0).hide();
+                    }
+                   //layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
                 $('#control_Billboards').click(function(){
-                   layer.getSubLayer(0).setSQL(updateMapByClient());
+                    sql = updateMapByClient()
+                    if (sql) {
+                        layer.getSubLayer(0).show();
+                        layer.getSubLayer(0).setSQL(sql);
+                    } else {
+                        layer.getSubLayer(0).hide();
+                    }
+                   //layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
 
 
