@@ -15,35 +15,35 @@ $('document').ready( function() {
     $options.removeClass('selected');
     $a.addClass('selected');        
 
-    var query = "SELECT * FROM exelon";
+    var query = "SELECT * FROM superior";
             
     //Create query based on data from the layer
             if(title !== 'All' && queryType == 'query asset') {
-              query = "SELECT * FROM exelon WHERE type = '" + title + "'";
+              query = "SELECT * FROM superior WHERE type = '" + title + "'";
               }
             else if (title != 'All' && queryType == 'query permit') {
                switch (title) {
-                    case "asset_type":
-                        query = "SELECT * FROM exelon WHERE " + title + " > 0";
+                    case "type":
+                        query = "SELECT * FROM superior WHERE " + title + " > 0";
                         break;
                     case "within_300ft_res":
-                        query = "SELECT * FROM exelon WHERE " + title;
+                        query = "SELECT * FROM superior WHERE " + title;
                         break;
                     case "face_rule":
-                        query = "SELECT * FROM exelon WHERE " + title;
+                        query = "SELECT * FROM superior WHERE " + title;
                         break;
                }
              }
             else if (title != 'All' && queryType == 'query record') {
                switch (title) {
                     case "lidar":
-                        query = "SELECT * FROM exelon WHERE source ='" + title + "'";
+                        query = "SELECT * FROM superior WHERE source ='" + title + "'";
                         break;
                     case "city_records":
-                        query = "SELECT * FROM exelon WHERE source ='" + title + "'";
+                        query = "SELECT * FROM superior WHERE source ='" + title + "'";
                         break;
                     case "market_records":
-                        query = "SELECT * FROM exelon WHERE source ='" + title + "'";
+                        query = "SELECT * FROM superior WHERE source ='" + title + "'";
                         break;
                }   
             }
@@ -72,9 +72,9 @@ $('document').ready( function() {
       type: 'cartodb',
       sublayers: [  
         {
-          sql: "SELECT * FROM exelon",
-          cartocss: "#exelon[asset_type=\"Vacant Lots\"]{marker-fill: #F79D00;}[asset_type=\"On-Premise Signage\"]{marker-fill: #4B25EE;}[asset_type=\"Billboards\"]{marker-fill: #16D7CB;}",
-          interactivity: "altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type,cartodb_id"
+          sql: "SELECT * FROM superior",
+          cartocss: "#superior[type=\"Vacant Lots\"]{marker-fill: #F79D00;}[type=\"On-Premise Signage\"]{marker-fill: #4B25EE;}[type=\"Billboards\"]{marker-fill: #16D7CB;}",
+          interactivity: "height_abve_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id"
         }]
         }).addTo(map)
 
@@ -109,15 +109,15 @@ $('document').ready( function() {
                     var Signage = $('#control_On-PremiseSignage')[0].checked;console.log("On-Premise Signage: "+Signage);
                     var Billboards = $('#control_Billboards')[0].checked;console.log("Billboards: "+Billboards);
 
-                    asset_types = {};
-                    asset_types['Vacant Lots'] = VacantLots;
-                    asset_types['On-Premise Signage'] = Signage;
-                    asset_types['Billboards'] = Billboards;
+                    types = {};
+                    types['Vacant Lots'] = VacantLots;
+                    types['On-Premise Signage'] = Signage;
+                    types['Billboards'] = Billboards;
 
-                    console.log(asset_types);
+                    console.log(types);
                     instring = ''
-                    for (var key in asset_types) {
-                        if (asset_types[key]) {
+                    for (var key in types) {
+                        if (types[key]) {
                                 instring += "'" + key + "', "
                             } 
                     }
@@ -125,9 +125,9 @@ $('document').ready( function() {
                     instring = instring.slice(0, -2); 
                     console.log(instring);
                     if (instring) {
-                        sql = "SELECT * FROM exelon WHERE asset_type in(" + instring + ")";
+                        sql = "SELECT * FROM superior WHERE type in(" + instring + ")";
                     } else {
-                        sql = "SELECT * FROM exelon WHERE altitude>1000"
+                        sql = "SELECT * FROM superior WHERE altitude>1000"
                     }
                     console.log(sql)
                     return sql;    
@@ -147,7 +147,7 @@ $('document').ready( function() {
               //Prepare DEFAULT content for Sidebar on Document Load   
               createSelector(subLayer);
                       $('#sidebar').html('');
-                      $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" height="250" width="300" id="image_sidepanel"></a>');
+                      $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Irving_Park_Road_1_Bart_1_38.jpg" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong></p>');
@@ -165,17 +165,17 @@ $('document').ready( function() {
 
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_abve_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
                       if (data.rows[0].frame == '201') {
-                          $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" height="250" width="300" id="image_sidepanel"></a>');
+                          $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" target="_blank"><img src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg" height="250" width="300" id="image_sidepanel"></a>');
                       } else {
 
                       $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].imageurl_lowres + '" height="250" width="300" id="image_sidepanel"></a>');
                       }
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
-                      $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].asset_type +'</p>');
+                      $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].collected_date +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Material:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Frame:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].frame +'</p>');
@@ -190,7 +190,7 @@ $('document').ready( function() {
                       
                 //Assign global variables for the Report
                       window.image= data.rows[0].image;
-                      window.types= data.rows[0].asset_type;
+                      window.types= data.rows[0].type;
                       window.dateCollected= data.rows[0].collected_date;
                       window.material= data.rows[0].type;
                       window.materialFrame= data.rows[0].frame;
@@ -208,16 +208,16 @@ $('document').ready( function() {
            subLayer.on('featureOver', function(e, latlng, pos, data) {
                 var content = $('#hoverbox');
               content.show();
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,asset_type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM exelon WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT altitude,type,collected_date,direction,encroaching_vegetation,frame,height,image,imageurl_lowres,latitude,longitude,mile_point,number_of_devices,pole_id,pole_tilt,rater_comments,route_id,type FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#hoverbox').html('');
 
               if (data.rows[0].frame == '201') {
-                  $('#hoverbox').append('<p align="center"><img height="150" width="200" src="https://s3.amazonaws.com/cityscan-exelon-pilot/CCS_Wrigley_Field_1_Bart_175.jpg"></p>');
+                  $('#hoverbox').append('<p align="center"><img height="150" width="200" src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg"></p>');
               } else {
                   $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].imageurl_lowres +'><p/>');
               }
-                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Asset Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].asset_type +'</span><br/>');
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Asset Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
          
                       $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
                   });
@@ -253,7 +253,7 @@ $('document').ready( function() {
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
     //Enconded SQL string for data download
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20exelon%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=kml";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20superior%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=kml";
         $(this).attr("href", new_sql);
       });
 
@@ -263,7 +263,7 @@ $('document').ready( function() {
         nwlon = map.getBounds().getNorthWest().lng,
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20exelon%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=shp";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20superior%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=shp";
         $(this).attr("href", new_sql);
       });
       
@@ -273,7 +273,7 @@ $('document').ready( function() {
         nwlon = map.getBounds().getNorthWest().lng,
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20exelon%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=geojson";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20superior%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=geojson";
         $(this).attr("href", new_sql);
       });
       
@@ -283,7 +283,7 @@ $('document').ready( function() {
         nwlon = map.getBounds().getNorthWest().lng,
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20exelon%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=csv";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20superior%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=csv";
         $(this).attr("href", new_sql);
       });
 
