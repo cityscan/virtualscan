@@ -74,7 +74,7 @@ $('document').ready( function() {
         {
           sql: "SELECT * FROM superior",
           cartocss: "#superior[type=\"Vacant Lots\"]{marker-fill: #F79D00;}[type=\"On-Premise Signage\"]{marker-fill: #4B25EE;}[type=\"Billboards\"]{marker-fill: #16D7CB;}",
-          interactivity: "height_above_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id"
+          interactivity: "height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id"
         }]
         }).addTo(map)
 
@@ -151,21 +151,18 @@ $('document').ready( function() {
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
                       $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Material:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Frame:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Streetlights (m):&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height Above Ground Level (m):&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Type:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Height (m):&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Width (m):&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Wording:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Altitude (m):&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Encroaching Vegetation:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Number of Devices:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Pole ID:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Pole Tilt:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Comments:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Notes:&nbsp;&nbsp;' +'</strong></p>');
 
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
                       if (data.rows[0].frame == '201') {
@@ -175,32 +172,29 @@ $('document').ready( function() {
                       $('#sidebar').append('<a href="' + data.rows[0].image + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
                       }
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
-                      $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].collected_date +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Material:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].type +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Frame:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].frame +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Streetlights:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].latitude +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].longitude +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Encroaching Vegetation:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].encroaching_vegetation  +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Number of Devices:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].number_of_devices +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Pole ID:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].pole_id  +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Pole Tilt:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].pole_tilt +'</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;line-height:200%"><strong>' + 'Comments:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].rater_comments  +'</p>');
+                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].collected_date +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height Above Ground Level (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height_above_ground_level_meters +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_type +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Height (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_height_meters +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Width (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_width_meters +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Wording:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_wording +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lat +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lon +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;line-height:200%"><strong>' + 'Notes:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].notes +' </p>');
                       
                 //Assign global variables for the Report
                       window.image= data.rows[0].image;
-                      window.types= data.rows[0].type;
-                      window.dateCollected= data.rows[0].collected_date;
-                      window.material= data.rows[0].type;
-                      window.materialFrame= data.rows[0].frame;
-                      window.heights= data.rows[0].height;
-                      window.altitude= data.rows[0].altitude;
-                      window.encroachingVegetation= data.rows[0].encroaching_vegetation;
-                      window.numberDevices= data.rows[0].number_of_devices
-                      window.poleId= data.rows[0].pole_id;
-                      window.poleTilt= data.rows[0].pole_tilt;
-                      window.raterComments= data.rows[0].rater_comments;
+
+                      window.dateCollected = data.rows[0].collected_date;
+                      window.heightAboveGroundLevel = data.rows[0].height_above_ground_level_meters;
+                      window.signType = data.rows[0].sign_type;
+                      window.signHeight = data.rows[0].sign_height_meters;
+                      window.signWidth = data.rows[0].sign_width_meters;
+                      window.signWording = data.rows[0].sign_wording;
+                      window.latitude = data.rows[0].lat;
+                      window.longitude = data.rows[0].lon;
+                      window.notes = data.rows[0].notes;
+                      window.address = data.rows[0].address;
                   });
               });
 
@@ -209,7 +203,7 @@ $('document').ready( function() {
                 var content = $('#hoverbox');
               content.show();
 
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#hoverbox').html('');
 
@@ -218,9 +212,11 @@ $('document').ready( function() {
               } else {
                   $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].thumbnail_url +'><p/>');
               }
-                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Asset Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Sign Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].sign_type +'</span><br/>');
          
                       $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
+
+                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Address:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].address +'</span>');
                   });
                   window.xcoord = pos.x;
                   window.ycoord = pos.y;
