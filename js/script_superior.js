@@ -173,7 +173,6 @@ $('document').ready( function() {
                       
                       $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-demo-img/superior_onpremise/61.JPG " target="_blank"><img src="https://s3.amazonaws.com/cityscan-demo-img/superior_onpremise/61.JPG" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
-                      $('#sidebar').append('<p style="color:white;margin-top:10px;margin-left:7px;font-family:arial"><strong>' + 'Type:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height Above Ground Level (m):&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Type:&nbsp;&nbsp;' +'</strong></p>');
