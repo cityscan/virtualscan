@@ -74,7 +74,7 @@ $('document').ready( function() {
         {
           sql: "SELECT * FROM superior",
           cartocss: "#superior[type=\"Vacant Lot\"]{marker-fill: #F79D00;}[type=\"On-Premise Signage\"]{marker-fill: #4B25EE;}[type=\"Billboards\"]{marker-fill: #16D7CB;}",
-          interactivity: "height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number"
+          interactivity: "height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number"
         }]
         }).addTo(map)
 
@@ -182,10 +182,20 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong></p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Notes:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'APN:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner Mailing Address:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Township:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Range:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Section:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Block:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Date of Sale:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sale Amount:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Fee Number:&nbsp;&nbsp;' +'</strong></p>');
 
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
                       $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
@@ -199,6 +209,16 @@ $('document').ready( function() {
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lat +' </p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lon +' </p>');
                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;line-height:200%"><strong>' + 'Notes:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].notes +' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'APN:&nbsp;&nbsp;' +'</strong>' + data.rows[0].apn + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner:&nbsp;&nbsp;' +'</strong> ' + data.rows[0].owner_name + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner Mailing Address:&nbsp;&nbsp;' +'</strong> <br>' + data.rows[0].address_ma + '<br> ' + data.rows[0].city_maili + ', &nbsp;' + data.rows[0].state_mail + '&nbsp; ' + data.rows[0].zip_code_m + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Township:&nbsp;&nbsp;' +'</strong>' + data.rows[0].township + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Range:&nbsp;&nbsp;' +'</strong>' + data.rows[0].range + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Section:&nbsp;&nbsp;' +'</strong>' + data.rows[0].section + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Block:&nbsp;&nbsp;' +'</strong>' + data.rows[0].bk + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Date of Sale:&nbsp;&nbsp;' +'</strong>' + data.rows[0].date_of_sa + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sale Amount:&nbsp;&nbsp;' +'</strong>' + data.rows[0].sale_amoun + ' </p>');
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Fee Number:&nbsp;&nbsp;' +'</strong>' + data.rows[0].fee_number + ' </p>');
                       
                 //Assign global variables for the Report
                       window.image= data.rows[0].image;
@@ -221,7 +241,7 @@ $('document').ready( function() {
                 var content = $('#hoverbox');
               content.show();
 
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#hoverbox').html('');
 
