@@ -172,53 +172,58 @@ $('document').ready( function() {
                       $('#sidebar').html('');
                       
                       $('#sidebar').append('<a href="https://s3.amazonaws.com/cityscan-demo-img/superior_onpremise/61.JPG " target="_blank"><img src="https://s3.amazonaws.com/cityscan-demo-img/superior_onpremise/61.JPG" height="250" width="300" id="image_sidepanel"></a>');
-                      $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height Above Ground Level (m):&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Type:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Height (m):&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Width (m):&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Wording:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Notes:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'APN:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner Mailing Address:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Township:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Range:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Section:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Block:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Date of Sale:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sale Amount:&nbsp;&nbsp;' +'</strong></p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Fee Number:&nbsp;&nbsp;' +'</strong></p>');
+                      $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
 
+              // human-friendly labels for db fields
+              // TODO: figure out WTF pg, par, and inc_stat mean
+              var display = {
+                  'height_above_ground_level_meters': 'Height Above Ground Level (m)',
+                  'collected_date': 'Collected Date',
+                  'address': 'Address (approx.)',
+                  'lat': 'Latitude',
+                  'lon': 'Longitude',
+                  'notes': 'Notes',
+                  'sign_height_meters': 'Sign Height (m)',
+                  'sign_width_meters': 'Sign Width (m)',
+                  'sign_wording': 'Sign Wording',
+                  'apn': 'APN',
+                  'owner_name': 'Owner Name',
+                  'owner_na_1': 'Owner Name Line 2',
+                  'owner_na_2': 'Owner Name Line 3',
+                  'address_ma': 'Owner Mailing Address',
+                  'city_maili': 'Owner Mailing City',
+                  'state_mail': 'Owner Mailing State',
+                  'zip_code_m': 'Owner Mailing ZIP Code',
+                  'legal_text': 'Legal Text',
+                  'bk': 'Block',
+                  'section': 'Section',
+                  'tax_area_c': 'Tax Area Code',
+                  'range': 'Range',
+                  'township': 'Township',
+                  'date_of_sa': 'Date of Sale',
+                  'sale_amoun': 'Sale Amount',
+                  'fee_number': 'Fee Number',
+                  'pg': 'PG',
+                  'par': 'PAR',
+                  'inc_stat': 'Inc. Stat',
+                  'imageurl': 'Link to Higher-res image',
+                  'thumbnail_url': 'Link to image thumbnail',
+                  'type': 'Type',
+                  'sign_type': 'Sign Type'
+                 
+                  };
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
                       $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
-                      $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTE -</p>');
-                       $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Collected Date:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].collected_date +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Height Above Ground Level (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].height_above_ground_level_meters +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Type:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_type +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Height (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_height_meters +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Width (m):&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_width_meters +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sign Wording:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].sign_wording +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Latitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lat +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Longitude:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].lon +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial;line-height:200%"><strong>' + 'Notes:&nbsp;&nbsp;' +'</strong> '+ data.rows[0].notes +' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'APN:&nbsp;&nbsp;' +'</strong>' + data.rows[0].apn + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner:&nbsp;&nbsp;' +'</strong> ' + data.rows[0].owner_name + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Property Owner Mailing Address:&nbsp;&nbsp;' +'</strong> <br>' + data.rows[0].address_ma + '<br> ' + data.rows[0].city_maili + ', &nbsp;' + data.rows[0].state_mail + '&nbsp; ' + data.rows[0].zip_code_m + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Township:&nbsp;&nbsp;' +'</strong>' + data.rows[0].township + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Range:&nbsp;&nbsp;' +'</strong>' + data.rows[0].range + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Section:&nbsp;&nbsp;' +'</strong>' + data.rows[0].section + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Block:&nbsp;&nbsp;' +'</strong>' + data.rows[0].bk + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Date of Sale:&nbsp;&nbsp;' +'</strong>' + data.rows[0].date_of_sa + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Sale Amount:&nbsp;&nbsp;' +'</strong>' + data.rows[0].sale_amoun + ' </p>');
-                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + 'Fee Number:&nbsp;&nbsp;' +'</strong>' + data.rows[0].fee_number + ' </p>');
+                      $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
+                      for (var k in data.rows[0]) {
+                          if (data.rows[0][k] !== 'N/A' && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id' && k !== 'type_id' && k !== 'cartodb_id') {
+                              $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + display[k] + ':&nbsp;&nbsp;</strong> ' + data.rows[0][k] + ' </p>');
+                          }
+                      }
                       
                 //Assign global variables for the Report
                       window.image= data.rows[0].image;
@@ -245,16 +250,12 @@ $('document').ready( function() {
               
               $('#hoverbox').html('');
 
-              if (data.rows[0].frame == '201') {
-                  $('#hoverbox').append('<p align="center"><img height="150" width="200" src="https://s3.amazonaws.com/cityscan-superior-pilot/CCS_Wrigley_Field_1_Bart_175.jpg"></p>');
-              } else {
-                  $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].thumbnail_url +'><p/>');
-              }
-                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Sign Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].sign_type +'</span><br/>');
+              $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].thumbnail_url +'><p/>');
+              $('#hoverbox').append('<span id="hoverboxTitle">' + 'Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
          
-                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].collected_date +'</span>');     
+              $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].collected_date +'</span><br />');     
 
-                      $('#hoverbox').append('<span id="hoverboxTitle">' + 'Address:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].address +'</span>');
+              $('#hoverbox').append('<span id="hoverboxTitle">' + 'Address (approx.):&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].address +'</span>');
                   });
                   window.xcoord = pos.x;
                   window.ycoord = pos.y;
