@@ -32,18 +32,9 @@
     win = open("",'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=700');
     win.document.write("<html><body><head></head><img src='image/logo.png' width='156' height='35' id='logo'><input value='Print Window' type='button' id='button' style='position:absolute;right:10px'></input><br /><br />"
       + "<img src="+ image + " hspace='3' width='300px' height='240px'><br /><br />"
-      + "<strong>- ATTRIBUTE -</strong><br /><br />"
-      + "<strong>Type: </strong>" + types + "<br />"
-      + "<strong>Date Collected: </strong>" + dateCollected + "<br />"
-      + "<strong>Material: </strong>" + material + "<br />"
-      + "<strong>Frame: </strong>" + materialFrame + "<br />"
-      + "<strong>Height (m): </strong>" + heights + "<br />"
-      + "<strong>Altitude (m): </strong>" + altitude + "<br />"
-      + "<strong>Encroaching Vegetation: </strong>" + encroachingVegetation + "<br />"
-      + "<strong>Number of Devices: </strong>" + numberDevices + "<br />"
-      + "<strong>Pole ID: </strong>" + poleId + "<br />"
-      + "<strong>Pole Tilt: </strong>" + poleTilt + "<br />"
-      + "<strong>Comments: </strong>" + raterComments + "<br />"
+      + "<strong>- ATTRIBUTES -</strong><br /><br />"
+      + "<strong>Type: </strong>" + type + "<br />"
+      + "<strong>Date Collected: </strong>" + collected_date + "<br />"
       + "</body></html>");
     // attach to button in target window, and use a handler in this one:
     var button = win.document.getElementById('button');

@@ -222,11 +222,17 @@ $('document').ready( function() {
                       for (var k in data.rows[0]) {
                           if (data.rows[0][k] !== 'N/A' && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id' && k !== 'type_id' && k !== 'cartodb_id') {
                               $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + display[k] + ':&nbsp;&nbsp;</strong> ' + data.rows[0][k] + ' </p>');
+                            //Assign global variables for the Report
+                              var key = k;
+                              window.key = data.rows[0][key];
                           }
                       }
+
+                        window.collected_date = data.rows[0]['collected_date'];
+                        window.type = data.rows[0]['type'];
                       
-                //Assign global variables for the Report
-                      window.image= data.rows[0].image;
+                      /*
+                      window.image= data.rows[0].imageurl;
 
                       window.dateCollected = data.rows[0].collected_date;
                       window.heightAboveGroundLevel = data.rows[0].height_above_ground_level_meters;
@@ -238,6 +244,7 @@ $('document').ready( function() {
                       window.longitude = data.rows[0].lon;
                       window.notes = data.rows[0].notes;
                       window.address = data.rows[0].address;
+                      */
                   });
               });
 
