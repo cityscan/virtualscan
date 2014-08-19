@@ -219,32 +219,16 @@ $('document').ready( function() {
                       $('#sidebar').html('');
                       $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
+                      var print_data = {};
                       for (var k in data.rows[0]) {
                           if (data.rows[0][k] !== 'N/A' && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id' && k !== 'type_id' && k !== 'cartodb_id') {
                               $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + display[k] + ':&nbsp;&nbsp;</strong> ' + data.rows[0][k] + ' </p>');
                             //Assign global variables for the Report
-                              var key = k;
-                              window.key = data.rows[0][key];
+                              print_data[display[k]] = data.rows[0][k];
+                              print_data['Image URL'] = data.rows[0].imageurl;
+                              window.print_data = print_data;
                           }
                       }
-
-                        window.collected_date = data.rows[0]['collected_date'];
-                        window.type = data.rows[0]['type'];
-                      
-                      /*
-                      window.image= data.rows[0].imageurl;
-
-                      window.dateCollected = data.rows[0].collected_date;
-                      window.heightAboveGroundLevel = data.rows[0].height_above_ground_level_meters;
-                      window.signType = data.rows[0].sign_type;
-                      window.signHeight = data.rows[0].sign_height_meters;
-                      window.signWidth = data.rows[0].sign_width_meters;
-                      window.signWording = data.rows[0].sign_wording;
-                      window.latitude = data.rows[0].lat;
-                      window.longitude = data.rows[0].lon;
-                      window.notes = data.rows[0].notes;
-                      window.address = data.rows[0].address;
-                      */
                   });
               });
 
