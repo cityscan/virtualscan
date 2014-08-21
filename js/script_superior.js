@@ -301,11 +301,11 @@ $('document').ready( function() {
                 var content = $('#hoverbox');
               content.show();
 
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,hover_img,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#hoverbox').html('');
 
-              $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].thumbnail_url +'><p/>');
+              $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].hover_img +'><p/>');
               $('#hoverbox').append('<span id="hoverboxTitle">' + 'Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
          
               $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].collected_date +'</span><br />');     
