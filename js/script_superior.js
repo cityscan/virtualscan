@@ -140,7 +140,7 @@ $('document').ready( function() {
                 layer.getSubLayer(1).remove();
             });
             */
-            subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
+            subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
               $('#sidebar').html('');
               $('#sidebar').append('<img src="image/photo_unavailable.png" height="250" width="300" id="image_sidepanel"></a>');
               $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
