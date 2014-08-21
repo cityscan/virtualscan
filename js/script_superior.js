@@ -119,7 +119,7 @@ $('document').ready( function() {
         {
             sql: "SELECT * FROM parcels_clipped",
             cartocss: "#parcels_clipped{polygon-fill:gray; polygon-opacity:0.5; line-color:black;}",
-            interactivity: "cartodb_id,apn,owner_name,owner_na_1,owner_na_2,care_of,address_ma,city_maili,state_mail,zip_code_m,legal_text,situs_comb,situs_st_n,situs_dir, situs_st_1,situs_suff,situs_city,situs_stat,situs_zip,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number"
+            interactivity: "cartodb_id,imageurl,thumbnail_url,apn,owner_name,owner_na_1,owner_na_2,care_of,address_ma,city_maili,state_mail,zip_code_m,legal_text,situs_comb,situs_st_n,situs_dir, situs_st_1,situs_suff,situs_city,situs_stat,situs_zip,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number"
         }]
     }).addTo(map)
         .done(function(layer) {
@@ -142,7 +142,14 @@ $('document').ready( function() {
             */
             subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
               $('#sidebar').html('');
+              if (data.imageurl) {
+                  console.log(data);
+                  console.log(data.imageurl);
+                  console.log(data.thumbnail_url);
+                  $('#sidebar').append('<a href="' + data.imageurl + '" target="_blank"><img src="' + data.thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
+              } else {
               $('#sidebar').append('<img src="image/photo_unavailable.png" height="250" width="300" id="image_sidepanel"></a>');
+              }
               $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
               var print_data = {};
               for (var k in data) {
