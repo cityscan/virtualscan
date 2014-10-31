@@ -1,12 +1,10 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>CityScan: Chicago | Utilities</title>
+<title>CityScan: Philadelphia | Billboards</title>
 <link rel="Shortcut Icon" href="http://cityscan.com/wp-content/themes/cityscan/images/favicon.ico" type="image/x-icon">
-<link href="css/style_chicago.css" rel="stylesheet" type="text/css">
+<link href="css/style_philly.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
-
-<!--[if lte IE 8]><link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" /><![endif]-->
 
 <!-- Bootstrap Libraries -->
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" />
@@ -32,18 +30,21 @@
     win = open("",'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=700');
     win.document.write("<html><body><head></head><img src='image/logo.png' width='156' height='35' id='logo'><input value='Print Window' type='button' id='button' style='position:absolute;right:10px'></input><br /><br />"
       + "<img src="+ image + " hspace='3' width='300px' height='240px'><br /><br />"
-      + "<strong>- ATTRIBUTE -</strong><br /><br />"
+      + "<strong>- ATTRIBUTE -</strong><br />"
       + "<strong>Type: </strong>" + types + "<br />"
       + "<strong>Date Collected: </strong>" + dateCollected + "<br />"
-      + "<strong>Material: </strong>" + material + "<br />"
-      + "<strong>Frame: </strong>" + materialFrame + "<br />"
-      + "<strong>Height (m): </strong>" + heights + "<br />"
-      + "<strong>Altitude (m): </strong>" + altitude + "<br />"
-      + "<strong>Encroaching Vegetation: </strong>" + encroachingVegetation + "<br />"
-      + "<strong>Number of Devices: </strong>" + numberDevices + "<br />"
-      + "<strong>Pole ID: </strong>" + poleId + "<br />"
-      + "<strong>Pole Tilt: </strong>" + poleTilt + "<br />"
-      + "<strong>Comments: </strong>" + raterComments + "<br />"
+      + "<strong>Operator: </strong>" + operator + "<br />"
+      + "<strong>Address: </strong>" + address + "<br />"
+      + "<strong>Mount Type: </strong>" + mountType + "<br />"
+      + "<strong>Width(in): </strong>" + widths + "&nbsp;&nbsp;&nbsp;<strong>Height(in):</strong>" + heights + "<br />"
+      + "<strong>Face Count: </strong>" + faceCount + "<br />"
+      + "<strong>Display Permit: </strong>" + displayPermit + "<br /><br />"
+      + "<strong>- CONDITION -</strong><br />"
+      + "<strong>Hansen License No.: </strong>" + licenseNum + "<br />" 
+      + "<strong>License Status: </strong>" + licenseStatus + "<br />" 
+      + "<strong>License Expiration Date: </strong>" + expirationDate + "<br />" 
+      + "<strong>No. within 500ft: </strong>" + within500ft + "<br />"
+      + "<strong>Within 300ft: </strong>" + within300ft + "&nbsp;&nbsp;&nbsp;<strong>Face Rule: </strong>" + faceRule + "<br /><br />" 
       + "</body></html>");
     // attach to button in target window, and use a handler in this one:
     var button = win.document.getElementById('button');
@@ -57,20 +58,18 @@
 <!-- Add Map and SideBar -->
 <div id='map'></div>
 <div class="hidden"><!-- Hide hover window -->
-  <div id='hoverbox'></div>
+  <div id='box'></div>
 </div>
 <div class="hidden">
   <div id='sidebar'></div>
 </div>
 <a href="#" title="Show Panel">
-<div id='sidebarToggle'>
-  L<br/>
+<div id='sidebar_toggle'>L<br/>
   E</br>
   S</br>
   S</br>
 </div>
-<div id='sidebarToggle2'>
-  M<br/>
+<div id='sidebar_toggle2'>M<br/>
   O</br>
   R</br>
   E</br>
@@ -95,9 +94,9 @@
 <!--Add CitySwitcher-->
 <div id="citySwitcher">
   <div class="btn-group">
-    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Chicagoland - Utility&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Philadelphia - Billboard&nbsp;&nbsp;&nbsp;</button>
     <ul class="dropdown-menu" role="menu">
-      <li><a href="philadelphia.html">Philadelphia - Billboard&nbsp;&nbsp;&nbsp;</a></li>
+      <li><a href="chicago.html">Chicagoland - Utility&nbsp;&nbsp;&nbsp;</a></li>
       <li><a href="newyork.html">New York - Safety&nbsp;&nbsp;&nbsp;</a></li>
       <li><a href="onpremise.html">Chicago - On-Premise Signage&nbsp;&nbsp;&nbsp;</a></li>
       <li><a href="superior.html">Superior - Multiple Use Cases&nbsp;&nbsp;&nbsp;</a></li>
@@ -107,7 +106,7 @@
 </div>
 
 <!-- Add Show All -->
-<div id="showallButton">
+<div id="showall_status">
   <div class="btn-group">
     <button type="button" class="btn">
     <a href="#" class="query all" title="Display All Features">Display All</a>
@@ -118,7 +117,7 @@
 <!-- Download Switcher -->
 <div id="downloadData">
   <div class="btn-group">
-    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data&nbsp;&nbsp;<span class="caret"></span></button>
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data&nbsp;&nbsp;</button>
     <ul class="dropdown-menu" role="menu">
       <li><a id="downkml" href="#" target="_blank">KML</a></li>
       <li><a id="downshp" href="#">Shapefile</a></li>
@@ -143,37 +142,54 @@
   </div>
 </div>
 
-<!-- Control Panel --> 
+<!-- Filter, also known as control panel or legend --> 
 <a href="#" title="Show Filter">
 <div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
 </a>
-<div id="controlExtend">
-  <p style="font-size:14px;font-weight:bolder;margin-top:20px">Select by Asset Type:</p>
+<div id="controlBig">
+  <div class="btn-group" data-toggle="buttons-radio">
+    <button type="button" class="btn btn-primary active" id="legendZoning">Violation</button>
+    <button type="button" class="btn btn-primary" id="legendSource">License</button>
+    <button type="button" class="btn btn-primary" id="legendOperator">Operator</button>
+  </div>
   
-  <!-- Add Asset Option -->
-  <div id="control_AssetLabel">
-    <p>Select Asset Type(s):</p>
+  <!-- Add Violations, aka Zoning, Filter Option -->
+  <div id="legendZoningLabel">
+    <p>Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
   </div>
-  <img src='image/asset_colors.png' width='30' height='6' id='control_AssetLegend'>
-  <div class="checkbox" id="control_AssetCheckbox">
+  <div class="checkbox" id="violationOR">
     <label>
-      <input type="checkbox" id="control_ElectricityUtilityPolesCheckbox">
-      Utility Poles</label>
+      <input type="checkbox" id="spacingViolation2">
+      500ft Spacing</label>
     <label>
-      <input type="checkbox" id="control_PoleDevicesCheckbox">
-      Pole Devices</label>
+      <input type="checkbox" id="residentialViolation2">
+      Within 300ft of Residential</label>
     <label>
-      <input type="checkbox" id="control_ManholeVaultsCheckbox">
-      Manholes/Vaults</label>
+      <input type="checkbox" id="heightViolation2">
+      Billboard Height > 20ft</label>
     <label>
-      <input type="checkbox" id="control_StreetlightsCheckbox">
-      Streetlights</label>
-    <label>
-      <input type="checkbox" id="control_WireSagCheckbox">
-      Wire Sag</label>
+      <input type="checkbox" id="licenseViolation2">
+      Unlicensed Billboards</label>
   </div>
+  
+  <!-- Add Source Option -->
+  <div id="legendSourceLabel">
+    <ul class="unstyled" style="padding-top:7px">
+      <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Billboards in City Records</li>
+      <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Unlicensed Billboards</li>
+    </ul>
+  </div>
+  
+  <!-- Add Operator Option -->
+  <div id="legendOperatorLabel">
+    <ul class="unstyled" style="padding-top:7px">
+      <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Reported to City</li>
+      <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Not Reported to City</li>
+    </ul>
+  </div>
+</div>
 
 <!-- Custom Script --> 
-<script src="js/script_chicago.js"></script>
+<script src="js/script_philly.js"></script>
 </body>
 </html>
