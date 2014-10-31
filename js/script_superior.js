@@ -1,4 +1,49 @@
 $('document').ready( function() {
+              var display = {
+                  'height_above_ground_level_meters': 'Height Above Ground Level (m)',
+                  'collected_date': 'Collected Date',
+                  'address': 'Address (approx.)',
+                  'lat': 'Latitude',
+                  'lon': 'Longitude',
+                  'notes': 'Notes',
+                  'sign_height_meters': 'Sign Height (m)',
+                  'sign_width_meters': 'Sign Width (m)',
+                  'sign_wording': 'Sign Wording',
+                  'apn': 'APN',
+                  'owner_name': 'Owner Name',
+                  'owner_na_1': 'Owner Name Line 2',
+                  'owner_na_2': 'Owner Name Line 3',
+                  'address_ma': 'Owner Mailing Address',
+                  'city_maili': 'Owner Mailing City',
+                  'state_mail': 'Owner Mailing State',
+                  'zip_code_m': 'Owner Mailing ZIP Code',
+                  'legal_text': 'Legal Text',
+                  'bk': 'Block',
+                  'section': 'Section',
+                  'tax_area_c': 'Tax Area Code',
+                  'range': 'Range',
+                  'township': 'Township',
+                  'date_of_sa': 'Date of Sale',
+                  'sale_amoun': 'Sale Amount',
+                  'fee_number': 'Fee Number',
+                  'pg': 'PG',
+                  'par': 'PAR',
+                  'inc_stat': 'Inc. Stat',
+                  'imageurl': 'Link to Higher-res image',
+                  'thumbnail_url': 'Link to image thumbnail',
+                  'type': 'Type',
+                  'sign_type': 'Sign Type',
+                  'care_of': 'Care of',
+                  'situs_comb': 'Situs Comb.',
+                  'situs_st_n': 'Situs Street Number',
+                      'situs_dir': 'Situs Street Direction',
+                      'situs_st_1': 'Situs Street Name',
+                        'situs_suff': 'Situs Street Suffix',
+                          'situs_city': 'Situs City',
+                            'situs_stat': 'Situs State',
+                              'situs_zip': 'Situs ZIP Code'
+                 
+                  };
     $("#control_AssetLabel").hide();
     $('input:checkbox').attr( 'checked', true );
 
@@ -67,6 +112,61 @@ $('document').ready( function() {
        };
 
     L.control.layers(baseMaps).setPosition('topright').addTo(map);
+    var parcels = cartodb.createLayer(map, {
+        user_name: 'cityscan',
+        type: 'cartodb',
+        sublayers: [
+        {
+            sql: "SELECT * FROM parcels_clipped",
+            cartocss: "#parcels_clipped{polygon-fill:gray; polygon-opacity:0.5; line-color:black;}",
+            interactivity: "cartodb_id,imageurl,thumbnail_url,apn,owner_name,owner_na_1,owner_na_2,care_of,address_ma,city_maili,state_mail,zip_code_m,legal_text,situs_comb,situs_st_n,situs_dir, situs_st_1,situs_suff,situs_city,situs_stat,situs_zip,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number"
+        }]
+    }).addTo(map)
+        .done(function(layer) {
+            LAY = layer;
+            var subLayer = layer.getSubLayer(0);
+            layer.setZIndex(50);
+            /*
+            subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
+                // SLOW AS BALLS
+                // TODO: make not slow as balls
+                var hovered = layer.createSubLayer(
+                        {
+                            sql: "SELECT * FROM parcels_clipped WHERE cartodb_id = " + data.cartodb_id,
+                            cartocss: "#parcels_clipped{polygon-fill: gray; polygon-opacity:0.5; line-color:rgb(0,255,255); line-width:1.5;}"
+                        });
+            });
+            subLayer.on('featureOut', function(e, latlng, pos, data, idx) {
+                layer.getSubLayer(1).remove();
+            });
+            */
+            subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
+              $('#sidebar').html('');
+              if (data.imageurl) {
+                  console.log(data);
+                  console.log(data.imageurl);
+                  console.log(data.thumbnail_url);
+                  $('#sidebar').append('<a href="' + data.imageurl + '" target="_blank"><img src="' + data.thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
+              } else {
+              $('#sidebar').append('<img src="image/photo_unavailable.png" height="250" width="300" id="image_sidepanel"></a>');
+              }
+              $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
+              var print_data = {};
+              for (var k in data) {
+                  if (data[k] !== 'N/A' && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id' && k !== 'type_id' && k !== 'cartodb_id') {
+                      $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + display[k] + ':&nbsp;&nbsp;</strong> ' + data[k] + ' </p>');
+                    //Assign global variables for the Report
+                      print_data[display[k]] = data[k];
+                      print_data['Image URL'] = data.imageurl;
+                      window.print_data = print_data;
+                  }
+              }
+            });
+            
+
+            subLayer.setInteraction(true);
+        });
+
     var myLayer = cartodb.createLayer(map, {
       user_name: 'cityscan',
       type: 'cartodb',
@@ -176,42 +276,6 @@ $('document').ready( function() {
 
               // human-friendly labels for db fields
               // TODO: figure out WTF pg, par, and inc_stat mean
-              var display = {
-                  'height_above_ground_level_meters': 'Height Above Ground Level (m)',
-                  'collected_date': 'Collected Date',
-                  'address': 'Address (approx.)',
-                  'lat': 'Latitude',
-                  'lon': 'Longitude',
-                  'notes': 'Notes',
-                  'sign_height_meters': 'Sign Height (m)',
-                  'sign_width_meters': 'Sign Width (m)',
-                  'sign_wording': 'Sign Wording',
-                  'apn': 'APN',
-                  'owner_name': 'Owner Name',
-                  'owner_na_1': 'Owner Name Line 2',
-                  'owner_na_2': 'Owner Name Line 3',
-                  'address_ma': 'Owner Mailing Address',
-                  'city_maili': 'Owner Mailing City',
-                  'state_mail': 'Owner Mailing State',
-                  'zip_code_m': 'Owner Mailing ZIP Code',
-                  'legal_text': 'Legal Text',
-                  'bk': 'Block',
-                  'section': 'Section',
-                  'tax_area_c': 'Tax Area Code',
-                  'range': 'Range',
-                  'township': 'Township',
-                  'date_of_sa': 'Date of Sale',
-                  'sale_amoun': 'Sale Amount',
-                  'fee_number': 'Fee Number',
-                  'pg': 'PG',
-                  'par': 'PAR',
-                  'inc_stat': 'Inc. Stat',
-                  'imageurl': 'Link to Higher-res image',
-                  'thumbnail_url': 'Link to image thumbnail',
-                  'type': 'Type',
-                  'sign_type': 'Sign Type'
-                 
-                  };
 
               subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
@@ -237,11 +301,11 @@ $('document').ready( function() {
                 var content = $('#hoverbox');
               content.show();
 
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT height_above_ground_level_meters,collected_date,address,id,imageurl,lat,lon,notes,sign_height_meters,sign_type,sign_width_meters,sign_wording,hover_img,thumbnail_url,type,type_id,cartodb_id,apn,owner_name,owner_na_1,owner_na_2,address_ma,city_maili,state_mail,zip_code_m,legal_text,bk,pg,par,section,tax_area_c,inc_stat,range,township,date_of_sa,sale_amoun,fee_number FROM superior WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#hoverbox').html('');
 
-              $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].thumbnail_url +'><p/>');
+              $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].hover_img +'><p/>');
               $('#hoverbox').append('<span id="hoverboxTitle">' + 'Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
          
               $('#hoverbox').append('<span id="hoverboxTitle">' + 'Date Collected:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].collected_date +'</span><br />');     
@@ -261,7 +325,7 @@ $('document').ready( function() {
               .error(function(err) {
                 console.log(err);
                });
-              map.addLayer(road, {insertAtTheBottom:true});
+              map.addLayer(sat, {insertAtTheBottom:true});
 
     //Geocoder Parameters
     function getURLParameter(name) {

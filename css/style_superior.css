@@ -259,7 +259,6 @@ a:hover {
 	line-height: 12px;
 	z-index: 3;
 	float: left;
-	overflow: hidden;
 }
 #sidebarToggle {
 	position: absolute;
@@ -330,9 +329,6 @@ a:hover {
 	left: 0px;
 	height: 1px;
 	width: 300px;
-	border-bottom-color: white;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
 	z-index: 7;
 }
 /*General Framework*/
