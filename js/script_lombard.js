@@ -165,7 +165,9 @@ $('document').ready( function() {
               // human-friendly labels for db fields
               // TODO: figure out WTF pg, par, and inc_stat mean
 
-              subLayer.on('featureOver', function(e, latlng, pos, data, idx) {
+              subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
+                  E = e;
+                  console.log(E.currentTarget.style);
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT * FROM lombard WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
