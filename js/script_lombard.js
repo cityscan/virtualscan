@@ -168,6 +168,7 @@ $('document').ready( function() {
               subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
                   E = e;
                   console.log(E.currentTarget.style);
+                  console.log(data.cartodb_id);
                   $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT * FROM lombard WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
