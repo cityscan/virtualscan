@@ -1,0 +1,33 @@
+{
+  "name": "VirtualScan",
+  "version": "0.0.1",
+  "homepage": "https://github.com/cityscan/virtualscan",
+  "authors": [
+    "CityScan",
+    "Inc. <info@cityscan.com>"
+  ],
+  "description": "A web-based data visualiation and analysis platform for CityScan clients",
+  "main": "virtualscan.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "cityscan",
+    "cities",
+    "urban",
+    "dataviz"
+  ],
+  "license": "ISC",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.0",
+    "bootstro": "*"
+  }
+}

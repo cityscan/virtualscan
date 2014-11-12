@@ -1,0 +1,29 @@
+{
+  "name": "VirtualScan",
+  "version": "0.0.1",
+  "description": "A web-based data visualization and analysis platform for CityScan clients",
+  "main": "virtualscan.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cityscan/virtualscan.git"
+  },
+  "keywords": [
+    "cityscan",
+    "cities",
+    "dataviz",
+    "urban"
+  ],
+  "author": "CityScan, Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cityscan/virtualscan/issues"
+  },
+  "homepage": "https://github.com/cityscan/virtualscan",
+  "dependencies": {
+    "express": "^4.10.2",
+    "express-handlebars": "^1.1.0"
+  }
+}
