@@ -4,31 +4,42 @@ var fs = require('fs');
 
 var app = express();
 
+var fortune = require('./lib/fortune.js');
+
 // set up handlebars view engine
 var handlebars = require('express-handlebars').create({ defaultLayout: 'main'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-// static content - using bower_components
+// static content 
 app.use(express.static(__dirname + '/bower_components'));
+app.use(express.static(__dirname + '/assets'));
+
+// everyday I'm testing
+app.use(function(req, res, next) {
+    res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+    next();
+});
 
 app.set('port', process.env.PORT || 3000);
 
-// how do I shot fortune?
-var fortunes = [
-    'You will die painfully',
-    'Pittsburgh has the most bridges of any city in the U.S.',
-    'I just sneezed'
-    ];
 
 app.get('/', function(req, res) {
     res.render('home');
 });
 
 app.get('/about', function(req, res) {
-    var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render('about', { fortune: randomFortune });
+    res.render('about', { 
+        fortune: fortune.getFortune(),
+        pageTestScript: '/qa/tests-about.js'
+    });
 });
+
+app.get('/contact', function(req, res) {
+    res.render('contact');
+});
+
+
 
 // custom 404 page
 app.use(function(req, res) {
