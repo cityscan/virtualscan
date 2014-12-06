@@ -1,0 +1,451 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+p {
+	font-size: 12px;
+	line-height: 12px;
+	color: black;
+}
+strong {
+	color: #009bd6;
+}
+a:hover {
+	text-decoration: none;
+}
+.btn {
+	display: inline-block !important;
+	;
+	padding: 3px 6px !important;
+	;
+	margin-bottom: 0 !important;
+	;
+	font-size: 11px !important;
+	;
+	font-weight: normal !important;
+	;
+	line-height: 1.428571429 !important;
+	;
+	text-align: center !important;
+	;
+	white-space: nowrap !important;
+	;
+	vertical-align: middle !important;
+	;
+	cursor: pointer !important;
+	;
+	background-image: none !important;
+	;
+	border: 1px solid transparent !important;
+	;
+	border-radius: 4px !important;
+	;
+	-webkit-user-select: none !important;
+	;
+	-moz-user-select: none !important;
+	;
+	-ms-user-select: none !important;
+	;
+	-o-user-select: none !important;
+	;
+	user-select: none !important;
+	;
+	border-radius: 0 !important;
+}
+.btn-primary {
+	color: #ffffff !important;
+	;
+	background-color: black !important;
+	;
+	border-color: #009bd6 !important;
+	;
+	border-radius: 0 !important;
+}
+/* Button */
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+	color: #fff !important;
+	;
+	background-color: #008fc6 !important;
+	;
+	border-color: #006e98 !important;
+	;
+	border-radius: 0 !important;
+}
+.input, button, select, textarea {
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+.nav-tabs.nav-stacked {
+	border-radius: 0px;
+}
+.my-legend .legend-title {
+	text-align: left;
+	margin-bottom: 5px;
+	font-weight: bold;
+	font-size: 90%;
+}
+.my-legend .legend-scale ul {
+	margin: 0;
+	margin-bottom: 5px;
+	padding: 0;
+	float: left;
+	list-style: none;
+}
+.my-legend .legend-scale ul li {
+	font-size: 80%;
+	list-style: none;
+	margin-left: 0;
+	line-height: 18px;
+	margin-bottom: 2px;
+}
+.my-legend ul.legend-labels li span {
+	display: block;
+	float: left;
+	height: 16px;
+	width: 30px;
+	margin-right: 5px;
+	margin-left: 0;
+	border: 1px solid #999;
+}
+.my-legend .legend-source {
+	font-size: 70%;
+	color: #999;
+	clear: both;
+}
+.my-legend a {
+	color: #777;
+}
+/* Map */
+#map {
+	width: 100%;
+	position: absolute;
+	top: 68px;
+	bottom: 0px;
+	background: black;
+	z-index: 2;
+}
+.leaflet-left .leaflet-control {
+	left: 300px !important;
+}
+.leaflet-control-geosearch.leaflet-control, .leaflet-container .leaflet-control-geosearch input {
+	width: 300px !important;
+}
+.leaflet-control-geosearch, .leaflet-control-geosearch ul {
+	position: absolute !important;
+	left: 0px;
+}
+.leaflet-control-layers-list {
+	width: 70px !important;
+	height: 30px !important;
+	z-index: 10px !important;
+}
+/* Modify Leaflet Conrols within Map 
+.leaflet-control-container {
+	position: absolute;
+	left: 300px;
+	z-index: 3;
+}
+
+.leaflet-control-layers.leaflet-control{
+	left: 965px !important;
+	top: -60px;
+}
+*/
+/* Feature Filter within Map */
+.featureMenu {
+	color: white;
+	font-size: 14px;
+	font-family: "Open Sans", sans-serif;
+	top: 86px;
+	right: 4px;
+	position: absolute;
+	width: 120px;
+	padding: 8px;
+	background-color: black;
+	z-index: 5;
+	text-align: center;
+	height: 480px;
+	border-radius: 0px;
+}
+/* Header Framework */
+#header {
+	position: absolute;
+	height: 35px;
+	width: 100%;
+	top: 0;
+	padding: 0;
+	margin: 0;
+	background-color: black;
+	border-bottom-color: white;
+	border-width: 1px;
+	border-bottom-style: solid;
+}
+#headerButtons {
+	position: absolute;
+	right: 10px;
+	top: 8px;
+	z-index: 6;
+}
+/* SubHeader Framework*/
+#subheader {
+	position: absolute;
+	height: 34px;
+	width: 100%;
+	top: 37px;
+	background-color: #F2F2F2;
+	padding: 0;
+	margin: 0;
+	border-bottom-color: white;
+	border-width: 1px;
+	border-bottom-style: solid;
+	z-index: 2;
+	background-color: #F2F2F2;
+}
+#citySwitcher {
+	position: absolute;
+	top: 42px;
+	right: 235px;
+	z-index: 20;
+}
+#showallButton {
+	position: absolute;
+	top: 42px;
+	right: 140px;
+	z-index: 20;
+	font-size: 12px;
+}
+#downloadData {
+	position: absolute;
+	top: 41px;
+	right: 7px;
+	z-index: 20;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+#aboutPage {
+	line-height: 16px;
+}
+.aboutButton a {
+	color: #DBDEDD;
+	width: 40px;
+	line-height: 19px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+}
+.aboutButton a:hover {
+	color: white;
+	text-decoration: none;
+}
+.bar {
+	color: #dbdedd;
+}
+.bar:hover {
+	text-decoration: none;
+}
+/* SideBar */
+#sidebar {
+	position: absolute;
+	top: 36px;
+	bottom: 0px;
+	left: 0px;
+	background-color: black;
+	padding-top: 15px;
+	width: 300px;
+	border-right-color: white;
+	border-right-style: solid;
+	border-right-width: 1px;
+	overflow: auto;
+	line-height: 12px;
+	z-index: 3;
+	float: left;
+	overflow: hidden;
+}
+#sidebarToggle {
+	position: absolute;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	top: 202px;
+	left: 300px;
+	color: white;
+	background-color: black;
+	border-top-style: solid;
+	border-top-color: white;
+	border-right-style: solid;
+	border-right-color: white;
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-width: 1px;
+	height: 85px;
+	width: 20px;
+	padding-top: 6px;
+	padding-left: 10px;
+	z-index: 2;
+}
+#sidebarToggle2 {
+	position: absolute;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	top: 202px;
+	left: 0px;
+	color: white;
+	background-color: black;
+	border-top-style: solid;
+	border-top-color: white;
+	border-right-style: solid;
+	border-right-color: white;
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-width: 1px;
+	height: 85px;
+	width: 20px;
+	padding-top: 6px;
+	padding-left: 10px;
+	display: none;
+	z-index: 2;
+}
+#sidebarTitle {
+	color: #29abe2;
+	font-size: 13px;
+	margin-left: 7px;
+	margin-top: 2px;
+	font-weight: bolder;
+	font-family: arial;
+}
+#sidebarContent {
+	color: blue;
+	font-size: 12px;
+	margin-left: 7px;
+	margin-top: 7px;
+	font-family: arial;
+}
+#sidebarProfile {
+	position: absolute;
+	top: 300px;
+	left: 240px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	z-index: 5;
+}
+#sidebar_imgbox {
+	position: absolute;
+	top: 287px;
+	left: 0px;
+	height: 1px;
+	width: 300px;
+	border-bottom-color: white;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	z-index: 7;
+}
+/*General Framework*/
+#logo {
+	position: relative;
+	padding-left: 4px;
+	top: -1px;
+	z-index: 5;
+}
+#hoverbox {
+	z-index: 50;
+	height: 205px !important;
+	width: 240px;
+	font-size: 10px;
+	line-height: 13px !important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: black;
+	border-color: white;
+	border-width: 1px;
+	border-style: solid;
+	font-family: arial;
+	overflow: hidden;
+}
+#hoverboxTitle {
+	color: #29abe2;
+	font-size: 10px;
+	margin-left: 20px;
+	margin-top: 2px;
+	font-weight: bolder;
+	font-family: arial;
+}
+#hoverboxContent {
+	color: white;
+	font-size: 10px;
+	margin-left: 7px;
+	margin-top: 7px;
+	font-family: arial;
+}
+#control {
+	position: absolute;
+	height: 25px;
+	width: 160px;
+	bottom: 0;
+	right: 4px;
+	background-color: black;
+	border-top-style: solid;
+	border-top-color: white;
+	border-right-style: solid;
+	border-right-color: white;
+	border-left-style: solid;
+	border-left-color: white;
+	border-width: 1px;
+	z-index: 10;
+	color: white;
+	padding-top: 8px;
+	font-size: 14px;
+	text-align: center;
+	padding-bottom: 1px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#controlExtend {
+	position: absolute;
+	height: 150px;
+	width: 210px;
+	bottom: -160px;
+	right: 5px;
+	background-color: #F2F2F2;
+	border-top-style: solid;
+	border-top-color: black;
+	border-right-style: solid;
+	border-right-color: black;
+	border-left-style: solid;
+	border-left-color: black;
+	border-width: 1px;
+	font-color: #000000;
+	padding-top: 8px;
+	padding-left: 8px !important;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	z-index: 12;
+}
+#image_sidepanel {
+	height: 250px;
+	width: 300px;
+	margin-top: -14px;
+}
+#Spacing #Residential #Height {
+	font-color: black;
+	padding-top: 3px;
+}
+#control_AssetLabel {
+	position: absolute;
+	bottom: 140px;
+	right: 57px;
+	font-size: 14px;
+	width: 150px;
+	height: 14px;
+	font-weight: bolder;
+}
+#control_AssetLegend {
+	position: absolute;
+        bottom: 55px !important;
+	/*height: 75px;*/
+	width: 25px;
+	right: 177px;
+}
+#control_AssetCheckbox {
+	position: absolute;
+	bottom: 21px;
+	right: 5px;
+	color: black;
+	height: 80px;
+	width: 150px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
