@@ -1,4 +1,21 @@
 $('document').ready( function() {
+    var display = {
+        'extraction_timestamp': 'Extracted at',
+        'type': 'Type',
+        'asset_type': 'Asset Class',
+        'height': 'Height (m)',
+        'width': 'Width(m)',
+        'num_spreaders': 'Number of Spreaders',
+        'spreader_length': 'Spreader/Arm Length (m)',
+        'num_devices': 'Number of Attached Devices',
+        'tilt': 'Pole Tilt',
+        'head_type': 'Head Type',
+        'comments': 'Comments',
+        'lat': 'Latitude',
+        'lon': 'Longitude',
+        'device_pole_id': 'Device Pole ID'
+    };
+
     $("#control_AssetLabel").hide();
     $('input:checkbox').attr( 'checked', true );
 
@@ -73,8 +90,8 @@ $('document').ready( function() {
       sublayers: [  
         {
           sql: "SELECT * FROM woodridge",
-          cartocss: "#woodridge[type=\"pole\"]{marker-fill: #F79D00;}[type=\"streetlight\"]{marker-fill: #4B25EE;}",
-          interactivity: "id,type,height,lat,lon,imageurl,thumbnail_url,comments,cartodb_id"
+          cartocss: "#woodridge[asset_type=\"pole\"]{marker-fill: #F79D00;}[asset_type=\"streetlight\"]{marker-fill: #4B25EE;}[asset_type=\"pole_device\"]{marker-fill: #16D7CB;}",
+          interactivity: "id,asset_type,extraction_timestamp,head_type,num_devices,num_spreaders,spreader_length,width,type,device_pole_id,height,lat,lon,imageurl,thumbnail_url,comments,cartodb_id"
         }]
         }).addTo(map)
 
@@ -107,10 +124,12 @@ $('document').ready( function() {
                 function updateMapByClient(){
                     var Utility = $('#control_Utility')[0].checked;console.log("Utilitys: "+Utility);
                     var Streetlights = $('#control_Streetlights')[0].checked;console.log("Streetlights: "+Streetlights);
+                    var PoleDevices = $('#control_PoleDevices')[0].checked;console.log("Pole Devices: "+PoleDevices);
 
                     types = {};
                     types['pole'] = Utility;
                     types['streetlight'] = Streetlights;
+                    types['pole_device'] = PoleDevices;
 
                     console.log(types);
                     instring = ''
@@ -123,7 +142,7 @@ $('document').ready( function() {
                     instring = instring.slice(0, -2); 
                     console.log(instring);
                     if (instring) {
-                        sql = "SELECT * FROM woodridge WHERE type in(" + instring + ")";
+                        sql = "SELECT * FROM woodridge WHERE asset_type in(" + instring + ")";
                         console.log(sql)
                         return sql;    
                     } else {
@@ -154,6 +173,16 @@ $('document').ready( function() {
                    //layer.getSubLayer(0).setSQL(updateMapByClient());
                 });
 
+                $('#control_PoleDevices').click(function(){
+                    sql = updateMapByClient()
+                    if (sql) {
+                        layer.getSubLayer(0).show();
+                        layer.getSubLayer(0).setSQL(sql);
+                    } else {
+                        layer.getSubLayer(0).hide();
+                    }
+                   //layer.getSubLayer(0).setSQL(updateMapByClient());
+                });
 
               //Prepare DEFAULT content for Sidebar on Document Load   
               createSelector(subLayer);
@@ -176,10 +205,10 @@ $('document').ready( function() {
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
                       var print_data = {};
                       for (var k in data.rows[0]) {
-                          if (data.rows[0][k] !== 'N/A' && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id'  && k !== 'cartodb_id' && k !== 'the_geom' && k !== 'the_geom_webmercator' && k !== 'created_at' && k !== 'updated_at') {
-                              $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + k + ':&nbsp;&nbsp;</strong> ' + data.rows[0][k] + ' </p>');
+                          if (data.rows[0][k] !== null && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id'  && k !== 'cartodb_id' && k !== 'the_geom' && k !== 'the_geom_webmercator' && k !== 'created_at' && k !== 'updated_at') {
+                              $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + display[k] + ':&nbsp;&nbsp;</strong> ' + data.rows[0][k] + ' </p>');
                             //Assign global variables for the Report
-                              print_data[k] = data.rows[0][k];
+                              print_data[display[k]] = data.rows[0][k];
                               print_data['Image URL'] = data.rows[0].imageurl;
                               window.print_data = print_data;
                           }
@@ -197,7 +226,7 @@ $('document').ready( function() {
               $('#hoverbox').html('');
 
               $('#hoverbox').append('<br/><p align="center"><img height="150" width="200" src='+ data.rows[0].thumbnail_url +'><p/>');
-              $('#hoverbox').append('<span id="hoverboxTitle">' + 'Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].type +'</span><br/>');
+              $('#hoverbox').append('<span id="hoverboxTitle">' + 'Type:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].asset_type +'</span><br/>');
          
               $('#hoverbox').append('<span id="hoverboxTitle">' + 'Height:&nbsp;</span><span id="hoverboxContent">' +'</strong>'+ data.rows[0].height +'</span><br />');     
 
