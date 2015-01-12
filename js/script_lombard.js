@@ -1,4 +1,5 @@
 $('document').ready( function() {
+
     $("#control_AssetLabel").hide();
     $('input:checkbox').attr( 'checked', true );
 
@@ -15,35 +16,36 @@ $('document').ready( function() {
     $options.removeClass('selected');
     $a.addClass('selected');        
 
-    var query = "SELECT * FROM lombard";
+    var query = "SELECT * FROM lombard_detailed";
+
             
     //Create query based on data from the layer
             if(title !== 'All' && queryType == 'query asset') {
-              query = "SELECT * FROM lombard WHERE type = '" + title + "'";
+              query = "SELECT * FROM lombard_detailed WHERE type = '" + title + "'";
               }
             else if (title != 'All' && queryType == 'query permit') {
                switch (title) {
                     case "type":
-                        query = "SELECT * FROM lombard WHERE " + title + " > 0";
+                        query = "SELECT * FROM lombard_detailed WHERE " + title + " > 0";
                         break;
                     case "within_300ft_res":
-                        query = "SELECT * FROM lombard WHERE " + title;
+                        query = "SELECT * FROM lombard_detailed WHERE " + title;
                         break;
                     case "face_rule":
-                        query = "SELECT * FROM lombard WHERE " + title;
+                        query = "SELECT * FROM lombard_detailed WHERE " + title;
                         break;
                }
              }
             else if (title != 'All' && queryType == 'query record') {
                switch (title) {
                     case "lidar":
-                        query = "SELECT * FROM lombard WHERE source ='" + title + "'";
+                        query = "SELECT * FROM lombard_detailed WHERE source ='" + title + "'";
                         break;
                     case "city_records":
-                        query = "SELECT * FROM lombard WHERE source ='" + title + "'";
+                        query = "SELECT * FROM lombard_detailed WHERE source ='" + title + "'";
                         break;
                     case "market_records":
-                        query = "SELECT * FROM lombard WHERE source ='" + title + "'";
+                        query = "SELECT * FROM lombard_detailed WHERE source ='" + title + "'";
                         break;
                }   
             }
@@ -72,9 +74,9 @@ $('document').ready( function() {
       type: 'cartodb',
       sublayers: [  
         {
-          sql: "SELECT * FROM lombard",
-          cartocss: "#lombard[type=\"pole\"]{marker-fill: #F79D00;}[type=\"streetlight\"]{marker-fill: #4B25EE;}",
-          interactivity: "id,type,height,lat,lon,imageurl,thumbnail_url,comments,cartodb_id"
+          sql: "SELECT * FROM lombard_detailed",
+          cartocss: "#lombard_detailed[type=\"pole\"]{marker-fill: #F79D00;}[type=\"streetlight\"]{marker-fill: #4B25EE;}",
+          interactivity: "id,type,height,lat,lon,imageurl,thumbnail_url,comments,cartodb_id,head_type,material,num_devices,num_fuses,num_other_devices,num_spreaders,num_switchgear,num_transformers,owner_id,spreader_length,tilt,width,simple_id"
         }]
         }).addTo(map)
 
@@ -123,13 +125,13 @@ $('document').ready( function() {
                     instring = instring.slice(0, -2); 
                     console.log(instring);
                     if (instring) {
-                        sql = "SELECT * FROM lombard WHERE type in(" + instring + ")";
+                        sql = "SELECT * FROM lombard_detailed WHERE type in(" + instring + ")";
                         console.log(sql)
                         return sql;    
                     } else {
                         
                         return false;
-                        //sql = "SELECT * FROM lombard"
+                        //sql = "SELECT * FROM lombard_detailed"
                     }
                 };
 
@@ -163,23 +165,40 @@ $('document').ready( function() {
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
 
               // human-friendly labels for db fields
-              // TODO: figure out WTF pg, par, and inc_stat mean
+            var display = {
+                'comments': 'Comments',
+                'height': 'Height (m)',
+                'material': 'Material',
+                'type': 'Type',
+                'tilt': 'Tilt',
+                'width': 'Width (m)',
+                'head_type': 'Head Type',
+                'num_devices': 'Total Devices',
+                'num_spreaders': 'Total Spreaders',
+                'spreader_length': 'Max Spreader Length (m)',
+                'num_fuses': 'Fuses',
+                'num_transformers': 'Transformers',
+                'num_switchgear': 'Switchgear',
+                'num_other_devices': 'Other Devices',
+                'lat': 'Latitude',
+                'lon': 'Longitude'
+            };
 
               subLayer.on('featureClick', function(e, latlng, pos, data, idx) {
                   E = e;
                   console.log(E.currentTarget.style);
                   console.log(data.cartodb_id);
-                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT * FROM lombard WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+                  $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT * FROM lombard_detailed WHERE cartodb_id = ' + data.cartodb_id), function(data) {
                   //Prepare DYNAMIC content for Sidebar on Document Load   
                       $('#sidebar').html('');
                       $('#sidebar').append('<a href="' + data.rows[0].imageurl + '" target="_blank"><img src="' + data.rows[0].thumbnail_url + '" height="250" width="300" id="image_sidepanel"></a>');
                       $('#sidebar').append('<br /><p style="color:white;margin-top: 20px; margin-left:7px;font-family:arial;font-weight:bolder">' + '- ATTRIBUTES -</p>');
                       var print_data = {};
                       for (var k in data.rows[0]) {
-                          if (data.rows[0][k] !== 'N/A' && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id'  && k !== 'cartodb_id' && k !== 'the_geom' && k !== 'the_geom_webmercator' && k !== 'created_at' && k !== 'updated_at') {
-                              $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + k + ':&nbsp;&nbsp;</strong> ' + data.rows[0][k] + ' </p>');
+                          if (data.rows[0][k] && data.rows[0][k] !== '' && data.rows[0][k] !== 'N/A' && k !== 'imageurl' && k !== 'thumbnail_url' && k !== 'id'  && k !== 'cartodb_id' && k !== 'the_geom' && k !== 'the_geom_webmercator' && k !== 'created_at' && k !== 'updated_at' && k !== 'simple_id' && k !== 'owner_id') {
+                              $('#sidebar').append('<p style="color:white;margin-left:7px;font-family:arial"><strong>' + display[k] + ':&nbsp;&nbsp;</strong> ' + data.rows[0][k] + ' </p>');
                             //Assign global variables for the Report
-                              print_data[k] = data.rows[0][k];
+                              print_data[display[k]] = data.rows[0][k];
                               print_data['Image URL'] = data.rows[0].imageurl;
                               window.print_data = print_data;
                           }
@@ -192,7 +211,7 @@ $('document').ready( function() {
                 var content = $('#hoverbox');
               content.show();
 
-              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT * FROM lombard WHERE cartodb_id = ' + data.cartodb_id), function(data) {
+              $.getJSON(encodeURI('http://cityscan.cartodb.com/api/v2/sql/?q=SELECT * FROM lombard_detailed WHERE cartodb_id = ' + data.cartodb_id), function(data) {
               
               $('#hoverbox').html('');
 
@@ -234,7 +253,7 @@ $('document').ready( function() {
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
     //Enconded SQL string for data download
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=kml";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard_detailed%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=kml";
         $(this).attr("href", new_sql);
       });
 
@@ -244,7 +263,7 @@ $('document').ready( function() {
         nwlon = map.getBounds().getNorthWest().lng,
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=shp";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard_detailed%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=shp";
         $(this).attr("href", new_sql);
       });
       
@@ -254,7 +273,7 @@ $('document').ready( function() {
         nwlon = map.getBounds().getNorthWest().lng,
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=geojson";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard_detailed%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=geojson";
         $(this).attr("href", new_sql);
       });
       
@@ -264,7 +283,7 @@ $('document').ready( function() {
         nwlon = map.getBounds().getNorthWest().lng,
         selat = map.getBounds().getSouthEast().lat,
         selon = map.getBounds().getSouthEast().lng;
-    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=csv";
+    var new_sql = "http://cityscan.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20lombard_detailed%20WHERE%20the_geom%20%26%26%20ST_SetSRID(ST_MakeBox2D(ST_Point(" + nwlon + "%2C%20" + nwlat + ")%2C%20ST_Point(" + selon + "%2C%20" + selat + "))%2C4326)%20ORDER%20BY%20lat%20DESC%20LIMIT%202000&format=csv";
         $(this).attr("href", new_sql);
       });
 
