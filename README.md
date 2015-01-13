@@ -1,6 +1,6 @@
 # VirtualScan
 
-VirtualScan is a proprietary web-based asset mapping tool aimed at helping cities and utilities make data-driven decisions about their critical infrastructure. Built as a direct result of CityScan's comprehensive mobile terrestrial LiDAR (MTL) mapping solution, VirtualScan allows decision makers and workers in the field to glance at a quick summary of every asset they're responsible for keeping track of.
+VirtualScan is a web-based asset mapping tool aimed at helping cities and utilities make data-driven decisions about their critical infrastructure. Built as a direct result of CityScan's comprehensive mobile terrestrial LiDAR (MTL) mapping solution, VirtualScan allows decision makers and workers in the field to glance at a quick summary of every asset they're responsible for keeping track of.
 
 ## VirtualScan Capabilities
 

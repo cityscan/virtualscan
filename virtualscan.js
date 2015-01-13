@@ -16,12 +16,26 @@ app.use(express.static(__dirname + '/bower_components'));
 app.use(express.static(__dirname + '/assets'));
 
 // everyday I'm testing
+// test (whoah...) to see if test=1 is in the querystring
 app.use(function(req, res, next) {
     res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
     next();
 });
 
 app.set('port', process.env.PORT || 3000);
+
+// Suppress Express X-Powered-By header
+app.disable('x-powered-by');
+
+// see browser headers
+app.get('/headers', function(req, res) {
+    res.set('Content-Type', 'text/plain');
+    var s = '';
+    for (var name in req.headers) {
+        s += name + ': ' + req.headers[name] + '\n';
+    }
+    res.send(s);
+});
 
 
 app.get('/', function(req, res) {
