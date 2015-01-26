@@ -1,16 +1,16 @@
 {
   "name": "VirtualScan",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/cityscan/virtualscan",
   "authors": [
-    "Cory Mollet <cmollet@cityscan.com>"
+    "CityScan Inc. <info@cityscan.com>"
   ],
   "description": "Web-based asset viewer and data analysis tool for CityScan clients",
-  "main": "script_lombard.js",
+  "main": "virtualscan.js",
   "moduleType": [
     "node"
   ],
-  "license": "MIT",
+  "license": "LICENSE.txt",
   "private": true,
   "ignore": [
     "**/.*",

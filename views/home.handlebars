@@ -1,0 +1,27 @@
+<head>
+    <!-- Mapbox -->
+    <link rel="stylesheet" href="/mapbox.js/mapbox.uncompressed.css">
+    <style>
+        #map {
+            position: absolute;
+            top: 50px;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <script src="/mapbox.js/mapbox.uncompressed.js"></script>
+
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+
+    var road = L.tileLayer('https://a.tiles.mapbox.com/v3/osaez.ggh7cflj/{z}/{x}/{y}.png');
+    var map = L.map('map', {
+        center: new L.latLng(39.965139, -75.181934),
+        zoom: 12,
+        layers: [road]
+    });
+    </script>
+</body>

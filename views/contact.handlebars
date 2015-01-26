@@ -1,0 +1,15 @@
+<h1>Contact Us</h1>
+
+<form>
+    <input type="hidden" name="referrer">
+    Name: <input type="text" id="fieldName" name="name"><br>
+    Age: <input type="text" name="age"><br>
+    Email: <input type="email" name="email"><br>
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+$(document).ready(function() {
+    $('input[name="referrer"]').val(document.referrer);
+});
+</script>

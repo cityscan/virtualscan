@@ -1,0 +1,41 @@
+{
+  "name": "VirtualScan",
+  "version": "0.0.1",
+  "description": "A web-based data visualization and analysis platform for CityScan clients",
+  "main": "virtualscan.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cityscan/virtualscan.git"
+  },
+  "keywords": [
+    "cityscan",
+    "cities",
+    "dataviz",
+    "urban"
+  ],
+  "author": "CityScan, Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cityscan/virtualscan/issues"
+  },
+  "homepage": "https://github.com/cityscan/virtualscan",
+  "dependencies": {
+    "cors": "^2.5.2",
+    "express": "^4.10.2",
+    "express-handlebars": "^1.1.0",
+    "passport": "^0.2.1"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "grunt": "^0.4.5",
+    "grunt-cafe-mocha": "^0.1.13",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-exec": "^0.4.6",
+    "license-sniffer": "^0.1.2",
+    "mocha": "^2.0.1",
+    "zombie": "^2.1.1"
+  }
+}

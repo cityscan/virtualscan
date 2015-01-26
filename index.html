@@ -57,25 +57,26 @@
 <!-- Add Map and SideBar -->
 <div id='map'></div>
 <div class="hidden"><!-- Hide hover window -->
-  <div id='box'></div>
+  <div id='hoverbox'></div>
 </div>
 <div class="hidden">
   <div id='sidebar'></div>
 </div>
 <a href="#" title="Show Panel">
-<div id='sidebar_toggle'>L<br/>
+<div id='sidebarToggle'>
+  L<br/>
   E</br>
   S</br>
   S</br>
 </div>
-<div id='sidebar_toggle2'>M<br/>
+<div id='sidebarToggle2'>
+  M<br/>
   O</br>
   R</br>
   E</br>
 </div>
 </a>
-<div id='sidebar_imgbox'></div>
-<!-- Add white container around siidebar image -->
+<div id='sidebar_imgbox'></div><!-- Add white container around sidebar image -->
 <div id="sidebarProfile">
   <button type="button" onclick="wins()">Print</button>
 </div>
@@ -83,9 +84,8 @@
 <!-- Add Header -->
 <div id='header'>
   <div id='logo'> <a href="http://cityscan.com/"><img src="image/logo_main.png" width="156" height="35" id="logo"></a> </div>
-  <div id='headerButtons'> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="http://www.cityscan.com">WELCOME</a></span> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> <span class="bar">|&nbsp</span> <span class="aboutButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
+  <div id='headerButtons'> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="http://www.cityscan.com">WELCOME</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
 </div>
-<!-- End of Header --> 
 
 <!--Add Sub-Header-->
 <div id='subheader'></div>
@@ -106,7 +106,7 @@
 </div>
 
 <!-- Add Show All -->
-<div id="showall_status">
+<div id="showallButton">
   <div class="btn-group">
     <button type="button" class="btn">
     <a href="#" class="query all" title="Display All Features">Display All</a>
@@ -142,38 +142,38 @@
   </div>
 </div>
 
-<!-- Filter, also known as control panel or legend --> 
+<!-- Control Panel --> 
 <a href="#" title="Show Filter">
 <div id="control">C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
 </a>
-<div id="controlBig">
+<div id="controlExtend">
   <div class="btn-group" data-toggle="buttons-radio">
-    <button type="button" class="btn btn-primary active" id="legendZoning">Violation</button>
-    <button type="button" class="btn btn-primary" id="legendSource">License</button>
-    <button type="button" class="btn btn-primary" id="legendOperator">Operator</button>
+    <button type="button" class="btn btn-primary active" id="control_Violation">Violation</button>
+    <button type="button" class="btn btn-primary" id="control_License">License</button>
+    <button type="button" class="btn btn-primary" id="control_Operator">Operator</button>
   </div>
   
-  <!-- Add Violations, aka Zoning, Filter Option -->
-  <div id="legendZoningLabel">
+  <!-- Add Violation Option -->
+  <div id="control_ViolationLabel">
     <p>Zoning Violation (<span style="color:red">Yes</span> or <span style="color:#16D7CB">No</span>)</p>
   </div>
-  <div class="checkbox" id="violationOR">
+  <div class="checkbox" id="control_ViolationCheckbox">
     <label>
-      <input type="checkbox" id="spacingViolation2">
+      <input type="checkbox" id="control_ViolationSpacing">
       500ft Spacing</label>
     <label>
-      <input type="checkbox" id="residentialViolation2">
+      <input type="checkbox" id="control_ViolationResidential">
       Within 300ft of Residential</label>
     <label>
-      <input type="checkbox" id="heightViolation2">
+      <input type="checkbox" id="control_ViolationHeight">
       Billboard Height > 20ft</label>
     <label>
-      <input type="checkbox" id="licenseViolation2">
+      <input type="checkbox" id="control_ViolationLicense">
       Unlicensed Billboards</label>
   </div>
   
   <!-- Add Source Option -->
-  <div id="legendSourceLabel">
+  <div id="control_SourceLabel">
     <ul class="unstyled" style="padding-top:7px">
       <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Billboards in City Records</li>
       <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Unlicensed Billboards</li>
@@ -181,7 +181,7 @@
   </div>
   
   <!-- Add Operator Option -->
-  <div id="legendOperatorLabel">
+  <div id="control_OperatorLabel">
     <ul class="unstyled" style="padding-top:7px">
       <li><a style='background:#16D7CB;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Reported to City</li>
       <li><a style='background:#D7162D;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;Not Reported to City</li>
