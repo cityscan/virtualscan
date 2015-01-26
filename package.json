@@ -25,7 +25,8 @@
   "dependencies": {
     "cors": "^2.5.2",
     "express": "^4.10.2",
-    "express-handlebars": "^1.1.0"
+    "express-handlebars": "^1.1.0",
+    "passport": "^0.2.1"
   },
   "devDependencies": {
     "chai": "^1.10.0",
