@@ -25,6 +25,65 @@
 <link rel="stylesheet" href="bower_components/bootstro/bootstro.css">
 <script src="bower_components/bootstro/bootstro.js"></script>
 
+<!-- Hopscotch (first-run demo) -->
+<link rel="stylesheet" href="bower_components/hopscotch/dist/css/hopscotch.css">
+<script src="bower_components/hopscotch/dist/js/hopscotch.js"></script>
+<script>
+    var tour = {
+        id: "welcome_tour",
+        steps: [
+        {
+            target: "headerButtons",
+            placement: "bottom",
+            title: "Welcome to VirtualScan!",
+            content: "VirtualScan is CityScan's online asset viewer for visualizing the results and insights yielded from mobile LiDAR scans"
+        },
+        {
+            target: "control",
+            placement: "top",
+            title: "Control Panel",
+            content: "Click on the Control Panel to expand it. Here you can toggle assets on and off the map. The nature of the filters will depend on the use case and client's needs.",
+            xOffset: -180,
+            arrowOffset: 180,
+            showPrevButton: true
+        },
+        {
+            target: "sidebarToggle",
+            placement: "right",
+            title: "Info Window",
+            content: "When hovering over and/or clicking on assets on te map, their relevant attributes and images will be displayed in this left sidebar. You can toggle the sidebar on or off by clicking the LESS/MORE button.",
+            showPrevButton: true
+        },
+        {
+            target: "sidebar_imgbox",
+            placement: "right",
+            title: "High-res images",
+            content: "Click on the thumbnail to open a high-res image of the asset.",
+            yOffset: -150,
+            showPrevButton: true
+        },
+        {
+            target: "downloadData",
+            placement: "bottom",
+            title: "Data Downloads",
+            content: "Click here to download the raw data in a variety of geospatial formats",
+            xOffset: -220,
+            arrowOffset: 220,
+            showPrevButton: true
+        },
+        {
+            target: "citySwitcher",
+            placement: "bottom",
+            title: "Switch cities/use cases",
+            content: "Switch between different locations and their use cases here.",
+            showPrevButton: true
+        }
+        ]
+    }
+hopscotch.startTour(tour);
+</script>
+
+
 </head>
 
 <body>
@@ -69,7 +128,7 @@
   <div id='sidebar'></div>
 </div>
 <a href="#" title="Show Panel">
-<div id='sidebarToggle' class="bootstro" data-bootstro-title="Info Window" data-bootstro-content="When hovering over and/or clicking on assets on the map, their relevant attributes and images will be displayed in this left sidebar. You can toggle the sidebar on or off by clicking the LESS/MORE button." data-bootstro-placement="right" data-bootstro-step=2>
+<div id='sidebarToggle' >
   L<br/>
   E</br>
   S</br>
@@ -82,7 +141,7 @@
   E</br>
 </div>
 </a>
-<div id='sidebar_imgbox' class="bootstro" data-bootstro-title="High-res images" data-bootstro-content="Click on the thumbnail to open a high-res image of the asset" data-bootstro-placement="right" data-bootstro-step=3></div><!-- Add white container around sidebar image -->
+<div id='sidebar_imgbox' ></div><!-- Add white container around sidebar image -->
 <div id="sidebarProfile">
   <button type="button" onclick="wins()">Print</button>
 </div>
@@ -90,14 +149,14 @@
 <!-- Add Header -->
 <div id='header'>
   <div id='logo'> <a href="http://cityscan.com/"><img src="image/logo_main.png" width="156" height="35" id="logo"></a> </div>
-  <div id='headerButtons'> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="http://www.cityscan.com" class="bootstro" data-bootstro-title="Welcome to VirtualScan!" data-bootstro-content="VirtualScan is CityScan's online asset viewer for visualizing the results and insights yielded from mobile LiDAR scans" data-bootstro-placement="bottom" data-bootstro-step=0 >WELCOME</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
+  <div id='headerButtons'> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="http://www.cityscan.com" >WELCOME</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#" role="button" data-toggle="modal">APPROACH</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#" role="button" data-toggle="modal">ASSUMPTIONS</a></span> <span class="bar">|&nbsp</span> <span class="headerButton"> <a href="#myModal" role="button" data-toggle="modal"> ABOUT</a></span> </div>
 </div>
 
 <!--Add Sub-Header-->
 <div id='subheader'></div>
 
 <!--Add CitySwitcher-->
-<div id="citySwitcher" class="bootstro" data-bootstro-title="Switch cities/use cases" data-bootstro-content="Switch between different cities and their use cases here." data-bootstro-placement="bottom" data-bootstro-step=5>
+<div id="citySwitcher" >
   <div class="btn-group" >
     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Philadelphia - Billboard&nbsp;&nbsp;&nbsp;</button>
     <ul class="dropdown-menu" role="menu">
@@ -121,7 +180,7 @@
 </div>
 
 <!-- Download Switcher -->
-<div id="downloadData" class="bootstro" data-bootstro-title="Data Downloads" data-bootstro-content="Click here to download the raw data in a variety of geospatial formats" data-bootstro-placement="bottom" data-bootstro-step=4>
+<div id="downloadData" >
   <div class="btn-group">
     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Download Data&nbsp;&nbsp;</button>
     <ul class="dropdown-menu" role="menu">
@@ -150,7 +209,9 @@
 
 <!-- Control Panel --> 
 <a href="#" title="Show Filter">
-<div id="control" class="bootstro" data-bootstro-title="Control Panel" data-bootstro-content="Click on the Control Panel to expand it. Here you can toggle assets on and off the map. The nature of the filters will depend on the use case and client's needs." data-bootstro-step=1>C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
+    <div id="control_bootstro" >
+    </div>
+<div id="control" >C&nbsp;O&nbsp;N&nbsp;T&nbsp;R&nbsp;O&nbsp;L</div>
 </a>
 <div id="controlExtend">
   <div class="btn-group" data-toggle="buttons-radio">

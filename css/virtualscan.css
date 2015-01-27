@@ -305,6 +305,13 @@ a:hover {
 	margin-top: 7px;
 	font-family: arial;
 }
+#control_bootstro {
+    position: absolute;
+    height: 25px;
+    width: 300px;
+    right: 150px;
+}
+
 #control {
 	position: absolute;
 	height: 25px;

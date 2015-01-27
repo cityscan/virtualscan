@@ -23,6 +23,7 @@
     "bootstrap": "~3.3.0",
     "bootstro": "*",
     "mapbox.js": "~2.1.3",
-    "leaflet": "~0.7.3"
+    "leaflet": "~0.7.3",
+    "hopscotch": "~0.2.3"
   }
 }
